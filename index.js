@@ -6,7 +6,6 @@ const axios = require("axios");
 const dotenv = require("dotenv")
 dotenv.config()
 
-
 var key = process.env.KEY
 
 console.log(process.env.KEY)
