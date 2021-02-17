@@ -1,19 +1,35 @@
-#submitButton {
-  width: 100px;
-}
-
 .grid-container-1 {
   display: grid;
   grid-template-columns: auto auto auto;
   padding: 10px;
 }
 .grid-item-1 {
-  padding: 20px;
+  padding: 20%;
   text-align: center;
 }
 
+#response {
+  width: 70%
+}
+#searchWord {
+  width: 90%;
+}
+#submitButton {
+  width: 60%;
+}
+#cancelButton {
+  width: 50%;
+}
 
-
+#songChoiceBox1 {
+  display: none;
+}
+#songChoiceBox2 {
+  display: none;
+}
+#songChoiceBox3 {
+  display: none;
+}
 
 @font-face {
     font-family: 'Windows 95';

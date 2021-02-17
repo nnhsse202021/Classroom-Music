@@ -8,15 +8,25 @@ submitButton.addEventListener("click", async () => {
 	//alert(searchTerm);
 
   await fetch(`/ytapi?term=${encodeURI(searchTerm)}`)
-    .then(res => res.json())
-    .then( json => {
-      for (var i = 0; i < response.data.items.length; i++) {
-      item = response.data.items[i];
-			console.log("[%s] Title: %s", item.id.videoId, item.snippet.title);
-      }
-    });
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.videoId1 + "   " + data.videoTitle1);
+      showSongChoices(data.videoId1, data.videoId2, data.videoId3, data.videoTitle1, data.videoTitle2, data.videoTitle3);
+    })
+
 
 })
+
+function showSongChoices(videoId1, videoId2, videoId3, videoTitle1, videoTitle2, videoTitle3) {
+  document.getElementById("songChoice1").innerHTML = "Title: " + videoTitle1;
+  document.getElementById("songChoice2").innerHTML = "Title: " + videoTitle2;
+  document.getElementById("songChoice3").innerHTML = "Title: " + videoTitle3;
+
+
+  document.getElementById("songChoiceBox1").style.display = "block";
+  document.getElementById("songChoiceBox2").style.display = "block";
+  document.getElementById("songChoiceBox3").style.display = "block";
+}
 
 let cancelButton = document.getElementById("cancelButton");
 
