@@ -21,6 +21,10 @@
   width: 50%;
 }
 
+#testModal {
+  display: none;
+}
+
 #songChoiceBox1 {
   display: none;
 }

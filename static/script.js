@@ -33,3 +33,33 @@ let cancelButton = document.getElementById("cancelButton");
 cancelButton.addEventListener("click", async () => {
 	document.getElementById("searchWord").value = "";
 })
+
+let modalButton = document.getElementById("modalButton");
+
+modalButton.addEventListener("click", async () => {
+	document.getElementById("testModal").style.display = "block";
+})
+
+
+
+
+/* GOOGLE AUTHENTICATION */
+
+
+
+//load up that authy boi
+gapi.load("auth2", () => {
+    gapi.auth2.init();
+})
+function googleLogin() {
+    var googleUser = await gapi.auth2.getAuthInstance().signIn(); // <- this one gonna open the google window
+    let res = await fetch("whatever route to ur auth stuff", {
+        method: "POST",
+        body: JSON.stringify({
+            token: googleUser.getAuthResponse().id_token
+        }),
+        headers: {
+            "Content-Type": "application/json"
+        }
+    })
+}
