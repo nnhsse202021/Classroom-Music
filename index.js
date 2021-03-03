@@ -1,23 +1,23 @@
 const app = require('express')();
 const http = require('http').createServer(app);
-const bodyParser = require('body-parser')
+const bodyParser = require('body-parser');
 const axios = require("axios"); // for requests (essentially equivalent to the fetch command)
+const Database = require("@replit/database");
+const db = new Database();
+
 
 // For storing the API key in the .env file and retrieving it
-const dotenv = require("dotenv")
-dotenv.config()
+const dotenv = require("dotenv");
+dotenv.config();
 
-//var key = process.env.KEY // don't need this at the moment, would rather not store the key value
-
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 // '/' endpoint handling
 app.get('/', (req, res) => { // Return the html file for the home directory of the server
   res.sendFile(__dirname + '/static/index.html');
 });
 
-app.get("/ytapi", (req,res) => {
-
+app.get("/ytapi", (req, res) => {
   let keyword = req.query.term;
   console.log("Search Term:  " + keyword); // temporary logging
 
@@ -50,8 +50,44 @@ app.get("/ytapi", (req,res) => {
   .catch(error => {
     console.log(error);
   })
-
 })
+
+app.get("/addsong", async (req,res) => {
+  let vidID = req.query.id;
+  let playlistID = req.query.playlist;
+
+  await db.set(playlistID, vidID);
+
+  res.send(JSON.stringify({
+    id: vidID,
+    playlist: playlistID
+  }))
+})
+
+app.get("/getplaylist", async (req,res) => {
+  let playlist = req.query.playlistID;
+  
+  //db.get(playlist).then(value => {console.log(playlist)});
+
+  console.log("SERVER SIDE TEST");
+
+  const value = await db.get(playlist);
+  console.log(value);
+
+  res.send(JSON.stringify({
+    playlist: value
+  }))
+})
+
+
+var songList = ["ma67yOdMQfs", "kAT_xX-Xk6c", "ma67yOdMQfs", "kAT_xX-Xk6c", "ma67yOdMQfs", "kAT_xX-Xk6c"]
+
+app.get("/loadnextsong", (req, res) => {
+	res.send(JSON.stringify({
+		id: songList.shift()
+	}));
+})
+
 
 //serving files
 app.use((req, res) => {
@@ -63,12 +99,11 @@ http.listen(3000, function(){
 })
 
 
-
-// http
-
 // GET
 // retrieving resources from servers
 
 
 // POST
 // sending data to servers
+
+

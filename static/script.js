@@ -13,9 +13,7 @@ submitButton.addEventListener("click", async () => {
       console.log(data.videoId1 + "   " + data.videoTitle1);
       showSongChoices(data.videoId1, data.videoId2, data.videoId3, data.videoTitle1, data.videoTitle2, data.videoTitle3);
     })
-
-
-})
+});
 
 function showSongChoices(videoId1, videoId2, videoId3, videoTitle1, videoTitle2, videoTitle3) {
   document.getElementById("songChoice1").innerHTML = "Title: " + videoTitle1;
@@ -28,38 +26,89 @@ function showSongChoices(videoId1, videoId2, videoId3, videoTitle1, videoTitle2,
   document.getElementById("songChoiceBox3").style.display = "block";
 }
 
+async function sendSongToDatabase(id, playlistID){
+
+  await fetch(`/addsong?id=${encodeURI(id)}&playlist=${encodeURI(playlistID)}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log("Sent song to server for database logging\nID: " + data.id);
+    })
+}
+
+async function getPlaylistFromDatabase(playlistID){
+
+  await fetch(`/getplaylist?}&playlistid=${encodeURI(playlistID)}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log(data.playlist);
+    })
+}
+
 let cancelButton = document.getElementById("cancelButton");
 
 cancelButton.addEventListener("click", async () => {
 	document.getElementById("searchWord").value = "";
+
+  document.getElementById("songChoiceBox1").style.display = "none";
+  document.getElementById("songChoiceBox2").style.display = "none";
+  document.getElementById("songChoiceBox3").style.display = "none";
+
+  document.getElementById("termDisplay").innerHTML = "";
+
+  document.getElementById("songChoice1").innerHTML = "";
+  document.getElementById("songChoice2").innerHTML = "";
+  document.getElementById("songChoice3").innerHTML = "";
+
+
+  document.getElementById("songChoiceBox1").style.display = "none";
+  document.getElementById("songChoiceBox2").style.display = "none";
+  document.getElementById("songChoiceBox3").style.display = "none";
+
+  document.getElementById("verifyModal").style.display = "none";
+  document.getElementById("searchModal").style.display = "none";
+
+});
+
+/* modal design for the search box */
+let searchModalButton = document.getElementById("searchModalButton");
+
+searchModalButton.addEventListener("click", async () => {
+	document.getElementById("searchModal").style.display = "block";
 })
 
-let modalButton = document.getElementById("modalButton");
+/* modal design for the verification box */
+let optionButton1 = document.getElementById("optionButton1");
+let optionButton2 = document.getElementById("optionButton2");
+let optionButton3 = document.getElementById("optionButton3");
 
-modalButton.addEventListener("click", async () => {
-	document.getElementById("testModal").style.display = "block";
+optionButton1.addEventListener("click", async () => {
+	document.getElementById("verifyModal").style.display = "block";
+})
+optionButton2.addEventListener("click", async () => {
+	document.getElementById("verifyModal").style.display = "block";
+})
+optionButton3.addEventListener("click", async () => {
+	document.getElementById("verifyModal").style.display = "block";
 })
 
-
-
-
-/* GOOGLE AUTHENTICATION */
-
-
-
-//load up that authy boi
-gapi.load("auth2", () => {
-    gapi.auth2.init();
+let verify = document.getElementById("verify");
+let confirmSong = document.getElementById("confirmSong");
+let verifyCancelButton = document.getElementById("verifyCancelButton");
+verify.addEventListener("click", async () => {
+  if (verify.checked) {
+    confirmSong.disabled = false;
+  }
+  else {
+    confirmSong.disabled = true;
+  }
 })
-function googleLogin() {
-    var googleUser = await gapi.auth2.getAuthInstance().signIn(); // <- this one gonna open the google window
-    let res = await fetch("whatever route to ur auth stuff", {
-        method: "POST",
-        body: JSON.stringify({
-            token: googleUser.getAuthResponse().id_token
-        }),
-        headers: {
-            "Content-Type": "application/json"
-        }
-    })
-}
+confirmSong.addEventListener("click", async () => {
+	document.getElementById("verifyModal").style.display = "none";
+  document.getElementById("songChoiceBox1").style.display = "none";
+  document.getElementById("songChoiceBox2").style.display = "none";
+  document.getElementById("songChoiceBox3").style.display = "none";
+  document.getElementById("searchModal").style.display = "none";
+})
+verifyCancelButton.addEventListener("click", async () => {
+	document.getElementById("verifyModal").style.display = "none";
+})
