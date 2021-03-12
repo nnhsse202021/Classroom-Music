@@ -6,20 +6,26 @@
 </head>
 
 <body>
+	<script src="/static/sessions.js"></script>
+
+	<script>checkLoginStatus()</script>
+
 	<div class="g-signin2" data-onsuccess="onSignIn"></div>
 	<button id="signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign Out</button>
 
-  <script>
+	<script>
     function onSignIn(googleUser) {
       var profile = googleUser.getBasicProfile();
       console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
       console.log('Name: ' + profile.getName());
       console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+			setLogin();
     }
 
     function signOut() {
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(() => {
+				setLogout();
         window.location.href = "https://classroom-music.thedoge.repl.co/static/index.html";
       });
     }

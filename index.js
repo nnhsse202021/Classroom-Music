@@ -6,6 +6,7 @@ const Database = require("@replit/database");
 const db = new Database();
 
 
+
 // For storing the API key in the .env file and retrieving it
 const dotenv = require("dotenv");
 dotenv.config();
@@ -119,15 +120,50 @@ app.get("/deleteplaylist", async (req, res) => {
 });
 
 
+const parseurl = require('parseurl')
+const session = require('express-session')
+// app.set('trust proxy', 1) // trust first proxy
+app.use(session({
+	secret: 'keyboard-cat',
+	resave: false,
+  saveUninitialized: true,
+}));
+
+app.use("/checksession", (req, res, next) => {
+	if (!req.session.views) {
+    req.session.views = {}
+  }
+
+	var pathname = parseurl(req).pathname
+  
+	if (req.session.views[pathname] === null) {
+		req.session.views[pathname] = false;
+	}
+
+	let mode = req.query.mode;
+
+	req.session.views["/checksession"] = (mode === 'check') ? req.session.views["/checksession"] : (mode === 'login');
+
+	next();
+})
+
+app.get("/checksession", (req, res, next) => {
+	console.log(req.session);
+	res.send(JSON.stringify({
+		loggedIn: req.session.views["/checksession"]
+	}));
+});
+
+
 //serving files
 app.use((req, res) => {
   res.sendFile(__dirname + req.url);
 });
 
+
 http.listen(3000, () => {
   console.log('listening on *:3000');
 });
-
 
 // GET
 // retrieving resources from servers
@@ -135,4 +171,3 @@ http.listen(3000, () => {
 
 // POST
 // sending data to servers
-

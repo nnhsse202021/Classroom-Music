@@ -10,7 +10,7 @@ submitButton.addEventListener("click", async () => {
     .then(response => response.json())
     .then(data => {
       console.log(data.videoId1 + "   " + data.videoTitle1);
-      showSongChoices(data.videoId1, data.videoId2, data.videoId3, data.videoTitle1, data.videoTitle2, data.videoTitle3);
+      showSongChoices(data.videoId1, data.videoId2, data.videoId3,data.videoTitle1, data.videoTitle2, data.videoTitle3);
     });
 });
 

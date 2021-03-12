@@ -1,12 +1,18 @@
+
 <head>
 	<meta name="google-signin-client_id" content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
 	<link rel="stylesheet" type="text/css" href="/static/style.css" />
 	<script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
+	<script src="https://apis.google.com/js/api.js"></script>
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
 <body>
-	
+	<script src="/static/sessions.js"></script>
+
+	<script>
+	</script>
+
 	<div id="signInBox">
 		<div class="card">
 			<div class="card-header">Please Sign in</div>
@@ -22,6 +28,8 @@
 	
 	<script>
 		function onSignIn(googleUser) {
+			setLogin();
+
 			var profile = googleUser.getBasicProfile();
 			console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
 			console.log('Name: ' + profile.getName());
