@@ -7,7 +7,6 @@
 
 <body>
 	<script src="/static/sessions.js"></script>
-
 	<script>checkLoginStatus()</script>
 
 	<div class="g-signin2" data-onsuccess="onSignIn"></div>
@@ -26,7 +25,7 @@
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(() => {
 				setLogout();
-        window.location.href = "https://classroom-music.thedoge.repl.co/static/index.html";
+        window.location.href = "https://classroom-music-3.evanzimmerman.repl.co/static/index.html";
       });
     }
   </script>
