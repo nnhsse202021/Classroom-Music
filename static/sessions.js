@@ -16,7 +16,7 @@ function checkLoginStatus() {
 			console.log(data.loggedIn);
 
 			if (data.loggedIn === false) {
-				window.location.href = "https://classroom-music.thedoge.repl.co/static/index.html";
+				window.location.href = window.location.origin + "/static/index.html";
 			}
 
 		});
