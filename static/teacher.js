@@ -34,8 +34,17 @@ document.getElementById("loadButton").addEventListener("click", async () => {
 });
 
 
+var isPlaying = false;
 document.getElementById("playButton").addEventListener("click", () => {
-	player.playVideo();
+	if (isPlaying == true) {	// Execute this if a video is currently playing
+		player.pauseVideo();
+		isPlaying = false;
+		document.getElementById("playButtonText").innerHTML = "Play";
+	} else { 					// Execute this if a video is currently paused
+		player.playVideo();
+		isPlaying = true;
+		document.getElementById("playButtonText").innerHTML = "Pause";
+	}
 });
 
 
