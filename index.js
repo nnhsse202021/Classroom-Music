@@ -122,9 +122,22 @@ app.get("/deleteplaylist", async (req, res) => {
 
 app.get("/generatecode", (req, res) => {
   let email = req.query.email;
-  email = email.substring(0, 4);
+  let hash = 0;
+  if (email.length == 0) return hash;
+  for (i = 0; i < email.length; i++) {
+    char = email.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  if (hash < 0) hash = -hash;
+  let code = "";
+  while (hash > 1) {
+    code += String.fromCharCode(65 + hash % 26);
+    hash = hash / 26;
+  }
+
   res.send(JSON.stringify({
-    code: email
+    code: code
   }));
 });
 
@@ -133,34 +146,34 @@ const parseurl = require('parseurl')
 const session = require('express-session')
 // app.set('trust proxy', 1) // trust first proxy
 app.use(session({
-	secret: 'keyboard-cat',
-	resave: false,
+  secret: 'keyboard-cat',
+  resave: false,
   saveUninitialized: true,
 }));
 
 app.use("/checksession", (req, res, next) => {
-	if (!req.session.views) {
+  if (!req.session.views) {
     req.session.views = {}
   }
 
-	var pathname = parseurl(req).pathname
-  
-	if (req.session.views[pathname] === null) {
-		req.session.views[pathname] = false;
-	}
+  var pathname = parseurl(req).pathname
 
-	let mode = req.query.mode;
+  if (req.session.views[pathname] === null) {
+    req.session.views[pathname] = false;
+  }
 
-	req.session.views["/checksession"] = (mode === 'check') ? req.session.views["/checksession"] : (mode === 'login');
+  let mode = req.query.mode;
 
-	next();
+  req.session.views["/checksession"] = (mode === 'check') ? req.session.views["/checksession"] : (mode === 'login');
+
+  next();
 })
 
 app.get("/checksession", (req, res, next) => {
-	console.log(req.session);
-	res.send(JSON.stringify({
-		loggedIn: req.session.views["/checksession"]
-	}));
+  console.log(req.session);
+  res.send(JSON.stringify({
+    loggedIn: req.session.views["/checksession"]
+  }));
 });
 
 
