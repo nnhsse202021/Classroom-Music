@@ -42,20 +42,21 @@
     <div class="card-body">
 			<input class="card-text" type="text" id="codeEntry"></input>
 			<button class="btn btn-sm mr-2 btn-primary border-dark" id="submitCode">Enter code</button>
-			<p class="card-text" id="displayCode">Hello</p>
+			<p class="card-text" id="displayCode"></p>
 		</div>
   </div>
 
 	<script>
-		var studentCode = ""
+		var studentCode = "" // Student's current class code
 
 		document.getElementById("submitCode").addEventListener("click", () => {
 			studentCode = document.getElementById("codeEntry").value;
 			getCurrentCode();
 		})
 
+		// function that returns the student's current class code
 		async function getCurrentCode() {
-			document.getElementById("displayCode").innerHTML = "Your code is: " + studentCode;
+			document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
 			return studentCode;
 		}
 	</script>

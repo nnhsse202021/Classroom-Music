@@ -120,16 +120,22 @@ app.get("/deleteplaylist", async (req, res) => {
 });
 
 
+// Generate an unique code for each teacher.
+// req should take in an email.
 app.get("/generatecode", (req, res) => {
   let email = req.query.email;
+  
+  // find the hash function of the email given
+  // (same as java implementation for string hash function)
   let hash = 0;
-  if (email.length == 0) return hash;
   for (i = 0; i < email.length; i++) {
     char = email.charCodeAt(i);
     hash = ((hash << 5) - hash) + char;
     hash = hash & hash; // Convert to 32bit integer
   }
-  if (hash < 0) hash = -hash;
+  if (hash < 0) hash = -hash; // convert negative hashs to positive values
+  
+  // convert the hash function to a 6 or 7 letter code
   let code = "";
   while (hash > 1) {
     code += String.fromCharCode(65 + hash % 26);
