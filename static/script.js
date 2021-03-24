@@ -57,20 +57,9 @@ cancelButton.addEventListener("click", async () => {
   document.getElementById("songChoiceBox3").style.display = "none";
 
   document.getElementById("verifyModal").style.display = "none";
-  document.getElementById("searchModal").style.display = "none";
 
   document.getElementById("verify").checked = false;
 
-  document.getElementById("searchModalButton").style.display = "block";
-
-});
-
-/* button for displaying the search box */
-let searchModalButton = document.getElementById("searchModalButton");
-
-searchModalButton.addEventListener("click", async () => {
-	document.getElementById("searchModal").style.display = "block";
-  document.getElementById("searchModalButton").style.display = "none";
 });
 
 /* modal design for the verification box */
@@ -116,12 +105,10 @@ confirmSong.addEventListener("click", async () => {
   document.getElementById("songChoiceBox1").style.display = "none";
   document.getElementById("songChoiceBox2").style.display = "none";
   document.getElementById("songChoiceBox3").style.display = "none";
-  document.getElementById("searchModal").style.display = "none";
   document.getElementById("termDisplay").innerHTML = "";
   document.getElementById("searchWord").value = "";
   document.getElementById("verify").checked = false;
   addSongToPlaylist(id, "tea");
-  document.getElementById("searchModalButton").style.display = "block";
 });
 
 verifyCancelButton.addEventListener("click", async () => {

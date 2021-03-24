@@ -6,7 +6,13 @@
 .grid-item-1 {
   padding: 20%;
   text-align: center;
-  
+}
+
+.squigga {
+  background-color: rgb(255, 255, 255);
+  padding: 10%;
+  border-radius: 25px;
+  border: 2px solid #ffb78d;
 }
 
 #musicControls {
@@ -55,36 +61,81 @@ li a {
   position: relative;
 }
 
-/* Pop-up to search for songs */
-#searchModal {
-  z-index: 0;
-  display: none;
-  font-family: 'Windows 95';
-}
-#searchModalButton {
-  font-family: 'Windows 95';
-}
+
 #searchWord {
   width: 90%;
+  border-radius: 10px;
+  border-color: #ffb78d;
+  background-color: #dfdfdfdf;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 2%;
+  font-family: 'Rubik', sans-serif;
 }
-#submitButton {
-  width: 60%;
-  font-family: 'Windows 95';
+
+#searchWord:focus {
+  outline: none;
+  box-shadow: none;
 }
-#cancelButton {
-  width: 50%;
-  font-family: 'Windows 95';
+
+
+.button1 {
+  width: 40%;
+  font-family: 'Rubik', sans-serif;
+  border-radius: 10px;
+  border-color: #ffb78d;
+  background-color: #dfdfdfdf;
+  padding: 2%;
+}
+
+.button1:hover {
+  background-color: #ffebdbdf;
+}
+
+.button1:focus {
+  outline: none;
+  box-shadow: none;
 }
 
 #songChoiceBox1 {
   display: none;
+  width: 60%;
+  background-color: rgb(255, 255, 255);
+  padding: 8%;
+  border-radius: 25px;
+  border: 2px solid #ffb78d;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 #songChoiceBox2 {
   display: none;
+  width: 60%;
+  background-color: rgb(255, 255, 255);
+  padding: 8%;
+  border-radius: 25px;
+  border: 2px solid #ffb78d;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 #songChoiceBox3 {
   display: none;
+  width: 60%;
+  background-color: rgb(255, 255, 255);
+  padding: 8%;
+  border-radius: 25px;
+  border: 2px solid #ffb78d;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
 }
+
+#songChoiceBox1:hover {
+  background-color: #ffebdbdf;
+}
+
 
 /* Verification Pop-up */
 #verifyModal {
@@ -104,8 +155,13 @@ li a {
 }
 
 #modalContent {
-  width: 50%;
+  width: 45%;
+  height: 15%;
   margin: auto;
+  background-color: rgb(255, 255, 255);
+  padding: 3%;
+  border-radius: 25px;
+  border: 2px solid #ffb78d;
 }
 
 #confirmSongPadding {
@@ -134,3 +190,14 @@ body {
   transform: translate(-50%, -50%);
 }
 
+
+
+.pulse:hover, 
+.pulse:focus {
+  animation: pulse 1s;
+  box-shadow: 0 0 0 2em rgba(#fff,0);
+}
+
+@keyframes pulse {
+  0% { box-shadow: 0 0 0 0 var(--hover); }
+}

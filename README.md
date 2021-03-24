@@ -1,6 +1,20 @@
 # Classroom-Music
 The Classroom Music web server is made to allow a teacher to play a playlist of songs as chosen by their students. As it is right now, has three different views: the sign-in, teacher, and student views. Each one serves a different function in playing music in the classroom.
 
+## Usage:
+If you're simply interested in visiting the website, then you can visit https://classroom-music.thedoge.repl.co/.
+
+## Development
+If you want to run the server on your computer locally, here are the steps:
+### Installation:
+1. Pull the code from github.
+2. Install node.js and npm. You can download it here: https://www.npmjs.com/get-npm.
+3. In the VScode terminal, enter the command `npm install`. This will install all the packages you need.
+### Running the Program:
+1. In the VScode terminal, run the command `node index.js`.
+2. Open a new tab in your favorite browser and go to the url `localhost:3000`. (Note: VScode provides the option to open a new window in the bottom-left. I recommend **not** using this option.)
+3. To stop running the server, press ctrl+C (not command+C if you’re on mac!).
+
 ## Sign-In
 The sign-in is simple -- its singular purpose is to guide students and teachers to their respective views.
 

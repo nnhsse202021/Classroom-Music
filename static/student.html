@@ -5,6 +5,7 @@
 	<script src="https://apis.google.com/js/platform.js" async defer></script>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Lora&family=Rubik&display=swap" rel="stylesheet">
 </head>
 
 <body>
@@ -65,33 +66,25 @@
 
   <div class="grid-container-1">
 
-    <div class="grid-item-1">
+    <!-- <div class="grid-item-1">
       <button id = "searchModalButton" class="btn mr-2 mb-2 btn-primary" type="button" >Search for Songs</button>
-    </div>
+    </div> -->
+
+    <div class="grid-item-1"></div>
 
     <div class="grid-item-1">
-      <div class = "modal" id = "searchModal">
-        <div class = "modal-content">
-          <div class="card card-tertiary">
-            <div class="card-header">
-              <span class="icon icon-xs w95-folder"></span>
-							<span class="ml-4">Classroom Music</span>
-						</div>
-						<div class="card-body">
-							<input class = "card-text" type = "text" id = "searchWord">
-							<p id="termDisplay" class="card-text"></p>
-							<div class="d-flex mt-3">
-								<button id="submitButton" class="btn btn-sm mr-2 btn-primary border-dark" type="button">
-									<span class="btn-text">Submit</span>
-								</button>
-								<button id="cancelButton" class="btn btn-sm btn-primary" type="button">
-									<span class="btn-text">Cancel</span>
-								</button>
-							</div>
-						</div>
-					</div>
+      <!-- <div class = "modal" id = "searchModal"> -->
+        <div class = "squigga">
+          <input class = "card-text" type = "text" id = "searchWord" placeholder = "squigga">
+          <p id="termDisplay" class="card-text"></p>
+          <button class="button1" id="submitButton" type="button">
+            <span>Submit</span>
+          </button>
+          <button class="button1" id="cancelButton" type="button">
+            <span>Cancel</span>
+          </button>
 				</div>
-			</div>
+			<!-- </div> -->
 		</div>
 
     <div class="grid-item-1"></div>
@@ -119,8 +112,8 @@
 				</div>
 				<div class="card-body">
 					<p id = "songChoice2" class="card-text"></p>
-					<div class="d-flex justify-content-end mt-3">
-						<button class="btn btn-sm mr-2 btn-primary border-dark" type="button" id = "optionButton2">
+					<div>
+						<button type="button" id = "optionButton2">
 							<span class="btn-text">Select</span>
 						</button>
 					</div>
