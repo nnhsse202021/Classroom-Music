@@ -146,7 +146,7 @@ confirmSong.addEventListener("click", async () => {
   document.getElementById("termDisplay").innerHTML = "";
   document.getElementById("searchWord").value = "";
   document.getElementById("verify").checked = false;
-  addSongToPlaylist(id, "tea");
+  addSongToPlaylist(id, getCurrentCode());
   document.getElementById("searchModalButton").style.display = "block";
 });
 

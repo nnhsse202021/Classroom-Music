@@ -27,7 +27,7 @@ async function deletePlaylist(playlistID) {
 var currentSongIndex = 0;
 document.getElementById("loadButton").addEventListener("click", async () => {
   if (player) {
-    var playlist = await getPlaylist("tea");
+    var playlist = await getPlaylist(getCurrentCode());
     player.loadVideoById(playlist.split(",")[currentSongIndex]);
     currentSongIndex++;
   }
@@ -50,7 +50,7 @@ document.getElementById("playButton").addEventListener("click", () => {
 
 document.getElementById("showPlaylist").addEventListener("click", async () => {
   document.getElementById("playlist").innerHTML = '';
-  var playlist = await getPlaylist("tea");
+  var playlist = await getPlaylist(getCurrentCode());
   if(playlist === null) {
     return;
   }
@@ -69,7 +69,7 @@ document.getElementById("showPlaylist").addEventListener("click", async () => {
 
 
 document.getElementById("clearPlaylist").addEventListener("click", async () => {
-  deletePlaylist("tea");
+  deletePlaylist(getCurrentCode());
   window.alert("Playlist has been cleared!");
 })
 
