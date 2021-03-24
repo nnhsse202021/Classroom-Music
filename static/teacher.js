@@ -48,11 +48,6 @@ document.getElementById("playButton").addEventListener("click", () => {
 });
 
 
-document.getElementById("pauseButton").addEventListener("click", () => {
-  player.pauseVideo();
-});
-
-
 document.getElementById("showPlaylist").addEventListener("click", async () => {
   document.getElementById("playlist").innerHTML = '';
   var playlist = await getPlaylist("tea");
