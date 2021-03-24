@@ -1,18 +1,30 @@
 .grid-container-1 {
   display: grid;
-  grid-template-columns: 33.333333% 33.333333% 33.333333%;
+  grid-template-columns: 25% 50% 25%;
   padding: 2%;
 }
 .grid-item-1 {
+  padding: 10%;
+  text-align: center;
+}
+
+.grid-container-2 {
+  display: grid;
+  grid-template-columns: 33.333333333% 33.333333333% 33.333333333%;
+  padding: 2%;
+}
+
+.grid-item-2 {
   padding: 20%;
   text-align: center;
 }
 
 .squigga {
   background-color: rgb(255, 255, 255);
-  padding: 10%;
+  padding: 7%;
   border-radius: 25px;
-  border: 2px solid #ffb78d;
+  border: 2px solid;
+  border-color: #49b8da;
 }
 
 #musicControls {
@@ -65,18 +77,25 @@ li a {
 #searchWord {
   width: 90%;
   border-radius: 10px;
-  border-color: #ffb78d;
+  /*border-color: #ffb78d;*/
+  border-color: white;
   background-color: #dfdfdfdf;
   border-top: none;
   border-left: none;
   border-right: none;
   padding: 2%;
   font-family: 'Rubik', sans-serif;
+  transition: border-color 0.5s;
 }
 
 #searchWord:focus {
   outline: none;
   box-shadow: none;
+  border-color: #49b8da;
+}
+
+#searchWord:hover {
+  border-color: #49b8da;
 }
 
 
@@ -84,13 +103,14 @@ li a {
   width: 40%;
   font-family: 'Rubik', sans-serif;
   border-radius: 10px;
-  border-color: #ffb78d;
+  /*border-color: #ffb78d;*/
+  border-color: #49b8da;
   background-color: #dfdfdfdf;
   padding: 2%;
 }
 
 .button1:hover {
-  background-color: #ffebdbdf;
+  background-color: #cfcfcf;
 }
 
 .button1:focus {
@@ -100,7 +120,7 @@ li a {
 
 #songChoiceBox1 {
   display: none;
-  width: 60%;
+  width: 50%;
   background-color: rgb(255, 255, 255);
   padding: 8%;
   border-radius: 25px;
@@ -108,10 +128,11 @@ li a {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  transition: transform .2s;
 }
 #songChoiceBox2 {
   display: none;
-  width: 60%;
+  width: 50%;
   background-color: rgb(255, 255, 255);
   padding: 8%;
   border-radius: 25px;
@@ -119,10 +140,11 @@ li a {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  transition: transform .2s;
 }
 #songChoiceBox3 {
   display: none;
-  width: 60%;
+  width: 50%;
   background-color: rgb(255, 255, 255);
   padding: 8%;
   border-radius: 25px;
@@ -130,10 +152,22 @@ li a {
   text-align: center;
   margin-left: auto;
   margin-right: auto;
+  transition: transform .2s;
 }
 
 #songChoiceBox1:hover {
   background-color: #ffebdbdf;
+  transform: scale(1.07);
+}
+
+#songChoiceBox2:hover {
+  background-color: #ffebdbdf;
+  transform: scale(1.07);
+}
+
+#songChoiceBox3:hover {
+  background-color: #ffebdbdf;
+  transform: scale(1.07);
 }
 
 
@@ -161,11 +195,23 @@ li a {
   background-color: rgb(255, 255, 255);
   padding: 3%;
   border-radius: 25px;
-  border: 2px solid #ffb78d;
+  border: 2px solid #49b8da;
+}
+
+.divider {
+  width:6%;
+  height:auto;
+  display:inline-block;
 }
 
 #confirmSongPadding {
-  padding: 4%;
+  padding: 2%;
+}
+
+#store_name {
+  width: 0%;
+  height: 0%;
+  display: none;
 }
 
 /*

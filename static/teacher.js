@@ -29,7 +29,7 @@ document.getElementById("loadButton").addEventListener("click", async () => {
 	if (player) {
 		var playlist = await getPlaylist("tea");
 		player.loadVideoById(playlist.split(",")[currentSongIndex]);
-		currentSongIndex++;
+		currentSongIndex+=2;
 	}
 });
 
@@ -52,13 +52,15 @@ document.getElementById("showPlaylist").addEventListener("click", async () => {
 	}
 	var songs = playlist.split(',');
 	console.log(songs);
-	for(i = 0; i < songs.length; i++) {
+  // song id
+	for(i = 0; i < songs.length; i+=2) {
+    var stuName = songs[i+1];
 		await fetch(`/videoidtotitle?id=${encodeURI(songs[i])}`)
 			.then(response => response.json())
 			.then(data => {
 				var newItem = document.createElement('li');
 				newItem.innerHTML = data.title;
-				document.getElementById('playlist').appendChild(newItem);
+				document.getElementById('playlist').appendChild(newItem).append(" ----------- Submitted by: " + stuName);
 			});
 	}
 });

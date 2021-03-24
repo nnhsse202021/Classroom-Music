@@ -27,6 +27,7 @@
 			console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
 			console.log('Name: ' + profile.getName());
 			console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+      document.getElementById("store_name").innerHTML = profile.getName();
 		}
 
     function signOut() {
@@ -44,7 +45,6 @@
     <div id = "modalContent">
       <div class="card card-tertiary">
         <div class="card-header">
-          <span class="icon icon-xs w95-folder"></span>
 					<span class="ml-4">ERROR: Please Confirm</span>
         </div>
         <class="card-body">
@@ -57,8 +57,10 @@
             </label>
           </div>
         <div id = "confirmSongPadding">
-          <button id = "confirmSong" class="btn mr-2 mb-2 btn-primary" type="button" disabled>Confirm</button>
-          <button id = "verifyCancelButton" class="btn mr-2 mb-2 btn-primary"  type="button">Cancel</button>
+          <button class = "button1" id = "confirmSong" type="button" disabled>Confirm</button>
+            <div id = "store_name"></div>
+            <div class="divider"></div>
+          <button class = "button1" id = "verifyCancelButton" type="button">Cancel</button>
         </div>
       </div>
     </div>
@@ -80,6 +82,7 @@
           <button class="button1" id="submitButton" type="button">
             <span>Submit</span>
           </button>
+          <div class="divider"></div>
           <button class="button1" id="cancelButton" type="button">
             <span>Cancel</span>
           </button>
@@ -88,7 +91,8 @@
 		</div>
 
     <div class="grid-item-1"></div>
-
+  </div>
+  <div class = "grid-container-2">
     <div id = "songChoiceBox1" class="grid-item-1">
 			<div class="card">
 				<div class="card-header">
@@ -96,11 +100,6 @@
 				</div>
 				<div class="card-body">
 					<p id = "songChoice1" class="card-text"></p>
-					<div class="d-flex justify-content-end mt-3">
-						<button class="btn btn-sm mr-2 btn-primary border-dark" type="button" id = "optionButton1">
-							<span class="btn-text">Select</span>
-						</button>
-					</div>
 				</div>
       </div>
     </div>
@@ -112,11 +111,6 @@
 				</div>
 				<div class="card-body">
 					<p id = "songChoice2" class="card-text"></p>
-					<div>
-						<button type="button" id = "optionButton2">
-							<span class="btn-text">Select</span>
-						</button>
-					</div>
 				</div>
       </div>
     </div>
@@ -126,14 +120,7 @@
 				<div class="card-header">
 					Song Option 3
 				</div>
-				<div class="card-body">
-					<p id = "songChoice3" class="card-text"></p>
-					<div class="d-flex justify-content-end mt-3">
-						<button class="btn btn-sm mr-2 btn-primary border-dark" type="button" id = "optionButton3">
-							<span class="btn-text">Select</span>
-						</button>
-					</div>
-				</div>
+        <p id = "songChoice3" class="card-text"></p>
       </div>
     </div>
 	
