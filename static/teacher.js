@@ -72,3 +72,13 @@ document.getElementById("clearPlaylist").addEventListener("click", async () => {
   deletePlaylist("tea");
   window.alert("Playlist has been cleared!");
 })
+
+
+document.getElementById("generateCode").addEventListener("click", () => {
+  var email = profile.getEmail();
+  fetch(`/generatecode?email=${encodeURI(email)}`)
+    .then(response => response.json())
+    .then(data => {
+      document.getElementById("displayCode").innerHTML = "Your code is: " + data.code;
+    });
+})

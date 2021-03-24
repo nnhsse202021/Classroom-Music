@@ -120,6 +120,15 @@ app.get("/deleteplaylist", async (req, res) => {
 });
 
 
+app.get("/generatecode", (req, res) => {
+  let email = req.query.email;
+  email = email.substring(0, 4);
+  res.send(JSON.stringify({
+    code: email
+  }));
+});
+
+
 const parseurl = require('parseurl')
 const session = require('express-session')
 // app.set('trust proxy', 1) // trust first proxy
