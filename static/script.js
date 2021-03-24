@@ -1,4 +1,30 @@
 
+
+var studentCode = ""
+
+document.getElementById("submitCode").addEventListener("click", () => {
+  studentCode = document.getElementById("codeEntry").value;
+  getCurrentCode();
+})
+
+
+function getCurrentCode() {
+  if (window.location.pathname.includes("teacher")) {
+    var email = profile.getEmail();
+    fetch(`/generatecode?email=${encodeURI(email)}`)
+      .then(response => response.json())
+      .then(data => {
+        return data.code;
+      });
+  } else {
+    console.log(studentCode);
+    document.getElementById("displayCode").innerHTML = "Your code is: " + studentCode;
+    return studentCode;
+  }
+}
+
+
+
 let submitButton = document.getElementById("submitButton");
 
 submitButton.addEventListener("click", async () => {
