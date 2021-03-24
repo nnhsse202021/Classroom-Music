@@ -23,11 +23,22 @@ async function deletePlaylist(playlistID) {
   return playlist;
 }
 
+// returns the current class code for the teacher
+async function getCurrentCode() {
+	var email = profile.getEmail();
+	var code;
+	await fetch(`/generatecode?email=${encodeURI(email)}`)
+		.then(response => response.json())
+		.then(data => {
+			code = data.code;
+		});
+	return code;
+}
 
 var currentSongIndex = 0;
 document.getElementById("loadButton").addEventListener("click", async () => {
   if (player) {
-    var playlist = await getPlaylist(getCurrentCode());
+    var playlist = await getPlaylist(await getCurrentCode());
     player.loadVideoById(playlist.split(",")[currentSongIndex]);
     currentSongIndex++;
   }
@@ -50,7 +61,7 @@ document.getElementById("playButton").addEventListener("click", () => {
 
 document.getElementById("showPlaylist").addEventListener("click", async () => {
   document.getElementById("playlist").innerHTML = '';
-  var playlist = await getPlaylist(getCurrentCode());
+  var playlist = await getPlaylist(await getCurrentCode());
   if(playlist === null) {
     return;
   }
@@ -69,16 +80,12 @@ document.getElementById("showPlaylist").addEventListener("click", async () => {
 
 
 document.getElementById("clearPlaylist").addEventListener("click", async () => {
-  deletePlaylist(getCurrentCode());
+  deletePlaylist(await getCurrentCode());
   window.alert("Playlist has been cleared!");
 })
 
 
-document.getElementById("generateCode").addEventListener("click", () => {
+document.getElementById("generateCode").addEventListener("click", async () => {
   var email = profile.getEmail();
-  fetch(`/generatecode?email=${encodeURI(email)}`)
-    .then(response => response.json())
-    .then(data => {
-      document.getElementById("displayCode").innerHTML = "Your code is: " + data.code;
-    });
+	document.getElementById("displayCode").innerHTML = "Your code is: " + await getCurrentCode();
 })

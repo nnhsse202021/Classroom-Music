@@ -40,11 +40,25 @@
       <span class="ml-4">Classroom</span>
     </div>
     <div class="card-body">
-	  <input class="card-text" type="text" id="codeEntry"></input>
-	  <button class="btn btn-sm mr-2 btn-primary border-dark" id="submitCode">Enter code</button>
-	  <p class="card-text" id="displayCode">Hello</p>
-	</div>
+			<input class="card-text" type="text" id="codeEntry"></input>
+			<button class="btn btn-sm mr-2 btn-primary border-dark" id="submitCode">Enter code</button>
+			<p class="card-text" id="displayCode">Hello</p>
+		</div>
   </div>
+
+	<script>
+		var studentCode = ""
+
+		document.getElementById("submitCode").addEventListener("click", () => {
+			studentCode = document.getElementById("codeEntry").value;
+			getCurrentCode();
+		})
+
+		async function getCurrentCode() {
+			document.getElementById("displayCode").innerHTML = "Your code is: " + studentCode;
+			return studentCode;
+		}
+	</script>
 
   <div class = "modal" id = "verifyModal">
     <div id = "modalContent">
