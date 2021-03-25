@@ -6,7 +6,7 @@ async function getPlaylist(playlistID) {
     .then(data => {
       console.log("Value: " + data.playlist);
       playlist = data.playlist;
-  });
+    });
   return playlist;
 }
 
@@ -19,20 +19,36 @@ async function deletePlaylist(playlistID) {
     .then(data => {
       console.log("Deleted playlist: " + data.playlist);
       playlist = data.playlist;
-  });
+    });
   return playlist;
 }
 
 // returns the current class code for the teacher
 async function getCurrentCode() {
-	var email = profile.getEmail();
-	var code;
-	await fetch(`/generatecode?email=${encodeURI(email)}`)
-		.then(response => response.json())
-		.then(data => {
-			code = data.code;
-		});
-	return code;
+  var email = profile.getEmail();
+  var code;
+  await fetch(`/generatecode?email=${encodeURI(email)}`)
+    .then(response => response.json())
+    .then(data => {
+      code = data.code;
+    });
+  return code;
+}
+
+async function getClassList(code) {
+  var classroom;
+  await fetch(`/getclass?code=${encodeURI(code)}`)
+    .then(response => response.json())
+    .then(data => {
+      classroom = data.classroom;
+      for (student in classroom) {
+        let newItem = document.createElement('li');
+        newItem.innerHTML = student;
+        document.getElementById('class-list').appendChild(newItem);
+      }
+    })
+
+  return classroom;
 }
 
 var currentSongIndex = 0;
@@ -62,12 +78,12 @@ document.getElementById("playButton").addEventListener("click", () => {
 document.getElementById("showPlaylist").addEventListener("click", async () => {
   document.getElementById("playlist").innerHTML = '';
   var playlist = await getPlaylist(await getCurrentCode());
-  if(playlist === null) {
+  if (playlist === null) {
     return;
   }
   var songs = playlist.split(',');
   console.log(songs);
-  for(i = 0; i < songs.length; i++) {
+  for (i = 0; i < songs.length; i++) {
     await fetch(`/videoidtotitle?id=${encodeURI(songs[i])}`)
       .then(response => response.json())
       .then(data => {
@@ -87,5 +103,9 @@ document.getElementById("clearPlaylist").addEventListener("click", async () => {
 
 document.getElementById("generateCode").addEventListener("click", async () => {
   var email = profile.getEmail();
-	document.getElementById("displayCode").innerHTML = "Your code is: " + await getCurrentCode();
+  document.getElementById("displayCode").innerHTML = "Your code is: " + await getCurrentCode();
+})
+
+document.getElementById("refreshClass").addEventListener("click", async () => {
+  getClassList(await getCurrentCode());
 })

@@ -51,13 +51,19 @@
 
 		document.getElementById("submitCode").addEventListener("click", () => {
 			studentCode = document.getElementById("codeEntry").value;
+			document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
 			getCurrentCode();
 		})
 
 		// function that returns the student's current class code
 		async function getCurrentCode() {
-			document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
 			return studentCode;
+		}
+
+		async function joinClass() {
+			let code = await getCurrentCode();
+			let email = profile.getEmail();
+			await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}`);
 		}
 	</script>
 
