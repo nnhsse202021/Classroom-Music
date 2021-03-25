@@ -32,8 +32,6 @@
     }
 	</script>
 
-  <p id="response"></p>
-
   <div class="card card-tertiary" id="classcode">
     <div class="card-header">
       <span class="icon icon-xs w95-folder"></span>
@@ -47,22 +45,20 @@
   </div>
 
 	<script>
-		var studentCode = "" // Student's current class code
+		var studentCode = ""; // Student's current class code
 
 		document.getElementById("submitCode").addEventListener("click", () => {
 			studentCode = document.getElementById("codeEntry").value;
 			document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
-			getCurrentCode();
-		})
+			joinClass(studentCode, profile.getEmail());
+		});
 
 		// function that returns the student's current class code
 		async function getCurrentCode() {
 			return studentCode;
 		}
 
-		async function joinClass() {
-			let code = await getCurrentCode();
-			let email = profile.getEmail();
+		async function joinClass(code, email) {
 			await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}`);
 		}
 	</script>

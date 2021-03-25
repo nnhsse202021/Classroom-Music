@@ -149,7 +149,7 @@ app.get("/generatecode", (req, res) => {
 
 
 app.get("/joinclass", async (req, res) => {
-  let code = req.query.code;
+  let code = req.query.code + "class";
   let email = req.query.email;
 
   let codeList = await db.list();
@@ -167,9 +167,8 @@ app.get("/joinclass", async (req, res) => {
 
 
 app.get("/getclass", async (req, res) => {
-  let code = req.query.code;
+  let code = req.query.code + "class";
   let classroom = await db.get(code);
-
   res.send(JSON.stringify({
     classroom: classroom
   }))

@@ -36,18 +36,12 @@ async function getCurrentCode() {
 }
 
 async function getClassList(code) {
-  var classroom;
+	var classroom;
   await fetch(`/getclass?code=${encodeURI(code)}`)
     .then(response => response.json())
     .then(data => {
       classroom = data.classroom;
-      for (student in classroom) {
-        let newItem = document.createElement('li');
-        newItem.innerHTML = student;
-        document.getElementById('class-list').appendChild(newItem);
-      }
     })
-
   return classroom;
 }
 
@@ -63,15 +57,15 @@ document.getElementById("loadButton").addEventListener("click", async () => {
 
 var isPlaying = false;
 document.getElementById("playButton").addEventListener("click", () => {
-  if (isPlaying == true) {	// Execute this if a video is currently playing
+  if (isPlaying == true) { // Execute this if a video is currently playing
     player.pauseVideo();
-    isPlaying = false;
     document.getElementById("playButtonText").innerHTML = "Play";
-  } else { 					// Execute this if a video is currently paused
+  } else { // Execute this if a video is currently paused
     player.playVideo();
-    isPlaying = true;
     document.getElementById("playButtonText").innerHTML = "Pause";
   }
+
+	isPlaying = !isPlaying;
 });
 
 
@@ -107,5 +101,12 @@ document.getElementById("generateCode").addEventListener("click", async () => {
 })
 
 document.getElementById("refreshClass").addEventListener("click", async () => {
-  getClassList(await getCurrentCode());
+  let classroom = await getClassList(await getCurrentCode());
+	document.getElementById('class-list').innerHTML = "";
+
+	for (let i = 0; i < classroom.length; i++) {
+		let newItem = document.createElement('li');
+		newItem.innerHTML = classroom[i];
+		document.getElementById('class-list').appendChild(newItem);
+	}
 })
