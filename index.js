@@ -124,7 +124,7 @@ app.get("/deleteplaylist", async (req, res) => {
 // req should take in an email.
 app.get("/generatecode", (req, res) => {
   let email = req.query.email;
-  
+
   // find the hash function of the email given
   // (same as java implementation for string hash function)
   let hash = 0;
@@ -134,7 +134,7 @@ app.get("/generatecode", (req, res) => {
     hash = hash & hash; // Convert to 32bit integer
   }
   if (hash < 0) hash = -hash; // convert negative hashs to positive values
-  
+
   // convert the hash function to a 6 or 7 letter code
   let code = "";
   while (hash > 1) {
@@ -147,6 +147,32 @@ app.get("/generatecode", (req, res) => {
   }));
 });
 
+
+app.get("/joinclass", async (req, res) => {
+  let code = req.query.code + "class";
+  let email = req.query.email;
+
+  let codeList = await db.list();
+  var classroom = [];
+
+  if (codeList.indexOf(code) > -1) {
+    classroom = await db.get(code);
+  }
+
+  classroom.push(email);
+
+  db.set(code, classroom);
+})
+
+
+
+app.get("/getclass", async (req, res) => {
+  let code = req.query.code + "class";
+  let classroom = await db.get(code);
+  res.send(JSON.stringify({
+    classroom: classroom
+  }))
+});
 
 const parseurl = require('parseurl')
 const session = require('express-session')

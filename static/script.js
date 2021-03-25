@@ -6,7 +6,6 @@ submitButton.addEventListener("click", async () => {
   document.getElementById("termDisplay").innerHTML = "Search Term: " + searchTerm;
 
   await fetch(`/ytapi?term=${encodeURI(searchTerm)}`)
-		.then(console.log(response))
     .then(response => response.json())
     .then(data => {
       console.log(data.videoId1 + "   " + data.videoTitle1);
@@ -84,7 +83,6 @@ var id = null;
 optionButton1.addEventListener("click", async () => {
 	verifyModal.style.display = "block";
 	id = document.getElementById("songChoice1").getAttribute("videoid");
-	// await fetch(`/addtempsong?id=${encodeURI(id)}`)
 });
 optionButton2.addEventListener("click", async () => {
 	verifyModal.style.display = "block";
