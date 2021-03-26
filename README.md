@@ -7,7 +7,7 @@ If you're simply interested in visiting the website, then you can visit https://
 ## Development
 If you want to run the server on your computer locally, here are the steps:
 ### Installation:
-1. Pull the code from github.
+1. Pull the code from Github.
 2. Install node.js and npm. You can download it here: https://www.npmjs.com/get-npm.
 3. In the VScode terminal, enter the command `npm install`. This will install all the packages you need.
 ### Running the Program:
