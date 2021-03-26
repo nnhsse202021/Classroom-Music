@@ -1,44 +1,44 @@
 <head>
-	<meta name="google-signin-client_id" content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
-	<link rel="stylesheet" type="text/css" href="/static/style.css" />
-	<script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
+  <link rel="stylesheet" type="text/css" href="/static/style.css" />
+  <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Lora&family=Rubik&display=swap" rel="stylesheet">
 </head>
 
 <body>
-	<script src="/static/sessions.js"></script>
-	<script>checkLoginStatus()</script>
+  <script src="/static/sessions.js"></script>
+  <script>checkLoginStatus()</script>
 
   <ul>
     <li><a>Classroom Music</a></li>
   </ul>
 
-	<div class="g-signin2" data-onsuccess="onSignIn"></div>
-	<button id = "signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign Out</button>
+  <div class="g-signin2" data-onsuccess="onSignIn"></div>
+  <button id = "signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign Out</button>
 
-	<script>
-		var profile;
-		function onSignIn(googleUser) {
-			setLogin();
+  <script>
+    var profile;
+    function onSignIn(googleUser) {
+      setLogin();
 
-			profile = googleUser.getBasicProfile();
-			console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-			console.log('Name: ' + profile.getName());
-			console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+      profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
       document.getElementById("store_name").innerHTML = profile.getName();
-		}
+    }
 
     function signOut() {
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(() => {
-				setLogout();
+        setLogout();
         window.location.href = window.location.origin + "/static/index.html";
       });
     }
-	</script>
+  </script>
 
   <div class="card card-tertiary" id="classcode">
     <div class="card-header">
@@ -46,36 +46,36 @@
       <span class="ml-4">Classroom</span>
     </div>
     <div class="card-body">
-			<input class="card-text" type="text" id="codeEntry"></input>
-			<button class="btn btn-sm mr-2 btn-primary border-dark" id="submitCode">Enter code</button>
-			<p class="card-text" id="displayCode"></p>
-		</div>
+      <input class="card-text" type="text" id="codeEntry"></input>
+      <button class="btn btn-sm mr-2 btn-primary border-dark" id="submitCode">Enter code</button>
+      <p class="card-text" id="displayCode"></p>
+    </div>
   </div>
 
-	<script>
-		var studentCode = ""; // Student's current class code
+  <script>
+    var studentCode = ""; // Student's current class code
 
-		document.getElementById("submitCode").addEventListener("click", () => {
-			studentCode = document.getElementById("codeEntry").value;
-			document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
-			joinClass(studentCode, profile.getEmail());
-		});
+    document.getElementById("submitCode").addEventListener("click", () => {
+      studentCode = document.getElementById("codeEntry").value;
+      document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
+      joinClass(studentCode, profile.getEmail());
+    });
 
-		// function that returns the student's current class code
-		async function getCurrentCode() {
-			return studentCode;
-		}
+    // function that returns the student's current class code
+    async function getCurrentCode() {
+      return studentCode;
+    }
 
-		async function joinClass(code, email) {
-			await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}`);
-		}
-	</script>
+    async function joinClass(code, email) {
+      await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}`);
+    }
+  </script>
 
   <div class = "modal" id = "verifyModal">
     <div id = "modalContent">
       <div class="card card-tertiary">
         <div class="card-header">
-					<span class="ml-4">ERROR: Please Confirm</span>
+          <span class="ml-4">ERROR: Please Confirm</span>
         </div>
         <class="card-body">
           <div class="form-check">
@@ -116,48 +116,48 @@
           <button class="button1" id="cancelButton" type="button">
             <span>Cancel</span>
           </button>
-				</div>
-			<!-- </div> -->
-		</div>
+        </div>
+      <!-- </div> -->
+    </div>
 
     <div class="grid-item-1"></div>
   </div>
   <div class = "grid-container-2">
     <div id = "songChoiceBox1" class="grid-item-1">
-			<div class="card">
-				<div class="card-header">
-					Song Option 1
-				</div>
-				<div class="card-body">
-					<p id = "songChoice1" class="card-text"></p>
-				</div>
+      <div class="card">
+        <div class="card-header">
+          Song Option 1
+        </div>
+        <div class="card-body">
+          <p id = "songChoice1" class="card-text"></p>
+        </div>
       </div>
     </div>
 
     <div id = "songChoiceBox2" class="grid-item-1">
-			<div class="card">
-				<div class="card-header">
-					Song Option 2
-				</div>
-				<div class="card-body">
-					<p id = "songChoice2" class="card-text"></p>
-				</div>
+      <div class="card">
+        <div class="card-header">
+          Song Option 2
+        </div>
+        <div class="card-body">
+          <p id = "songChoice2" class="card-text"></p>
+        </div>
       </div>
     </div>
 
     <div id = "songChoiceBox3" class="grid-item-1">
-			<div class="card">
-				<div class="card-header">
-					Song Option 3
-				</div>
+      <div class="card">
+        <div class="card-header">
+          Song Option 3
+        </div>
         <p id = "songChoice3" class="card-text"></p>
       </div>
     </div>
-	
+  
   </div>
 
 
-	<script src="https://apis.google.com/js/api.js"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
   <script src="/static/script.js"></script>
 
 

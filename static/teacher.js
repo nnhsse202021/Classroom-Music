@@ -36,7 +36,7 @@ async function getCurrentCode() {
 }
 
 async function getClassList(code) {
-	var classroom;
+  var classroom;
   await fetch(`/getclass?code=${encodeURI(code)}`)
     .then(response => response.json())
     .then(data => {
@@ -47,11 +47,11 @@ async function getClassList(code) {
 
 var currentSongIndex = 0;
 document.getElementById("loadButton").addEventListener("click", async () => {
-	if (player) {
-		var playlist = await getPlaylist(await getCurrentCode());
-		player.loadVideoById(playlist.split(",")[currentSongIndex]);
-		currentSongIndex+=2;
-	}
+  if (player) {
+    var playlist = await getPlaylist(await getCurrentCode());
+    player.loadVideoById(playlist.split(",")[currentSongIndex]);
+    currentSongIndex+=2;
+  }
 });
 
 
@@ -65,29 +65,29 @@ document.getElementById("playButton").addEventListener("click", () => {
     document.getElementById("playButtonText").innerHTML = "Pause";
   }
 
-	isPlaying = !isPlaying;
+  isPlaying = !isPlaying;
 });
 
 
 document.getElementById("showPlaylist").addEventListener("click", async () => {
-	document.getElementById("playlist").innerHTML = '';
-	var playlist = await getPlaylist(await getCurrentCode());
-	if(playlist === null) {
-		return;
-	}
-	var songs = playlist.split(',');
-	console.log(songs);
+  document.getElementById("playlist").innerHTML = '';
+  var playlist = await getPlaylist(await getCurrentCode());
+  if(playlist === null) {
+    return;
+  }
+  var songs = playlist.split(',');
+  console.log(songs);
   // song id
-	for(i = 0; i < songs.length; i+=2) {
+  for(i = 0; i < songs.length; i+=2) {
     var stuName = songs[i+1];
-		await fetch(`/videoidtotitle?id=${encodeURI(songs[i])}`)
-			.then(response => response.json())
-			.then(data => {
-				var newItem = document.createElement('li');
-				newItem.innerHTML = data.title;
-				document.getElementById('playlist').appendChild(newItem).append(" ----------- Submitted by: " + stuName);
-			});
-	}
+    await fetch(`/videoidtotitle?id=${encodeURI(songs[i])}`)
+      .then(response => response.json())
+      .then(data => {
+        var newItem = document.createElement('li');
+        newItem.innerHTML = data.title;
+        document.getElementById('playlist').appendChild(newItem).append(" ----------- Submitted by: " + stuName);
+      });
+  }
 });
 
 
@@ -104,11 +104,11 @@ document.getElementById("generateCode").addEventListener("click", async () => {
 
 document.getElementById("refreshClass").addEventListener("click", async () => {
   let classroom = await getClassList(await getCurrentCode());
-	document.getElementById('class-list').innerHTML = "";
+  document.getElementById('class-list').innerHTML = "";
 
-	for (let i = 0; i < classroom.length; i++) {
-		let newItem = document.createElement('li');
-		newItem.innerHTML = classroom[i];
-		document.getElementById('class-list').appendChild(newItem);
-	}
+  for (let i = 0; i < classroom.length; i++) {
+    let newItem = document.createElement('li');
+    newItem.innerHTML = classroom[i];
+    document.getElementById('class-list').appendChild(newItem);
+  }
 })

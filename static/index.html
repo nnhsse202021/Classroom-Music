@@ -1,37 +1,37 @@
 
 <head>
-	<meta name="google-signin-client_id" content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
-	<link rel="stylesheet" type="text/css" href="/static/style.css" />
-	<script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
-	<script src="https://apis.google.com/js/api.js"></script>
-	<script src="https://apis.google.com/js/platform.js" async defer></script>
+  <meta name="google-signin-client_id" content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
+  <link rel="stylesheet" type="text/css" href="/static/style.css" />
+  <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
+  <script src="https://apis.google.com/js/api.js"></script>
+  <script src="https://apis.google.com/js/platform.js" async defer></script>
 </head>
 
 <body>
-	<script src="/static/sessions.js"></script>
+  <script src="/static/sessions.js"></script>
 
   
-	<div id="signInBox">
-		<div class="card">
-			<div class="card-header">Please Sign in</div>
-				<div class="card-body">
-					<p class="card-text">To access the website you are required to sign in with Google.</p>
+  <div id="signInBox">
+    <div class="card">
+      <div class="card-header">Please Sign in</div>
+        <div class="card-body">
+          <p class="card-text">To access the website you are required to sign in with Google.</p>
 
-					<!-- Google sign in button -->
-					<div id = "googleButton" class="g-signin2" data-onsuccess="onSignIn"></div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<script>
-		function onSignIn(googleUser) {
-			setLogin();
+          <!-- Google sign in button -->
+          <div id = "googleButton" class="g-signin2" data-onsuccess="onSignIn"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    function onSignIn(googleUser) {
+      setLogin();
 
-			var profile = googleUser.getBasicProfile();
-			console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-			console.log('Name: ' + profile.getName());
-			console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
+      console.log('Name: ' + profile.getName());
+      console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 
       if (profile.getEmail().includes("@naperville203.org")) {
         window.location.href = window.location.origin + "/static/teacher.html";
@@ -42,7 +42,7 @@
       else {
         window.location.href = window.location.origin + "/static/student.html";
       }
-		}
-	</script>
-	
+    }
+  </script>
+  
 </body>
