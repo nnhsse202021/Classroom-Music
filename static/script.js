@@ -3,7 +3,6 @@ let submitButton = document.getElementById("submitButton");
 
 submitButton.addEventListener("click", async () => {
 	let searchTerm = document.getElementById("searchWord").value;
-  document.getElementById("termDisplay").innerHTML = "Search Term: " + searchTerm;
 
   await fetch(`/ytapi?term=${encodeURI(searchTerm)}`)
     .then(response => response.json())
@@ -35,6 +34,28 @@ async function addSongToPlaylist(id, playlistID) {
   });
 }
 
+
+let songChoiceBox1 = document.getElementById("songChoiceBox1");
+songChoiceBox1.addEventListener("click", async () => {
+  verifyModal.style.display = "block";
+	id = document.getElementById("songChoice1").getAttribute("videoid");
+	// await fetch(`/addtempsong?id=${encodeURI(id)}`)
+})
+
+let songChoiceBox2 = document.getElementById("songChoiceBox2");
+songChoiceBox2.addEventListener("click", async () => {
+  verifyModal.style.display = "block";
+	id = document.getElementById("songChoice2").getAttribute("videoid");
+	// await fetch(`/addtempsong?id=${encodeURI(id)}`)
+})
+
+let songChoiceBox3 = document.getElementById("songChoiceBox3");
+songChoiceBox3.addEventListener("click", async () => {
+  verifyModal.style.display = "block";
+	id = document.getElementById("songChoice3").getAttribute("videoid");
+	// await fetch(`/addtempsong?id=${encodeURI(id)}`)
+})
+
 let cancelButton = document.getElementById("cancelButton");
 
 cancelButton.addEventListener("click", async () => {
@@ -44,7 +65,6 @@ cancelButton.addEventListener("click", async () => {
   document.getElementById("songChoiceBox2").style.display = "none";
   document.getElementById("songChoiceBox3").style.display = "none";
 
-  document.getElementById("termDisplay").innerHTML = "";
 
   document.getElementById("songChoice1").innerHTML = "";
   document.getElementById("songChoice2").innerHTML = "";
@@ -56,42 +76,17 @@ cancelButton.addEventListener("click", async () => {
   document.getElementById("songChoiceBox3").style.display = "none";
 
   document.getElementById("verifyModal").style.display = "none";
-  document.getElementById("searchModal").style.display = "none";
 
   document.getElementById("verify").checked = false;
 
-  document.getElementById("searchModalButton").style.display = "block";
-
-});
-
-/* button for displaying the search box */
-let searchModalButton = document.getElementById("searchModalButton");
-
-searchModalButton.addEventListener("click", async () => {
-	document.getElementById("searchModal").style.display = "block";
-  document.getElementById("searchModalButton").style.display = "none";
 });
 
 /* modal design for the verification box */
 let verifyModal = document.getElementById("verifyModal");
-let optionButton1 = document.getElementById("optionButton1");
-let optionButton2 = document.getElementById("optionButton2");
-let optionButton3 = document.getElementById("optionButton3");
+
 
 var id = null;
 
-optionButton1.addEventListener("click", async () => {
-	verifyModal.style.display = "block";
-	id = document.getElementById("songChoice1").getAttribute("videoid");
-});
-optionButton2.addEventListener("click", async () => {
-	verifyModal.style.display = "block";
-  id = document.getElementById("songChoice2").getAttribute("videoid");
-});
-optionButton3.addEventListener("click", async () => {
-	verifyModal.style.display = "block";
-  id = document.getElementById("songChoice3").getAttribute("videoid");
-});
 
 let verify = document.getElementById("verify");
 let confirmSong = document.getElementById("confirmSong");
@@ -114,16 +109,15 @@ confirmSong.addEventListener("click", async () => {
   document.getElementById("songChoiceBox1").style.display = "none";
   document.getElementById("songChoiceBox2").style.display = "none";
   document.getElementById("songChoiceBox3").style.display = "none";
-  document.getElementById("searchModal").style.display = "none";
-  document.getElementById("termDisplay").innerHTML = "";
   document.getElementById("searchWord").value = "";
   document.getElementById("verify").checked = false;
-  addSongToPlaylist(id, await getCurrentCode());
-  document.getElementById("searchModalButton").style.display = "block";
+  var name = document.getElementById("store_name").innerHTML;
+  // console.log(name);
+  var songInfo = [id, name];
+  addSongToPlaylist(songInfo, await getCurrentCode());
 });
 
 verifyCancelButton.addEventListener("click", async () => {
 	document.getElementById("verifyModal").style.display = "none";
-  document.getElementById("termDisplay").innerHTML = "";
   document.getElementById("verify").checked = false;
 });
