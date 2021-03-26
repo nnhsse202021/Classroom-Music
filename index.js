@@ -120,38 +120,92 @@ app.get("/deleteplaylist", async (req, res) => {
 });
 
 
+// Generate an unique code for each teacher.
+// req should take in an email.
+app.get("/generatecode", (req, res) => {
+  let email = req.query.email;
+
+  // find the hash function of the email given
+  // (same as java implementation for string hash function)
+  let hash = 0;
+  for (i = 0; i < email.length; i++) {
+    char = email.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32bit integer
+  }
+  if (hash < 0) hash = -hash; // convert negative hashs to positive values
+
+  // convert the hash function to a 6 or 7 letter code
+  let code = "";
+  while (hash > 1) {
+    code += String.fromCharCode(65 + hash % 26);
+    hash = hash / 26;
+  }
+
+  res.send(JSON.stringify({
+    code: code
+  }));
+});
+
+
+app.get("/joinclass", async (req, res) => {
+  let code = req.query.code + "class";
+  let email = req.query.email;
+
+  let codeList = await db.list();
+  var classroom = [];
+
+  if (codeList.indexOf(code) > -1) {
+    classroom = await db.get(code);
+  }
+
+  classroom.push(email);
+
+  db.set(code, classroom);
+})
+
+
+
+app.get("/getclass", async (req, res) => {
+  let code = req.query.code + "class";
+  let classroom = await db.get(code);
+  res.send(JSON.stringify({
+    classroom: classroom
+  }))
+});
+
 const parseurl = require('parseurl')
 const session = require('express-session')
 // app.set('trust proxy', 1) // trust first proxy
 app.use(session({
-	secret: 'keyboard-cat',
-	resave: false,
+  secret: 'keyboard-cat',
+  resave: false,
   saveUninitialized: true,
 }));
 
 app.use("/checksession", (req, res, next) => {
-	if (!req.session.views) {
+  if (!req.session.views) {
     req.session.views = {}
   }
 
-	var pathname = parseurl(req).pathname
-  
-	if (req.session.views[pathname] === null) {
-		req.session.views[pathname] = false;
-	}
+  var pathname = parseurl(req).pathname
 
-	let mode = req.query.mode;
+  if (req.session.views[pathname] === null) {
+    req.session.views[pathname] = false;
+  }
 
-	req.session.views["/checksession"] = (mode === 'check') ? req.session.views["/checksession"] : (mode === 'login');
+  let mode = req.query.mode;
 
-	next();
+  req.session.views["/checksession"] = (mode === 'check') ? req.session.views["/checksession"] : (mode === 'login');
+
+  next();
 })
 
 app.get("/checksession", (req, res, next) => {
-	console.log(req.session);
-	res.send(JSON.stringify({
-		loggedIn: req.session.views["/checksession"]
-	}));
+  console.log(req.session);
+  res.send(JSON.stringify({
+    loggedIn: req.session.views["/checksession"]
+  }));
 });
 
 

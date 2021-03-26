@@ -10,6 +10,7 @@
 <body>
 	<script src="/static/sessions.js"></script>
 
+  
 	<div id="signInBox">
 		<div class="card">
 			<div class="card-header">Please Sign in</div>
@@ -33,13 +34,13 @@
 			console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
 
       if (profile.getEmail().includes("@naperville203.org")) {
-        window.location.href = "https://classroom-music-3.evanzimmerman.repl.co/teacher.html";
+        window.location.href = window.location.origin + "/static/teacher.html";
       }
       else if (profile.getEmail() === "dpbabenkov@stu.naperville203.org" || profile.getEmail() === "gwu@stu.naperville203.org" || profile.getEmail() === "geoffrey.feifei@gmail.com") {
-        window.location.href = "https://classroom-music-3.evanzimmerman.repl.co/static/teacher.html";
+        window.location.href = window.location.origin + "/static/teacher.html";
       }
       else {
-        window.location.href = "https://classroom-music-3.evanzimmerman.repl.co/static/student.html";
+        window.location.href = window.location.origin + "/static/student.html";
       }
 		}
 	</script>

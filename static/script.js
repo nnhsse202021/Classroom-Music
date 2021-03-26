@@ -5,7 +5,6 @@ submitButton.addEventListener("click", async () => {
 	let searchTerm = document.getElementById("searchWord").value;
 
   await fetch(`/ytapi?term=${encodeURI(searchTerm)}`)
-		.then(console.log(response))
     .then(response => response.json())
     .then(data => {
       console.log(data.videoId1 + "   " + data.videoTitle1);
@@ -89,7 +88,6 @@ let verifyModal = document.getElementById("verifyModal");
 var id = null;
 
 
-
 let verify = document.getElementById("verify");
 let confirmSong = document.getElementById("confirmSong");
 let verifyCancelButton = document.getElementById("verifyCancelButton");
@@ -116,7 +114,7 @@ confirmSong.addEventListener("click", async () => {
   var name = document.getElementById("store_name").innerHTML;
   // console.log(name);
   var songInfo = [id, name];
-  addSongToPlaylist(songInfo, "tea");
+  addSongToPlaylist(songInfo, await getCurrentCode());
 });
 
 verifyCancelButton.addEventListener("click", async () => {
