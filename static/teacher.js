@@ -51,6 +51,10 @@ document.getElementById("loadButton").addEventListener("click", async () => {
     var playlist = await getPlaylist(await getCurrentCode());
     player.loadVideoById(playlist.split(",")[currentSongIndex]);
     currentSongIndex += 2;
+    
+    // update the play button
+    isPlaying = true;
+    document.getElementById("playButtonText").innerHTML = "Pause";
   }
 });
 
