@@ -29,14 +29,13 @@
       setLogin();
 
       var profile = googleUser.getBasicProfile();
-      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
       console.log('Name: ' + profile.getName());
-      console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+      console.log('Email: ' + profile.getEmail());
 
       if (profile.getEmail().includes("@naperville203.org")) {
         window.location.href = window.location.origin + "/static/teacher.html";
       }
-      else if (profile.getEmail() === "dpbabenkov@stu.naperville203.org" || profile.getEmail() === "gwu@stu.naperville203.org" || profile.getEmail() === "geoffrey.feifei@gmail.com") {
+      else if (["dpbabenkov@stu.naperville203.org", "gwu@stu.naperville203.org", "geoffrey.feifei@gmail.com"].includes(profile.getEmail())) {
         window.location.href = window.location.origin + "/static/teacher.html";
       }
       else {

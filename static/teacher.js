@@ -50,7 +50,7 @@ document.getElementById("loadButton").addEventListener("click", async () => {
   if (player) {
     var playlist = await getPlaylist(await getCurrentCode());
     player.loadVideoById(playlist.split(",")[currentSongIndex]);
-    currentSongIndex+=2;
+    currentSongIndex += 2;
   }
 });
 
@@ -72,14 +72,14 @@ document.getElementById("playButton").addEventListener("click", () => {
 document.getElementById("showPlaylist").addEventListener("click", async () => {
   document.getElementById("playlist").innerHTML = '';
   var playlist = await getPlaylist(await getCurrentCode());
-  if(playlist === null) {
+  if (playlist === null) {
     return;
   }
   var songs = playlist.split(',');
   console.log(songs);
   // song id
-  for(i = 0; i < songs.length; i+=2) {
-    var stuName = songs[i+1];
+  for (i = 0; i < songs.length; i += 2) {
+    var stuName = songs[i + 1];
     await fetch(`/videoidtotitle?id=${encodeURI(songs[i])}`)
       .then(response => response.json())
       .then(data => {

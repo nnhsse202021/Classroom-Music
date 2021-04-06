@@ -24,7 +24,7 @@ app.get("/ytapi", (req, res) => {
 
   axios.get("https://www.googleapis.com/youtube/v3/search", { // Axios request
     params: {
-      key: process.env.KEY, // Our API key
+      key: process.env.KEY, // our API key
       type: "video", // type of youtube content
       part: "snippet",
       videoCategoryId: 10, // only returns videos that are categorized as songs
@@ -34,7 +34,6 @@ app.get("/ytapi", (req, res) => {
   })
     .then(response => {
       // iterating through the JSON and getting the data we want from it
-
       for (var i = 0; i < response.data.items.length; i++) {
         item = response.data.items[i];
         console.log("[%s] Title: %s", item.id.videoId, item.snippet.title.replace("&#39;", "'"));
@@ -96,13 +95,8 @@ app.get("/addsong", async (req, res) => {
 });
 
 app.get("/getplaylist", async (req, res) => {
-  let playlist = req.query.playlistID;
-
-  value = await db.get(playlist);
-
-  console.log(value);
-  console.log(await db.list());
-
+  let playlistID = req.query.playlistID;
+  value = await db.get(playlistID);
   res.send(JSON.stringify({
     playlist: value
   }));
@@ -169,20 +163,18 @@ app.get("/joinclass", async (req, res) => {
   }
 
   studentsToCodes[email] = req.query.code;
-	db.set("studentsToCodes", studentsToCodes);
-
-	console.log(studentsToCodes);
+  db.set("studentsToCodes", studentsToCodes);
 })
 
 
 app.get("/getcurrentclass", async (req, res) => {
   let email = req.query.email;
   let studentsToCodes = await db.get("studentsToCodes");
-	let currentCode = "";
+  let currentCode = "";
   if (email in studentsToCodes) {
-		currentCode = studentsToCodes[email];
-	}
-	
+    currentCode = studentsToCodes[email];
+  }
+
   res.send(JSON.stringify({
     code: currentCode
   }));
@@ -197,6 +189,7 @@ app.get("/getclass", async (req, res) => {
   }))
 });
 
+/* SESSIONS: */
 const parseurl = require('parseurl')
 const session = require('express-session')
 // app.set('trust proxy', 1) // trust first proxy
@@ -218,7 +211,6 @@ app.use("/checksession", (req, res, next) => {
   }
 
   let mode = req.query.mode;
-
   req.session.views["/checksession"] = (mode === 'check') ? req.session.views["/checksession"] : (mode === 'login');
 
   next();

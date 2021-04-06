@@ -25,9 +25,8 @@
       setLogin();
 
       profile = googleUser.getBasicProfile();
-      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
       console.log('Name: ' + profile.getName());
-      console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
+      console.log('Email: ' + profile.getEmail());
       document.getElementById("store_name").innerHTML = profile.getName();
 
 			let currentCode = await getCurrentCode(profile.getEmail());
@@ -69,11 +68,9 @@
 			let currentCode = await fetch(`/getcurrentclass?email=${encodeURI(email)}`)
         .then(response => response.json())
         .then(data => {
-          console.log(data.code);
 					return data.code;
         })
 				return currentCode;
-      // return studentCode;
     }
 		
     async function joinClass(code, email) {
