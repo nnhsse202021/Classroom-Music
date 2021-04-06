@@ -21,7 +21,7 @@
 
   <script>
     var profile;
-    function onSignIn(googleUser) {
+    async function onSignIn(googleUser) {
       setLogin();
 
       profile = googleUser.getBasicProfile();
@@ -29,6 +29,9 @@
       console.log('Name: ' + profile.getName());
       console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
       document.getElementById("store_name").innerHTML = profile.getName();
+
+			let currentCode = await getCurrentCode(profile.getEmail());
+			document.getElementById("displayCode").innerHTML = "Your current code is: " + currentCode;
     }
 
     function signOut() {
@@ -62,10 +65,17 @@
     });
 
     // function that returns the student's current class code
-    async function getCurrentCode() {
-      return studentCode;
+    async function getCurrentCode(email) {
+			let currentCode = await fetch(`/getcurrentclass?email=${encodeURI(email)}`)
+        .then(response => response.json())
+        .then(data => {
+          console.log(data.code);
+					return data.code;
+        })
+				return currentCode;
+      // return studentCode;
     }
-
+		
     async function joinClass(code, email) {
       await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}`);
     }

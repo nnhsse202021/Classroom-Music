@@ -160,10 +160,33 @@ app.get("/joinclass", async (req, res) => {
   }
 
   classroom.push(email);
-
   db.set(code, classroom);
+
+  let studentsToCodes = {};
+
+  if (codeList.indexOf("studentsToCodes") > -1) {
+    studentsToCodes = await db.get("studentsToCodes");
+  }
+
+  studentsToCodes[email] = req.query.code;
+	db.set("studentsToCodes", studentsToCodes);
+
+	console.log(studentsToCodes);
 })
 
+
+app.get("/getcurrentclass", async (req, res) => {
+  let email = req.query.email;
+  let studentsToCodes = await db.get("studentsToCodes");
+	let currentCode = "";
+  if (email in studentsToCodes) {
+		currentCode = studentsToCodes[email];
+	}
+	
+  res.send(JSON.stringify({
+    code: currentCode
+  }));
+})
 
 
 app.get("/getclass", async (req, res) => {
