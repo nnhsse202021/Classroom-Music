@@ -59,11 +59,18 @@ document.getElementById("loadButton").addEventListener("click", async () => {
 });
 
 
+var isPlaying = false;
 document.getElementById("playButton").addEventListener("click", () => {
-  player.playVideo();
+  if (isPlaying == true) { // Execute this if a video is currently playing
+    player.pauseVideo();
+    document.getElementById("playButtonText").innerHTML = "Play";
+  } else { // Execute this if a video is currently paused
+    player.playVideo();
+    document.getElementById("playButtonText").innerHTML = "Pause";
+  }
+
+  isPlaying = !isPlaying;
 });
-
-
 
 
 document.getElementById("showPlaylist").addEventListener("click", async () => {
@@ -89,9 +96,11 @@ document.getElementById("showPlaylist").addEventListener("click", async () => {
 
 
 document.getElementById("clearPlaylist").addEventListener("click", async () => {
-  deletePlaylist("tea");
+  deletePlaylist(await getCurrentCode());
   window.alert("Playlist has been cleared!");
 })
+
+
 document.getElementById("generateCode").addEventListener("click", async () => {
   var email = profile.getEmail();
   document.getElementById("displayCode").innerHTML = "Your code is: " + await getCurrentCode();

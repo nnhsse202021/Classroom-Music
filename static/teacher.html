@@ -17,25 +17,28 @@
   <button id="signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign
     Out</button>
 
-  <script>
-    function onSignIn(googleUser) {
-      var profile = googleUser.getBasicProfile();
-      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-      console.log('Name: ' + profile.getName());
-      console.log('Email: ' + profile.getEmail());
-      setLogin();
-
-			document.getElementById("store_name").innerHTML = profile.getName();
-    }
-
-    function signOut() {
-      var auth2 = gapi.auth2.getAuthInstance();
-      auth2.signOut().then(() => {
-        setLogout();
-        window.location.href = "https://classroom-music-3.evanzimmerman.repl.co/static/index.html";
-      });
-    }
-  </script>
+    <script>
+      var profile;
+      async function onSignIn(googleUser) {
+        setLogin();
+  
+        profile = googleUser.getBasicProfile();
+        console.log('Name: ' + profile.getName());
+        console.log('Email: ' + profile.getEmail());
+        document.getElementById("store_name").innerHTML = profile.getName();
+  
+        let currentCode = await getCurrentCode(profile.getEmail());
+        document.getElementById("displayCode").innerHTML = "Your current code is: " + currentCode;
+      }
+  
+      function signOut() {
+        var auth2 = gapi.auth2.getAuthInstance();
+        auth2.signOut().then(() => {
+          setLogout();
+          window.location.href = window.location.origin + "/static/index.html";
+        });
+      }
+    </script>
 
   <div class="musicControlses" id="musicControls">
     <div class="card-header">
@@ -47,11 +50,24 @@
       <div class="d-flex mt-3">
         <button id="loadButton" class="button2" type="button"><span class="btn-text">Load next song</span></button>
         <button id="showPlaylist" class="button2"> Show playlist</button>
-        <button id="playButton" class="button2"><span class="card-header">Play</span></button>
-        <button id="pauseButton" class="button2" type="button"><span class="btn-text">Pause</span></button>
+        <button id="playButton" class="button2"><span class="card-header"><span id="playButtonText" class="btn-text">Play</span></span></button>
         <button id="clearPlaylist" class="button2" type="button"><span class="btn-text">Clear
             Playlist</span></button>
       </div>
+    </div>
+  </div>
+
+  <div class="card card-tertiary" id="classcode">
+    <div class="card-header">
+      <span class="icon icon-xs w95-folder"></span>
+      <span class="ml-4">Classroom Controls</span>
+    </div>
+    <div class="card-body">
+      <button id="generateCode" class="btn btn-sm mr-2 btn-primary border-dark">Generate class code</button>
+      <p class="card-text" id="displayCode">Your code is: </p>
+      <button id="refreshClass" class="btn btn-sm mr-2 btn-primary border-dark">Refresh class list</button>
+      <p class="card-text">Your students are:</p>
+      <ul id="class-list"></ul>
     </div>
   </div>
 
@@ -70,8 +86,8 @@
     var player;
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
-        height: '1', // I changed this to 1 (from 300) to make the player invisible
-        width: '1',
+        height: '300', // I changed this to 1 (from 300) to make the player invisible
+        width: '300',
         events: {
           'onReady': onPlayerReady,
           'onStateChange': onPlayerStateChange

@@ -29,7 +29,7 @@
       console.log('Email: ' + profile.getEmail());
       document.getElementById("store_name").innerHTML = profile.getName();
 
-			let currentCode = await getCurrentCode(profile.getEmail());
+			let currentCode = await getCurrentCode();
 			document.getElementById("displayCode").innerHTML = "Your current code is: " + currentCode;
     }
 
@@ -65,7 +65,8 @@
     });
 
     // function that returns the student's current class code
-    async function getCurrentCode(email) {
+    async function getCurrentCode() {
+			let email = profile.getEmail();
 			let currentCode = await fetch(`/getcurrentclass?email=${encodeURI(email)}`)
         .then(response => response.json())
         .then(data => {
