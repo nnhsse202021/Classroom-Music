@@ -1,5 +1,6 @@
 <head>
-  <meta name="google-signin-client_id" content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
+  <meta name="google-signin-client_id"
+    content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
   <link rel="stylesheet" type="text/css" href="/static/style.css" />
   <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
@@ -8,14 +9,18 @@
 <body>
   <script src="/static/sessions.js"></script>
   <script>checkLoginStatus()</script>
+  <ul>
+    <li><a>Classroom Music - Teacher View</a></li>
+  </ul>
 
   <div class="g-signin2" data-onsuccess="onSignIn"></div>
-  <button id="signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign Out</button>
+  <button id="signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign
+    Out</button>
 
   <script>
-    var profile;
     function onSignIn(googleUser) {
-      profile = googleUser.getBasicProfile();
+      var profile = googleUser.getBasicProfile();
+      console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
       console.log('Name: ' + profile.getName());
       console.log('Email: ' + profile.getEmail());
       setLogin();
@@ -27,12 +32,12 @@
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(() => {
         setLogout();
-        window.location.href = window.location.origin + "/static/index.html";
+        window.location.href = "https://classroom-music-3.evanzimmerman.repl.co/static/index.html";
       });
     }
   </script>
 
-  <div class="card card-tertiary" id="musicControls">
+  <div class="musicControlses" id="musicControls">
     <div class="card-header">
       <span class="icon icon-xs w95-folder"></span>
       <span class="ml-4">Music Controls</span>
@@ -40,27 +45,13 @@
     <div class="card-body">
       <p class="card-text"></p>
       <div class="d-flex mt-3">
-        <button id="loadButton" class="btn btn-sm mr-2 btn-primary border-dark" type="button"><span
-            class="btn-text">Load next song</span></button>
-        <button id="showPlaylist" class="btn btn-sm mr-2 btn-primary border-dark">Show playlist</button>
-        <button id="playButton" class="btn btn-sm btn-primary" type="button"><span id="playButtonText" class="btn-text">Play</span></button>
-        <button id="clearPlaylist" class="btn btn-sm btn-primary" type="button"><span class="btn-text">Clear
+        <button id="loadButton" class="button2" type="button"><span class="btn-text">Load next song</span></button>
+        <button id="showPlaylist" class="button2"> Show playlist</button>
+        <button id="playButton" class="button2"><span class="card-header">Play</span></button>
+        <button id="pauseButton" class="button2" type="button"><span class="btn-text">Pause</span></button>
+        <button id="clearPlaylist" class="button2" type="button"><span class="btn-text">Clear
             Playlist</span></button>
       </div>
-    </div>
-  </div>
-
-  <div class="card card-tertiary" id="classcode">
-    <div class="card-header">
-      <span class="icon icon-xs w95-folder"></span>
-      <span class="ml-4">Classroom Controls</span>
-    </div>
-    <div class="card-body">
-      <button id="generateCode" class="btn btn-sm mr-2 btn-primary border-dark">Generate class code</button>
-      <p class="card-text" id="displayCode">Your code is: </p>
-      <button id="refreshClass" class="btn btn-sm mr-2 btn-primary border-dark">Refresh class list</button>
-      <p class="card-text">Your students are:</p>
-      <ul id="class-list"></ul>
     </div>
   </div>
 
@@ -79,8 +70,8 @@
     var player;
     function onYouTubeIframeAPIReady() {
       player = new YT.Player('player', {
-        height: '300',
-        width: '300',
+        height: '1', // I changed this to 1 (from 300) to make the player invisible
+        width: '1',
         events: {
           'onReady': onPlayerReady,
           'onStateChange': onPlayerStateChange
@@ -90,7 +81,7 @@
 
     // 4. The API will call this function when the video player is ready.
     function onPlayerReady(event) {
-      
+
     }
 
     // 5. The API calls this function when the player's state changes.
@@ -100,31 +91,57 @@
     }
   </script>
 
-  <p>Playlist:</p>
-  <ul id="playlist"></ul>
+  <div id="playlistCard">
+    <div class="grid-item-3">Playlist:</div>
+    <ul id="playlist"></ul>
+  </div>
+
+  <p id="response"></p>
+
+  <div class="modal" id="verifyModal">
+    <div id="modalContent">
+      <div class="card-header">
+        <span class="ml-4">ERROR: Please Confirm</span>
+      </div>
+      <class="card-body">
+        <div class="form-check">
+          <label class="form-check-label">
+            <input class="form-check-input" type="checkbox" id="verify">
+            <span class="form-check-x"></span>
+            <span class="form-check-sign"></span>
+            This song IS CLEAN. This includes all sources, such as obscene language or inappropriate themes. </input>
+          </label>
+        </div>
+        <div id="confirmSongPadding">
+          <button class="button1" id="confirmSong" type="button" disabled>Confirm</button>
+          <div id="store_name"></div>
+          <div class="divider"></div>
+          <button class="button1" id="verifyCancelButton" type="button">Cancel</button>
+        </div>
+    </div>
+  </div>
 
   <div class="grid-container-1">
 
-    <div class="grid-item-1">
-      <button id="searchModalButton" class="btn mr-2 mb-2 btn-primary" type="button">Search for Songs</button>
-    </div>
+    <!-- <div class="grid-item-1">
+      <button id = "searchModalButton" class="btn mr-2 mb-2 btn-primary" type="button" >Search for Songs</button>
+    </div> -->
+
+    <div class="grid-item-1"></div>
 
     <div class="grid-item-1">
-      <div class="modal" id="searchModal">
-        <div class="modal-content">
-          <div class="card card-tertiary">
-            <div class="card-header">
-              <span class="icon icon-xs w95-folder"></span>
-              <span class="ml-4">Classroom Music</span>
-            </div>
-            <div class="card-body">
-              <input class="card-text" type="text" id="searchWord">
-              <p id="termDisplay" class="card-text"></p>
-              <div class="d-flex mt-3">
-                <button id="submitButton" class="btn btn-sm mr-2 btn-primary border-dark" type="button"><span
-                    class="btn-text">Submit</span></button>
-                <button id="cancelButton" class="btn btn-sm btn-primary" type="button"><span
-                    class="btn-text">Cancel</span></button>
+      <!-- <div class = "modal" id = "searchModal"> -->
+      <div class="squid">
+        <div class="grid-item-3">Search For Songs</div>
+        <input class="card-text" type="text" id="searchWord" placeholder="Search">
+        <p id="termDisplay" class="card-text"></p>
+        <button class="button1" id="submitButton" type="button">
+          <span>Submit</span>
+        </button>
+        <div class="divider"></div>
+        <button class="button1" id="cancelButton" type="button">
+          <span>Cancel</span>
+        </button>
               </div>
             </div>
           </div>
@@ -155,9 +172,12 @@
             </div>
         </div>
       </div>
+      <!-- </div> -->
     </div>
-    <div class="grid-item-1"></div>
 
+    <div class="grid-item-1"></div>
+  </div>
+  <div class="grid-container-2">
     <div id="songChoiceBox1" class="grid-item-1">
       <div class="card">
         <div class="card-header">
@@ -165,10 +185,6 @@
         </div>
         <div class="card-body">
           <p id="songChoice1" class="card-text"></p>
-          <div class="d-flex justify-content-end mt-3">
-            <button class="btn btn-sm mr-2 btn-primary border-dark" type="button" id="optionButton1"><span
-                class="btn-text">Select</span></button>
-          </div>
         </div>
       </div>
     </div>
@@ -180,10 +196,6 @@
         </div>
         <div class="card-body">
           <p id="songChoice2" class="card-text"></p>
-          <div class="d-flex justify-content-end mt-3">
-            <button class="btn btn-sm mr-2 btn-primary border-dark" type="button" id="optionButton2"><span
-                class="btn-text">Select</span></button>
-          </div>
         </div>
       </div>
     </div>
@@ -193,21 +205,9 @@
         <div class="card-header">
           Song Option 3
         </div>
-        <div class="card-body">
-          <p id="songChoice3" class="card-text"></p>
-          <div class="d-flex justify-content-end mt-3">
-            <button class="btn btn-sm mr-2 btn-primary border-dark" type="button" id="optionButton3"><span
-                class="btn-text">Select</span></button>
-          </div>
-        </div>
+        <p id="songChoice3" class="card-text"></p>
       </div>
     </div>
-
-    <div class="grid-item-1">7</div>
-
-    <div class="grid-item-1">8</div>
-
-    <div class="grid-item-1">9</div>
 
   </div>
 
