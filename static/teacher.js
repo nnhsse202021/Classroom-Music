@@ -22,11 +22,23 @@ async function deletePlaylist(playlistID) {
   return playlist;
 }
 
-// shuffles the currently selected playlist
-async function shufflePlaylist() {
-  var isShuffled = !isShuffled;
 
-  var order = [];
+// shuffles the currently selected playlist
+var isShuffled = false;
+async function shufflePlaylist() {
+  isShuffled = !isShuffled;
+  if (isShuffled) {
+    var order = [];
+    for (i = 0; i < playlist.length; i++) {
+      var num = Math.floor(Math.random() * playlist.length);
+      while (order.includes(num)) {
+        num = Math.floor(Math.random() * playlist.length);
+      }
+      console.log(num);
+      order.push(num);
+    }
+    console.log(order);
+  }
 }
 
 // returns the current class code for the teacher
@@ -108,7 +120,12 @@ document.getElementById("clearPlaylist").addEventListener("click", async () => {
 
 document.getElementById("shuffleButton").addEventListener("click", async () => {
   shufflePlaylist();
-  window.alert("Playlist has been cleared!");
+  if (isShuffled){
+    window.alert("Playlist is shuffling!");
+  }
+  else {
+    window.alert("Playlist is no longer shuffling!")
+  }
 })
 
 
