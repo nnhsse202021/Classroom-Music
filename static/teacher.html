@@ -19,6 +19,8 @@
       console.log('Name: ' + profile.getName());
       console.log('Email: ' + profile.getEmail());
       setLogin();
+
+			document.getElementById("store_name").innerHTML = profile.getName();
     }
 
     function signOut() {
@@ -148,6 +150,7 @@
             </div>
             <div id="confirmSongPadding">
               <button id="confirmSong" class="btn mr-2 mb-2 btn-primary" type="button" disabled>Confirm</button>
+							<div id = "store_name"></div>
               <button id="verifyCancelButton" class="btn mr-2 mb-2 btn-primary" type="button">Cancel</button>
             </div>
         </div>
