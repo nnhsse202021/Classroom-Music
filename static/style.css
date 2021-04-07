@@ -19,18 +19,42 @@
   text-align: center;
 }
 
+.grid-item-3 {
+  padding: 2%;
+  text-align: center;
+}
+
 .squid {
   background-color: rgb(255, 255, 255);
-  padding: 7%;
+  padding: 6%;
   border-radius: 25px;
   border: 2px solid;
   border-color: #49b8da;
+}
+
+.musicControlses {
+  background-color: rgb(255, 255, 255);
+  padding: 1.5%;
+  border-radius: 20px;
+  border: 2px solid;
+  border-color: #009608;
 }
 
 #musicControls {
   width: 40%;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
+}
+
+#playlistCard {
+  background-color: rgb(255, 255, 255);
+  padding: 1.5%;
+  border-radius: 20px;
+  border: 2px solid;
+  border-color: #bf1a02;
+  text-align: left;
+  width: 20%;
 }
 
 /* Navbar */
@@ -118,6 +142,24 @@ li a {
   box-shadow: none;
 }
 
+.button2 {
+  font-family: 'Rubik', sans-serif;
+  border-radius: 10px;
+  /*border-color: #ffb78d;*/
+  border-color: #009608;
+  background-color: #dfdfdfdf;
+  padding: 2%;
+}
+
+.button2:hover {
+  background-color: #cfcfcf;
+}
+
+.button2:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 #songChoiceBox1 {
   display: none;
   width: 50%;
@@ -169,7 +211,6 @@ li a {
   background-color: #ffebdbdf;
   transform: scale(1.07);
 }
-
 
 /* Verification Pop-up */
 #verifyModal {
