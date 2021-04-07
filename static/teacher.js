@@ -1,3 +1,5 @@
+/* The playlist variable we have as of now works a bit strangely -- every even index is the song, and every odd index is the name of the student who submitted it. */
+
 async function getPlaylist(playlistID) {
   var playlist;
   await fetch(`/getplaylist?playlistID=${encodeURI(playlistID)}`)
@@ -25,14 +27,14 @@ async function deletePlaylist(playlistID) {
 
 // shuffles the currently selected playlist
 var isShuffled = false;
+var order = [];
 async function shufflePlaylist() {
   isShuffled = !isShuffled;
   if (isShuffled) {
-    var order = [];
-    for (i = 0; i < playlist.length; i++) {
-      var num = Math.floor(Math.random() * playlist.length);
+    for (i = 0; i < (playlist.length/2); i++) {
+      var num = Math.floor(Math.random() * (playlist.length/2));
       while (order.includes(num)) {
-        num = Math.floor(Math.random() * playlist.length);
+        num = Math.floor(Math.random() * (playlist.length/2));
       }
       console.log(num);
       order.push(num);
@@ -66,10 +68,22 @@ async function getClassList(code) {
 var currentSongIndex = 0;
 document.getElementById("loadButton").addEventListener("click", async () => {
   if (player) {
-    var playlist = await getPlaylist(await getCurrentCode());
-    player.loadVideoById(playlist.split(",")[currentSongIndex]);
-    currentSongIndex += 2;
-    
+    if (isShuffled) {
+      var playlist = await getPlaylist(await getCurrentCode());
+      player.loadVideoById(playlist.split(",")[(order[currentSongIndex] * 2)]); // * 2 since playlist is song and student name
+      currentSongIndex += 1;
+      if (currentSongIndex > (playlist.length/2)) {
+        currentSongIndex = 0;
+      }
+    }
+    else {
+      var playlist = await getPlaylist(await getCurrentCode());
+      player.loadVideoById(playlist.split(",")[currentSongIndex]);
+      currentSongIndex += 2;
+      if (currentSongIndex > playlist.length) {
+        currentSongIndex = 0;
+      }
+    }
     // update the play button
     isPlaying = true;
     document.getElementById("playButtonText").innerHTML = "Pause";
@@ -119,6 +133,7 @@ document.getElementById("clearPlaylist").addEventListener("click", async () => {
 })
 
 document.getElementById("shuffleButton").addEventListener("click", async () => {
+  currentSongPlaylist = 0; // doesn't save between
   shufflePlaylist();
   if (isShuffled){
     window.alert("Playlist is shuffling!");
