@@ -23,13 +23,38 @@ async function deletePlaylist(playlistID) {
   return playlist;
 }
 
+// returns the current class code for the teacher
+async function getCurrentCode() {
+  var email = profile.getEmail();
+  var code;
+  await fetch(`/generatecode?email=${encodeURI(email)}`)
+    .then(response => response.json())
+    .then(data => {
+      code = data.code;
+    });
+  return code;
+}
+
+async function getClassList(code) {
+  var classroom;
+  await fetch(`/getclass?code=${encodeURI(code)}`)
+    .then(response => response.json())
+    .then(data => {
+      classroom = data.classroom;
+    })
+  return classroom;
+}
 
 var currentSongIndex = 0;
 document.getElementById("loadButton").addEventListener("click", async () => {
   if (player) {
-    var playlist = await getPlaylist("tea");
+    var playlist = await getPlaylist(await getCurrentCode());
     player.loadVideoById(playlist.split(",")[currentSongIndex]);
     currentSongIndex += 2;
+    
+    // update the play button
+    isPlaying = true;
+    document.getElementById("playButtonText").innerHTML = "Pause";
   }
 });
 
@@ -39,14 +64,11 @@ document.getElementById("playButton").addEventListener("click", () => {
 });
 
 
-document.getElementById("pauseButton").addEventListener("click", () => {
-  player.pauseVideo();
-});
 
 
 document.getElementById("showPlaylist").addEventListener("click", async () => {
   document.getElementById("playlist").innerHTML = '';
-  var playlist = await getPlaylist("tea");
+  var playlist = await getPlaylist(await getCurrentCode());
   if (playlist === null) {
     return;
   }
@@ -69,4 +91,19 @@ document.getElementById("showPlaylist").addEventListener("click", async () => {
 document.getElementById("clearPlaylist").addEventListener("click", async () => {
   deletePlaylist("tea");
   window.alert("Playlist has been cleared!");
+})
+document.getElementById("generateCode").addEventListener("click", async () => {
+  var email = profile.getEmail();
+  document.getElementById("displayCode").innerHTML = "Your code is: " + await getCurrentCode();
+})
+
+document.getElementById("refreshClass").addEventListener("click", async () => {
+  let classroom = await getClassList(await getCurrentCode());
+  document.getElementById('class-list').innerHTML = "";
+
+  for (let i = 0; i < classroom.length; i++) {
+    let newItem = document.createElement('li');
+    newItem.innerHTML = classroom[i];
+    document.getElementById('class-list').appendChild(newItem);
+  }
 })
