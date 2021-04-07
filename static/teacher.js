@@ -1,4 +1,3 @@
-
 async function getPlaylist(playlistID) {
   var playlist;
   await fetch(`/getplaylist?playlistID=${encodeURI(playlistID)}`)
@@ -21,6 +20,13 @@ async function deletePlaylist(playlistID) {
       playlist = data.playlist;
     });
   return playlist;
+}
+
+// shuffles the currently selected playlist
+async function shufflePlaylist() {
+  var isShuffled = !isShuffled;
+
+  var order = [];
 }
 
 // returns the current class code for the teacher
@@ -97,6 +103,11 @@ document.getElementById("showPlaylist").addEventListener("click", async () => {
 
 document.getElementById("clearPlaylist").addEventListener("click", async () => {
   deletePlaylist(await getCurrentCode());
+  window.alert("Playlist has been cleared!");
+})
+
+document.getElementById("shuffleButton").addEventListener("click", async () => {
+  shufflePlaylist();
   window.alert("Playlist has been cleared!");
 })
 
