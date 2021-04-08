@@ -12,8 +12,8 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 var player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
-    height: '300', // I changed this to 1 (from 300) to make the player invisible
-    width: '300',
+    height: '0', // Change this to 1 to make the player invisible
+    width: '0',
     events: {
       'onReady': onPlayerReady,
       'onStateChange': onPlayerStateChange

@@ -14,7 +14,7 @@ function checkLoginStatus() {
     .then(response => response.json())
     .then(data => {
       console.log(data.loggedIn);
-      if (data.loggedIn === false) {
+      if (data.loggedIn === undefined || data.loggedIn === false) {
         window.location.href = window.location.origin + "/static/index.html";
       }
     });
