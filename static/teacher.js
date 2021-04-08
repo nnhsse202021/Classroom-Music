@@ -150,10 +150,10 @@ document.getElementById("shuffleButton").addEventListener("click", async () => {
 })
 
 
-document.getElementById("generateCode").addEventListener("click", async () => {
-  var email = profile.getEmail();
-  document.getElementById("displayCode").innerHTML = "Your code is: " + await getCurrentCode();
-})
+// document.getElementById("generateCode").addEventListener("click", async () => {
+//   var email = profile.getEmail();
+//   document.getElementById("displayCode").innerHTML = "Your code is: " + await getCurrentCode();
+// })
 
 document.getElementById("refreshClass").addEventListener("click", async () => {
   let classroom = await getClassList(await getCurrentCode());

@@ -142,6 +142,7 @@ app.get("/generatecode", (req, res) => {
 });
 
 
+
 app.get("/joinclass", async (req, res) => {
   let code = req.query.code + "class";
   let email = req.query.email;
@@ -211,7 +212,8 @@ app.use("/checksession", (req, res, next) => {
   }
 
   let mode = req.query.mode;
-  req.session.views["/checksession"] = (mode === 'check') ? req.session.views["/checksession"] : (mode === 'login');
+	let url = req.query.url;
+  req.session.views["/checksession"] = (mode === 'check') ? req.session.views["/checksession"] : url;
 
   next();
 })

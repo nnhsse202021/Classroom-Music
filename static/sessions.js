@@ -1,7 +1,12 @@
 
-function setLogin() {
-  fetch(`/checksession?mode=${encodeURI("login")}`)
-    .then(console.log('Session marked as logged in.'));
+// function setLogin() {
+//   fetch(`/checksession?mode=${encodeURI("login")}`)
+//     .then(console.log('Session marked as logged in.'));
+// }
+
+function setLogin(url) {
+  fetch(`/checksession?mode=${encodeURI("login")}&url=${encodeURI(url)}`)
+    .then(console.log('Session marked as logged in at' + url));
 }
 
 function setLogout() {
@@ -14,8 +19,10 @@ function checkLoginStatus() {
     .then(response => response.json())
     .then(data => {
       console.log(data.loggedIn);
-      if (data.loggedIn === undefined || data.loggedIn === false) {
+      if (data.loggedIn === undefined) {
         window.location.href = window.location.origin + "/static/index.html";
-      }
+			} else if (data.loggedIn != window.location.href) {
+				window.location.href = data.loggedIn;
+			}
     });
 }

@@ -4,12 +4,12 @@
   <link rel="stylesheet" type="text/css" href="/static/style.css" />
   <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
+
+	<script src="/static/sessions.js"></script>
+  <script>checkLoginStatus()</script>
 </head>
 
 <body>
-  <script src="/static/sessions.js"></script>
-  <script>checkLoginStatus()</script>
-
   <ul id="navbar1">
     <li><a>Classroom Music - Teacher View</a></li>
   </ul>
@@ -21,7 +21,7 @@
   <script>
     var profile;
     async function onSignIn(googleUser) {
-      setLogin();
+      // setLogin();
 
       profile = googleUser.getBasicProfile();
       console.log('Name: ' + profile.getName());
@@ -65,7 +65,7 @@
       <span class="ml-4">Classroom Controls</span>
     </div>
     <div class="card-body">
-      <button id="generateCode" class="button3">Generate class code</button>
+      <!-- <button id="generateCode" class="button3">Generate class code</button> -->
       <p class="card-text" id="displayCode">Your code is: </p>
       <button id="refreshClass" class="button3">Refresh class list</button>
       <p class="card-text">Your students are:</p>

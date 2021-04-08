@@ -51,6 +51,14 @@
   border-color: #5f0096;
 }
 
+#class-list {
+  background-color: #ffffff;
+}
+
+#playlist {
+  background-color: #ffffff;
+}
+
 #classControls {
   width: 40%;
   margin-left: 5%;

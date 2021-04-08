@@ -6,11 +6,13 @@
   <link rel="preconnect" href="https://fonts.gstatic.com">
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css2?family=Lora&family=Rubik&display=swap" rel="stylesheet">
+
+	<script src="/static/sessions.js"></script>
+  <script>checkLoginStatus()</script>
 </head>
 
 <body>
-  <script src="/static/sessions.js"></script>
-  <script>checkLoginStatus()</script>
+
 
   <ul id="navbar1">
     <li><a>Classroom Music</a></li>
@@ -22,7 +24,7 @@
   <script>
     var profile;
     async function onSignIn(googleUser) {
-      setLogin();
+      // setLogin();
 
       profile = googleUser.getBasicProfile();
       console.log('Name: ' + profile.getName());
