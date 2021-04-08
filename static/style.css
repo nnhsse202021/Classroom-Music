@@ -32,6 +32,24 @@
   border-color: #49b8da;
 }
 
+.classControlses {
+  background-color: rgb(255, 255, 255);
+  padding: 1.5%;
+  border-radius: 20px;
+  border: 2px solid;
+  border-color: #5f0096;
+}
+
+#classControls {
+  width: 40%;
+  margin-left: 5%;
+  /* margin-top: 1%; */
+  /* margin-right: 5%; */
+  text-align: center;
+  display: inline-block;
+}
+
+
 .musicControlses {
   background-color: rgb(255, 255, 255);
   padding: 1.5%;
@@ -42,9 +60,11 @@
 
 #musicControls {
   width: 40%;
-  margin-left: auto;
-  margin-right: auto;
+  margin-left: 5%;
+  /* margin-top: 1%; */
+  /* margin-right: 5%; */
   text-align: center;
+  display: inline-block;
 }
 
 #playlistCard {
@@ -55,6 +75,9 @@
   border-color: #bf1a02;
   text-align: left;
   width: 20%;
+  margin-left: 15%;
+  margin-top: 1%;
+  /* margin-right: auto; */
 }
 
 /* Navbar */
