@@ -111,6 +111,7 @@ document.getElementById("playButton").addEventListener("click", () => {
 
 
 document.getElementById("showPlaylist").addEventListener("click", async () => {
+  document.getElementById("playlistCard").style.display = "block";
   document.getElementById("playlist").innerHTML = '';
   var playlist = await getPlaylist(await getCurrentCode());
   if (playlist === null) {

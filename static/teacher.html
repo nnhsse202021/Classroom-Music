@@ -10,11 +10,11 @@
   <script src="/static/sessions.js"></script>
   <script>checkLoginStatus()</script>
 
-  <ul>
+  <ul id="navbar1">
     <li><a>Classroom Music - Teacher View</a></li>
-    <div class="g-signin2" data-onsuccess="onSignIn"></div>
-    <button id="signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign Out</button>
   </ul>
+  <div class="g-signin2" data-onsuccess="onSignIn"></div>
+  <button id="signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign Out</button>
 
   
   <p></p>
@@ -54,7 +54,7 @@
               class="btn-text">Play</span></button>
         <button id="clearPlaylist" class="button2" type="button"><span class="btn-text">Clear
             Playlist</span></button>
-        <button id="shuffleButton" class="button2" type="button"><span class="btn-text">Shuffle!</span></button>
+        <button id="shuffleButton" class="button2" type="button"><span class="btn-text">Shuffle</span></button>
       </div>
     </div>
   </div>
@@ -65,9 +65,9 @@
       <span class="ml-4">Classroom Controls</span>
     </div>
     <div class="card-body">
-      <button id="generateCode" class="btn btn-sm mr-2 btn-primary border-dark">Generate class code</button>
+      <button id="generateCode" class="button3">Generate class code</button>
       <p class="card-text" id="displayCode">Your code is: </p>
-      <button id="refreshClass" class="btn btn-sm mr-2 btn-primary border-dark">Refresh class list</button>
+      <button id="refreshClass" class="button3">Refresh class list</button>
       <p class="card-text">Your students are:</p>
       <ul id="class-list"></ul>
     </div>
@@ -81,7 +81,7 @@
 
 
   <div id="playlistCard">
-    <div class="grid-item-3">Playlist:</div>
+    <div class="grid-item-3">Playlist</div>
     <ul id="playlist"></ul>
   </div>
 
@@ -162,7 +162,7 @@
     <!-- </div> -->
   </div>
 
-  <div class="grid-item-1"></div>
+
   </div>
   <div class="grid-container-2">
     <div id="songChoiceBox1" class="grid-item-1">
