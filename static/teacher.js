@@ -48,9 +48,10 @@ async function shufflePlaylist() {
   }
 }
 
+var classNumber = "1";
 // returns the current class code for the teacher
 async function getCurrentCode() {
-  var email = profile.getEmail();
+  var email = classNumber + profile.getEmail();
   var code;
   await fetch(`/generatecode?email=${encodeURI(email)}`)
     .then(response => response.json())
@@ -164,4 +165,11 @@ document.getElementById("refreshClass").addEventListener("click", async () => {
     newItem.innerHTML = classroom[i];
     document.getElementById('class-list').appendChild(newItem);
   }
+})
+
+
+document.getElementById("selectClass").addEventListener("change", async () => {
+	console.log(document.getElementById("selectClass").value);
+	classNumber = document.getElementById("selectClass").value;
+	document.getElementById("displayCode").innerHTML = "Your code is: " + await getCurrentCode();
 })
