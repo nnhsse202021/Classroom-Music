@@ -30,18 +30,13 @@ var isShuffled = false;
 var order = [];
 async function shufflePlaylist() {
   isShuffled = !isShuffled;
-	order = [];
-	var playlist = await getPlaylist(await getCurrentCode());
-	playlist = playlist.split(",");
-	console.log(playlist);
-	console.log(playlist.length);
   if (isShuffled) {
     for (i = 0; i < (playlist.length/2); i++) {
       var num = Math.floor(Math.random() * (playlist.length/2));
       while (order.includes(num)) {
         num = Math.floor(Math.random() * (playlist.length/2));
       }
-      // console.log(num);
+      console.log(num);
       order.push(num);
     }
     console.log(order);
@@ -111,7 +106,6 @@ document.getElementById("playButton").addEventListener("click", () => {
 
 
 document.getElementById("showPlaylist").addEventListener("click", async () => {
-  document.getElementById("playlistCard").style.display = "block";
   document.getElementById("playlist").innerHTML = '';
   var playlist = await getPlaylist(await getCurrentCode());
   if (playlist === null) {

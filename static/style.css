@@ -24,68 +24,12 @@
   text-align: center;
 }
 
-.classroomBox {
-  margin: auto;
-  text-align: center;
-  width: 20%;
-  background-color: rgb(255, 255, 255);
-  padding: 1.5%;
-  border-radius: 25px;
-  border: 2px solid;
-  border-color: #5f0096;
-}
-
 .squid {
   background-color: rgb(255, 255, 255);
   padding: 6%;
   border-radius: 25px;
   border: 2px solid;
   border-color: #49b8da;
-}
-
-.classControlses {
-  background-color: rgb(255, 255, 255);
-  padding: 1.5%;
-  border-radius: 20px;
-  border: 2px solid;
-  border-color: #5f0096;
-}
-
-#classControls {
-  width: 40%;
-  margin-left: 5%;
-  /* margin-top: 1%; */
-  /* margin-right: 5%; */
-  text-align: center;
-  display: inline-block;
-}
-
-#classCodeText {
-  padding: 2%;
-}
-
-#classCodeEnter {
-  width: 50%;
-  border-radius: 10px;
-  /*border-color: #ffb78d;*/
-  border-color: white;
-  background-color: #dfdfdfdf;
-  border-top: none;
-  border-left: none;
-  border-right: none;
-  padding: 2%;
-  font-family: 'Rubik', sans-serif;
-  transition: border-color 0.5s;
-}
-
-#classCodeEnter:focus {
-  outline: none;
-  box-shadow: none;
-  border-color: #5f0096;
-}
-
-#classCodeEnter:hover {
-  border-color: #5f0096;
 }
 
 .musicControlses {
@@ -98,11 +42,9 @@
 
 #musicControls {
   width: 40%;
-  margin-left: 5%;
-  /* margin-top: 1%; */
-  /* margin-right: 5%; */
+  margin-left: auto;
+  margin-right: auto;
   text-align: center;
-  display: inline-block;
 }
 
 #playlistCard {
@@ -113,14 +55,10 @@
   border-color: #bf1a02;
   text-align: left;
   width: 20%;
-  margin-left: 15%;
-  margin-top: 1%;
-  display: none;
-  /* margin-right: auto; */
 }
 
 /* Navbar */
-#navbar1 {
+ul {
   font-family: 'Libre Baskerville', serif;
   list-style-type: none;
   margin: 0;
@@ -218,25 +156,6 @@ li a {
 }
 
 .button2:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-.button3 {
-  width: 40%;
-  font-family: 'Rubik', sans-serif;
-  border-radius: 10px;
-  /*border-color: #ffb78d;*/
-  border-color: #5f0096;
-  background-color: #dfdfdfdf;
-  padding: 2%;
-}
-
-.button3:hover {
-  background-color: #cfcfcf;
-}
-
-.button3:focus {
   outline: none;
   box-shadow: none;
 }

@@ -12,7 +12,7 @@
   <script src="/static/sessions.js"></script>
   <script>checkLoginStatus()</script>
 
-  <ul id="navbar1">
+  <ul>
     <li><a>Classroom Music</a></li>
   </ul>
 
@@ -43,14 +43,14 @@
   </script>
 
 
-  <div class="classroomBox" id="classcode">
-    <div class="card-header"  id="classCodeText">
-      <span>Classroom Code</span>
+  <div class="card card-tertiary" id="classcode">
+    <div class="card-header">
+      <span class="icon icon-xs w95-folder"></span>
+      <span class="ml-4">Classroom</span>
     </div>
     <div class="card-body">
-      <input placeholder="Code" class="card-text" type="text" id="classCodeEnter"></input>
-      <div class="divider"></div>
-      <button class="button3" id="submitCode">Enter code</button>
+      <input class="card-text" type="text" id="codeEntry"></input>
+      <button class="btn btn-sm mr-2 btn-primary border-dark" id="submitCode">Enter code</button>
       <p class="card-text" id="displayCode"></p>
     </div>
   </div>
@@ -59,7 +59,7 @@
     var studentCode = ""; // Student's current class code
 
     document.getElementById("submitCode").addEventListener("click", () => {
-      studentCode = document.getElementById("classCodeEnter").value;
+      studentCode = document.getElementById("codeEntry").value;
       document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
       joinClass(studentCode, profile.getEmail());
     });
