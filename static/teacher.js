@@ -154,6 +154,17 @@ document.getElementById("shuffleButton").addEventListener("click", async () => {
 //   var email = profile.getEmail();
 //   document.getElementById("displayCode").innerHTML = "Your code is: " + await getCurrentCode();
 // })
+var isPlaylistEnabled = true;
+document.getElementById("disableButton").addEventListener("click", async () => {
+  if (isPlaylistEnabled = true) {
+    isPlaylistEnabled = false;
+    document.getElementById("disableButtonText").innerHTML = "Enable Classroom Code";
+  }
+  else {
+    isPlaylistEnabled = true;
+    document.getElementById("disableButtonText").innerHTML = "Disable Classroom Code";
+  }
+})
 
 document.getElementById("refreshClass").addEventListener("click", async () => {
   let classroom = await getClassList(await getCurrentCode());

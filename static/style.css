@@ -160,11 +160,8 @@ li a {
   font-family: 'Windows 95';
 }
 
-/* trying to center the dumb google sign in button inside of the box (it's not working) */
 #googleButton {
-  width: 50px;
-  padding: 10px;
-  position: relative;
+  margin: auto;
 }
 
 
@@ -358,7 +355,7 @@ body {
   background-color: #dfdfdf;
 }
 
-#centered {
+.centered {
   position: fixed;
   top: 50%;
   left: 50%;

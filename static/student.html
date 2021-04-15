@@ -61,9 +61,14 @@
     var studentCode = ""; // Student's current class code
 
     document.getElementById("submitCode").addEventListener("click", () => {
-      studentCode = document.getElementById("classCodeEnter").value;
-      document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
-      joinClass(studentCode, profile.getEmail());
+      if (isPlaylistEnabled = true) {
+        studentCode = document.getElementById("classCodeEnter").value;
+        document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
+        joinClass(studentCode, profile.getEmail());
+      }
+      else {
+        window.alert("Joining that classroom is disabled right now!")
+      }
     });
 
     // function that returns the student's current class code
@@ -85,7 +90,7 @@
   <div class="modal" id="verifyModal">
     <div id="modalContent">
       <div class="card-header">
-        <span class="ml-4">ERROR: Please Confirm</span>
+        <span class="ml-4">Confirmation</span>
       </div>
       <class="card-body">
         <div class="form-check">
