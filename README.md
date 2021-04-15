@@ -19,7 +19,11 @@ If you want to run the server on your computer locally, here are the steps:
 The sign-in is simple -- its singular purpose is to guide students and teachers to their respective views.
 
 ## Student View
-The student view is a bit more complex. Currently, it  allows a student to search for a song(through YouTube) and add it to the playlist in the teacher view. It also gives them a sign out button that brings them back to the sign-in page. After searching for a song and locating it, the student is told to verify that the song is clean.
+The student view is a bit more complex. Just in case, the student gets a sign out button that brings them back to the sign-in page. More importantly, the student can submit songs. First, they input a code, which they get from their teacher, and then search for a song. It finds this song on YouTube, after which the student can add it to the playlist in the teacher view. After searching for a song and locating it, the student is told to verify that the song is clean.
 
 ## Teacher View
-The teacher view has the most detail. Not only does it have all the elements of the student view, but also allows for control over the playlist itself. The teacher can play the songs in the playlist in their given order, skip them if they find them to be inappropriate or too long, and can summon a list of all the songs within the playlist. In the situation that the teacher needs to erase the playlist, such as when a new one is needed for a different set of students, they can click the clear playlist button, which will reset the playlist entirely.
+The teacher view has the most detail. Not only does it have all the elements of the student view, but also allows for control over the playlist itself. 
+
+The teacher can play the songs in the playlist in their given order, skip them if they find them to be inappropriate or too long, and can summon a list of all the songs within the playlist. In the situation that the teacher needs to erase the playlist, such as when a new one is needed for a different set of students, they can click the clear playlist button, which will reset the playlist entirely. And in case the teacher wants to mix it up, they have a shuffle feature, which plays the songs in the playlist in a random order, but keeps them in the order they're in right now. 
+
+Finally, teachers have their own classrooms. Although a teacher can only have on classroom as of now, they can create codes to allow students to join and submit songs.
