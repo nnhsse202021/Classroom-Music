@@ -155,14 +155,15 @@ document.getElementById("shuffleButton").addEventListener("click", async () => {
 //   document.getElementById("displayCode").innerHTML = "Your code is: " + await getCurrentCode();
 // })
 var isPlaylistEnabled = true;
+document.getElementById("disableButtonText").innerHTML = "Disable Classroom Code";
 document.getElementById("disableButton").addEventListener("click", async () => {
-  if (isPlaylistEnabled = true) {
-    isPlaylistEnabled = false;
+  if (isPlaylistEnabled == true) {
     document.getElementById("disableButtonText").innerHTML = "Enable Classroom Code";
+    isPlaylistEnabled = false;
   }
   else {
-    isPlaylistEnabled = true;
     document.getElementById("disableButtonText").innerHTML = "Disable Classroom Code";
+    isPlaylistEnabled = true;
   }
 })
 

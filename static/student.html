@@ -61,13 +61,13 @@
     var studentCode = ""; // Student's current class code
 
     document.getElementById("submitCode").addEventListener("click", () => {
-      if (isPlaylistEnabled = true) {
+      if (isPlaylistEnabled == true) {
         studentCode = document.getElementById("classCodeEnter").value;
         document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
         joinClass(studentCode, profile.getEmail());
       }
       else {
-        window.alert("Joining that classroom is disabled right now!")
+        window.alert("Joining that classroom is disabled right now!");
       }
     });
 
