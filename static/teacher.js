@@ -1,5 +1,27 @@
-/* The playlist variable we have as of now works a bit strangely -- every even index is the song, and every odd index is the name of the student who submitted it. */
 
+async function getCode(email) {
+	var code;
+  await fetch(`/generatecode?email=${encodeURI(email)}`)
+    .then(response => response.json())
+    .then(data => {
+      code = data.code;
+    });
+  return code;
+}
+
+async function getClassList(code) {
+  var classroom;
+  await fetch(`/getclass?code=${encodeURI(code)}`)
+    .then(response => response.json())
+    .then(data => {
+      classroom = data.classroom;
+    })
+  return classroom;
+}
+
+
+
+/* The playlist variable we have as of now works a bit strangely -- every even index is the song, and every odd index is the name of the student who submitted it. */
 async function getPlaylist(playlistID) {
   var playlist;
   await fetch(`/getplaylist?playlistID=${encodeURI(playlistID)}`)
@@ -33,8 +55,6 @@ async function shufflePlaylist() {
 	order = [];
 	var playlist = await getPlaylist(await getCurrentCode());
 	playlist = playlist.split(",");
-	console.log(playlist);
-	console.log(playlist.length);
   if (isShuffled) {
     for (i = 0; i < (playlist.length/2); i++) {
       var num = Math.floor(Math.random() * (playlist.length/2));
@@ -61,21 +81,12 @@ async function getCurrentCode() {
   return code;
 }
 
-async function getClassList(code) {
-  var classroom;
-  await fetch(`/getclass?code=${encodeURI(code)}`)
-    .then(response => response.json())
-    .then(data => {
-      classroom = data.classroom;
-    })
-  return classroom;
-}
 
 var currentSongIndex = 0;
 document.getElementById("loadButton").addEventListener("click", async () => {
   if (player) {
+		var playlist = await getPlaylist(await getCurrentCode());
     if (isShuffled) {
-      var playlist = await getPlaylist(await getCurrentCode());
       player.loadVideoById(playlist.split(",")[(order[currentSongIndex] * 2)]); // * 2 since playlist is song and student name
       currentSongIndex += 1;
       if (currentSongIndex > (playlist.length/2)) {
@@ -83,7 +94,6 @@ document.getElementById("loadButton").addEventListener("click", async () => {
       }
     }
     else {
-      var playlist = await getPlaylist(await getCurrentCode());
       player.loadVideoById(playlist.split(",")[currentSongIndex]);
       currentSongIndex += 2;
       if (currentSongIndex > playlist.length) {
@@ -115,11 +125,8 @@ document.getElementById("showPlaylist").addEventListener("click", async () => {
   document.getElementById("playlistCard").style.display = "block";
   document.getElementById("playlist").innerHTML = '';
   var playlist = await getPlaylist(await getCurrentCode());
-  if (playlist === null) {
-    return;
-  }
+  if (playlist === null) return;
   var songs = playlist.split(',');
-  console.log(songs);
   // song id
   for (i = 0; i < songs.length; i += 2) {
     var stuName = songs[i + 1];
@@ -139,22 +146,58 @@ document.getElementById("clearPlaylist").addEventListener("click", async () => {
   window.alert("Playlist has been cleared!");
 })
 
+
 document.getElementById("shuffleButton").addEventListener("click", async () => {
-  currentSongPlaylist = 0; // doesn't save between
   shufflePlaylist();
-  if (isShuffled){
+  if (isShuffled) {
     window.alert("Playlist is shuffling!");
   }
   else {
-    window.alert("Playlist is no longer shuffling!")
+    window.alert("Playlist is no longer shuffling!");
   }
 })
 
 
-// document.getElementById("generateCode").addEventListener("click", async () => {
-//   var email = profile.getEmail();
-//   document.getElementById("displayCode").innerHTML = "Your code is: " + await getCurrentCode();
-// })
+async function loadClassSelection() {
+	let newItem = document.createElement('select');
+	newItem.name = 'selectClass';
+	newItem.id = 'selectClass';
+
+	for (let i = 1; i <= 8; i++) {
+		let code = await getCode(i + email);
+		await fetch(`/getcodename?code=${encodeURI(code)}`).
+			then(response => response.json())
+			.then(data => {
+				let newOption = document.createElement('option');
+				newOption.innerHTML = data.name;
+				newOption.id = 'option' + i;
+				newOption.value = i;
+
+				newItem.appendChild(newOption);
+			});
+	}
+
+	document.getElementById('selectClassLabel').innerHTML = "Select your class: ";
+	document.getElementById('selector').appendChild(newItem);
+
+	var classSelector = document.getElementById("selectClass");
+	classSelector.addEventListener("change", async () => {
+		classNumber = classSelector.value;
+		document.getElementById("class-list").innerHTML = "";
+		document.getElementById("displayCode").innerHTML = "Your code is: " + await getCurrentCode();
+	})
+}
+
+
+document.getElementById("changeClassNameButton").addEventListener("click", async () => {
+	let code = await getCurrentCode();
+	let newName = document.getElementById("changeClassName").value;
+
+	document.getElementById("option" + classNumber).innerHTML = newName;
+
+	await fetch(`/renamecode?code=${encodeURI(code)}&name=${encodeURI(newName)}`);
+})
+
 
 document.getElementById("refreshClass").addEventListener("click", async () => {
   let classroom = await getClassList(await getCurrentCode());
@@ -165,11 +208,4 @@ document.getElementById("refreshClass").addEventListener("click", async () => {
     newItem.innerHTML = classroom[i];
     document.getElementById('class-list').appendChild(newItem);
   }
-})
-
-
-document.getElementById("selectClass").addEventListener("change", async () => {
-	console.log(document.getElementById("selectClass").value);
-	classNumber = document.getElementById("selectClass").value;
-	document.getElementById("displayCode").innerHTML = "Your code is: " + await getCurrentCode();
 })
