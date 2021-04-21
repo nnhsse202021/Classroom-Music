@@ -154,16 +154,19 @@ document.getElementById("shuffleButton").addEventListener("click", async () => {
 //   var email = profile.getEmail();
 //   document.getElementById("displayCode").innerHTML = "Your code is: " + await getCurrentCode();
 // })
-var isPlaylistEnabled = true;
+
+var isClassEnabled = true;
+var classDisabledData = [];
 document.getElementById("disableButtonText").innerHTML = "Disable Classroom Code";
 document.getElementById("disableButton").addEventListener("click", async () => {
-  if (isPlaylistEnabled == true) {
+  classDisabledData = [await getCurrentCode(), isClassEnabled];
+  if (isClassEnabled == true) {
     document.getElementById("disableButtonText").innerHTML = "Enable Classroom Code";
-    isPlaylistEnabled = false;
+    isClassEnabled = false;
   }
   else {
     document.getElementById("disableButtonText").innerHTML = "Disable Classroom Code";
-    isPlaylistEnabled = true;
+    isClassEnabled = true;
   }
 })
 

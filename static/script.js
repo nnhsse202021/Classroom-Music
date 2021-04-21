@@ -11,7 +11,6 @@ submitButton.addEventListener("click", async () => {
       showSongChoices(data.videoId1, data.videoId2, data.videoId3,data.videoTitle1, data.videoTitle2, data.videoTitle3);
     });
 });
-
 function showSongChoices(videoId1, videoId2, videoId3, videoTitle1, videoTitle2, videoTitle3) {
   document.getElementById("songChoice1").innerHTML = "Title: " + videoTitle1;
 	document.getElementById("songChoice1").setAttribute("videoid", videoId1);
