@@ -163,6 +163,10 @@ app.get("/generatecode", async (req, res) => {
 
 	let codeToName = await db.get("codeToName");
 
+	if (codeToName == null) {
+		codeToName = {};
+	}
+
 	if (!(code in codeToName)) {
 		codeToName[code] = email;
 	}
