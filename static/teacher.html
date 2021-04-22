@@ -6,7 +6,7 @@
   <script src="https://apis.google.com/js/platform.js" async defer></script>
 
 	<script src="/static/sessions.js"></script>
-  <script>checkLoginStatus()</script>
+  <script>checkLoginStatus();</script>
 </head>
 
 <body>
@@ -16,7 +16,6 @@
   <div class="g-signin2" data-onsuccess="onSignIn"></div>
   <button id="signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign Out</button>
 
-  
   <p></p>
   <script>
     var profile;
@@ -24,12 +23,15 @@
       // setLogin();
 
       profile = googleUser.getBasicProfile();
+			email = profile.getEmail();
       console.log('Name: ' + profile.getName());
       console.log('Email: ' + profile.getEmail());
       document.getElementById("store_name").innerHTML = profile.getName();
 
-      let currentCode = await getCurrentCode(profile.getEmail());
+      let currentCode = await getCurrentCode();
       document.getElementById("displayCode").innerHTML = "Your code is: " + currentCode;
+
+			await loadClassSelection();
     }
 
     function signOut() {
@@ -48,41 +50,33 @@
     <div class="card-body">
       <p class="card-text"></p>
       <div class="d-flex mt-3">
-        <button id="loadButton" class="button2" type="button"><span class="btn-text">Load next song</span></button>
-        <button id="showPlaylist" class="button2"> Show playlist</button>
-        <button id="playButton" class="button2"></span><span id="playButtonText"
-              class="btn-text">Play</span></button>
-        <button id="clearPlaylist" class="button2" type="button"><span class="btn-text">Clear
-            Playlist</span></button>
-        <button id="shuffleButton" class="button2" type="button"><span class="btn-text">Shuffle</span></button>
+        <button id="loadButton" class="button2" type="button">Load next song</button>
+				<button id="playButton" class="button2"><span id="playButtonText" class="btn-text">Play</span></button>
+        <button id="showPlaylist" class="button2">Show playlist</button>
+        <button id="clearPlaylist" class="button2" type="button">Clear Playlist</button>
+        <button id="shuffleButton" class="button2" type="button">Shuffle</button>
       </div>
     </div>
   </div>
 
   <div class="classControlses" id="classControls">
     <div class="card-header">
-      <span class="icon icon-xs w95-folder"></span>
       <span class="ml-4">Classroom Controls</span>
     </div>
     <div class="card-body">
-      <!-- <button id="generateCode" class="button3">Generate class code</button> -->
+			<p></p>
+			<div id="selector">
+				<label for="selectClass" id="selectClassLabel">Select your class: Loading...</label>
+			</div>
+			<p></p>
+			<input class="card-text" type="text" id="changeClassName" placeholder="New Name">
+			<button class="button1" id="changeClassNameButton" type="button">Rename</button>
+
       <p class="card-text" id="displayCode">Your code is: </p>
       <button id="refreshClass" class="button3">Refresh class list</button>
       <p class="card-text">Your students are:</p>
       <ul id="class-list"></ul>
     </div>
-  </div>
-
-
-  <!-- Video player: -->
-  <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
-  <div id="player"></div>
-  <script src="video-player.js"></script>
-
-
-  <div id="playlistCard">
-    <div class="grid-item-3">Playlist</div>
-    <ul id="playlist"></ul>
   </div>
 
   <div class="modal" id="verifyModal">
@@ -94,9 +88,10 @@
         <div class="form-check">
           <label class="form-check-label">
             <input class="form-check-input" type="checkbox" id="verify">
-            <span class="form-check-x"></span>
-            <span class="form-check-sign"></span>
-            This song IS CLEAN. This includes all sources, such as obscene language or inappropriate themes. </input>
+							<span class="form-check-x"></span>
+							<span class="form-check-sign"></span>
+							This song IS CLEAN. This includes all sources, such as obscene language or inappropriate themes.
+						</input>
           </label>
         </div>
         <div id="confirmSongPadding">
@@ -132,9 +127,7 @@
       </div>
     </div>
   </div>
-  </div>
-  </div>
-  </div>
+
   <div class="modal" id="verifyModal">
     <div class="modal-content">
       <div class="card card-tertiary">
@@ -161,7 +154,6 @@
     </div>
     <!-- </div> -->
   </div>
-
 
   </div>
   <div class="grid-container-2">
@@ -195,11 +187,15 @@
         <p id="songChoice3" class="card-text"></p>
       </div>
     </div>
-
   </div>
+
+	<!-- Video player: -->
+  <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+  <div id="player"></div>
 
   <script src="https://apis.google.com/js/api.js"></script>
   <script src="/static/script.js"></script>
   <script src="/static/teacher.js"></script>
+	<script src="video-player.js"></script>
 
 </body>

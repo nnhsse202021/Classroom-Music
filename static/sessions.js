@@ -20,8 +20,10 @@ function checkLoginStatus() {
     .then(data => {
       console.log(data.loggedIn);
       if (data.loggedIn === undefined) {
+				console.log("thonk");
         window.location.href = window.location.origin + "/static/index.html";
 			} else if (data.loggedIn != window.location.href) {
+				console.log(window.location.href);
 				window.location.href = data.loggedIn;
 			}
     });
