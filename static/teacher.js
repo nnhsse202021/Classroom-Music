@@ -82,27 +82,40 @@ async function getCurrentCode() {
 }
 
 
+async function updateCurrentlyPlayingText(id) {
+	await fetch(`/videoidtotitle?id=${encodeURI(id)}`)
+		.then(response => response.json())
+		.then(data => {
+			document.getElementById('currentlyPlaying').innerHTML = data.title;
+		});
+}
+
 var currentSongIndex = 0;
 document.getElementById("loadButton").addEventListener("click", async () => {
   if (player) {
+		var id;
 		var playlist = await getPlaylist(await getCurrentCode());
     if (isShuffled) {
-      player.loadVideoById(playlist.split(",")[(order[currentSongIndex] * 2)]); // * 2 since playlist is song and student name
+      id = playlist.split(",")[(order[currentSongIndex] * 2)]; // * 2 since playlist is song and student name
       currentSongIndex += 1;
       if (currentSongIndex > (playlist.length/2)) {
         currentSongIndex = 0;
       }
     }
     else {
-      player.loadVideoById(playlist.split(",")[currentSongIndex]);
+			id = playlist.split(",")[currentSongIndex];
       currentSongIndex += 2;
       if (currentSongIndex > playlist.length) {
         currentSongIndex = 0;
       }
     }
+
+		player.loadVideoById(id); 
+
     // update the play button
     isPlaying = true;
     document.getElementById("playButtonText").innerHTML = "Pause";
+		updateCurrentlyPlayingText(id);
   }
 });
 
