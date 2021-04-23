@@ -181,7 +181,7 @@ app.get("/generatecode", async (req, res) => {
 
 
 app.get("/joinclass", async (req, res) => {
-  let code = req.query.code + "class" + req.query.classNumber;
+  let code = req.query.code + "class";
   let email = req.query.email;
 
   let codeList = await db.list();
