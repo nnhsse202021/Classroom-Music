@@ -73,12 +73,23 @@ app.get("/videoidtotitle", (req, res) => {
     });
 });
 
+var classArray;
+app.get("/sendclassenabled", (req, res) => {
+  classArray = req.query.classArray;
+});
+
+app.get("/getclassenabled", (req, res) =>{
+  res.send(JSON.stringify({
+    classDisabledData: classArray
+  }));
+});
+
 app.get("/addsong", async (req, res) => {
   let vidID = req.query.id;
   let playlistID = req.query.playlist;
   let value = vidID;
 
-  playlistIDList = await db.list(); // getting the list of keys
+  playlistIDList =  db.list(); // getting the list of keys
   if (playlistIDList.indexOf(playlistID) > -1) { // check for whether the key is already in the database
     value = await db.get(playlistID);
     console.log("got it");

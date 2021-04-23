@@ -1,4 +1,4 @@
-<head>
+  <head>
 	<meta name="google-signin-client_id" content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
 	<link rel="stylesheet" type="text/css" href="/static/style.css" />
 	<script src="https://apis.google.com/js/client.js?onload=onClientLoad">
@@ -62,21 +62,27 @@
     </div>
   </div>
 
-  <script src = "script.js">
-		
-	</script>
-
 	<script>
-		var checkArray = isClassEnabled;
-    var studentCode = ""; // Student's current class classcode
-    document.getElementById("submitCode").addEventListener("click", () => {
-      studentCode = document.getElementById("classCodeEnter").value;
+		var studentCode = ""; // Student's current class classcode
+  
+    document.getElementById("submitCode").addEventListener("click", async () => {
       
-      if (studentCode == checkArray[0] && checkArray[1] == true) {
+      let classDisableArray = await fetch(`/getclassenabled`)
+				.then(response => response.json())
+        .then(data => {
+          console.log("Classroom Enable Data Accessed");
+					console.log(data);
+          return data.classDisabledData;
+        });
+
+      studentCode = document.getElementById("classCodeEnter").value;
+
+			classDisableArray = classDisableArray.split(',');
+      if (studentCode == classDisableArray[0] && classDisableArray[1] == true) {
         document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
         joinClass(studentCode, profile.getEmail());
       }
-      else if (studentCode == checkArray[0] && checkArray[1] == false) {
+      else if (studentCode == classDisableArray[0] && classDisableArray[1] == false) {
         window.alert("Joining that classroom is disabled right now!");
       }
     });

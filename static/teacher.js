@@ -157,16 +157,24 @@ document.getElementById("shuffleButton").addEventListener("click", async () => {
 
 var isClassEnabled = true;
 var classDisabledData = [];
+
+async function xyz () { // send code stuff automatically
+  classDisabledData = [await getCurrentCode(), isClassEnabled];
+  console.log(classDisabledData);
+  await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`); // so it's not linked to pressing the button
+}
+
 document.getElementById("disableButtonText").innerHTML = "Disable Classroom Code";
 document.getElementById("disableButton").addEventListener("click", async () => {
-  classDisabledData = [await getCurrentCode(), isClassEnabled];
-  if (isClassEnabled == true) {
+  if (classDisabledData[1] == true) {
     document.getElementById("disableButtonText").innerHTML = "Enable Classroom Code";
-    isClassEnabled = false;
+    classDisabledData[1] = false;
+    await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`);
   }
   else {
     document.getElementById("disableButtonText").innerHTML = "Disable Classroom Code";
-    isClassEnabled = true;
+    classDisabledData[1] = true;
+    await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`);
   }
 })
 
