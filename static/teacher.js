@@ -125,13 +125,30 @@ document.getElementById("showPlaylist").addEventListener("click", async () => {
     await fetch(`/videoidtotitle?id=${encodeURI(songs[i])}`)
       .then(response => response.json())
       .then(data => {
-        var newItem = document.createElement('li');
+        /*
+        var rmvbtn = document.createElement("BUTTON");
+        rmvbtn.innerHTML = "CLICK ME";
+        document.getElementById("playlist").appendChild(rmvbtn);
+        */
+        var newItem = document.createElement("BUTTON");
+        newItem.setAttribute('id', songs[i]);
+        newItem.classList.add("playlistSongs");
+
+        newItem.addEventListener("click", async () => {
+          displaySongInfo(songs[i], stuName);
+          console.log("Sent ID and Student Name to MODAL");
+        })
+
+
         newItem.innerHTML = data.title;
         document.getElementById('playlist').appendChild(newItem).append(" ----------- Submitted by: " + stuName);
       });
   }
 });
 
+async function displaySongInfo(id, stuName){
+  console.log("squigga");
+}
 
 document.getElementById("clearPlaylist").addEventListener("click", async () => {
   deletePlaylist(await getCurrentCode());
@@ -158,7 +175,7 @@ document.getElementById("shuffleButton").addEventListener("click", async () => {
 document.getElementById("refreshClass").addEventListener("click", async () => {
   let classroom = await getClassList(await getCurrentCode());
   document.getElementById('class-list').innerHTML = "";
-
+  document.getElementById("studentCard").style.display = "block";
   for (let i = 0; i < classroom.length; i++) {
     let newItem = document.createElement('li');
     newItem.innerHTML = classroom[i];
