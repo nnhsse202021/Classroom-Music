@@ -105,13 +105,16 @@ document.getElementById("playButton").addEventListener("click", () => {
     player.playVideo();
     document.getElementById("playButtonText").innerHTML = "Pause";
   }
-
   isPlaying = !isPlaying;
 });
 
+let cancelOptionsButton = document.getElementById("cancelOptionsButton");
+cancelOptionsButton.addEventListener("click", async () => {
+  document.getElementById("songOptionsModal").style.display = "none";
+})
 
 document.getElementById("showPlaylist").addEventListener("click", async () => {
-  document.getElementById("playlistCard").style.display = "block";
+  document.getElementById("playlistCard").style.display = "inline-block";
   document.getElementById("playlist").innerHTML = '';
   var playlist = await getPlaylist(await getCurrentCode());
   if (playlist === null) {
@@ -137,6 +140,7 @@ document.getElementById("showPlaylist").addEventListener("click", async () => {
         newItem.addEventListener("click", async () => {
           displaySongInfo(songs[i], stuName);
           console.log("Sent ID and Student Name to MODAL");
+          document.getElementById("songOptionsModal").style.display = "block";
         })
 
 
@@ -175,7 +179,7 @@ document.getElementById("shuffleButton").addEventListener("click", async () => {
 document.getElementById("refreshClass").addEventListener("click", async () => {
   let classroom = await getClassList(await getCurrentCode());
   document.getElementById('class-list').innerHTML = "";
-  document.getElementById("studentCard").style.display = "block";
+  document.getElementById("studentCard").style.display = "inline-block";
   for (let i = 0; i < classroom.length; i++) {
     let newItem = document.createElement('li');
     newItem.innerHTML = classroom[i];

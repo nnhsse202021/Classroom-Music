@@ -70,30 +70,29 @@
     </div>
   </div>
 
-  <div id="studentCard">
-    <div class="grid-item-3">Students</div>
-      <ul id="class-list"></ul>
+  <div class="grid-item-3">
+    <div id="playlistCard">
+      <div class="grid-item-3">Playlist</div>
+      <ul id="playlist"></ul>
+    </div>
+    <div class="divider3"></div>
+    <div id="studentCard">
+      <div class="grid-item-3">Students</div>
+        <ul id="class-list"></ul>
+      </div>
     </div>
   </div>
-
 
   <!-- Video player: -->
   <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
   <div id="player"></div>
   <script src="video-player.js"></script>
 
-
-  <div id="playlistCard">
-    <div class="grid-item-3">Playlist</div>
-    <ul id="playlist"></ul>
-  </div>
-
   <div class="modal" id="verifyModal">
     <div id="modalContent">
       <div class="card-header">
-        <span class="ml-4">Please Confirm</span>
-      </div>
-      <class="card-body">
+        <span>Please Confirm</span>
+      </div class="card-body">
         <label class="form-check-label">
           <input type="checkbox" id="verify">
           This song IS CLEAN. This includes all sources, such as obscene language or inappropriate themes. </input>
@@ -135,22 +134,25 @@
   </div>
   </div>
 
-  <div class="modal" id="songchoiceModal">
-    <div id="modalContent">
+  <div class="modal" id="songOptionsModal">
+    <div id="songOptionsContent">
       <div class="card-header">
-        <span class="ml-4">Please Confirm</span>
+        <span>Song Info</span>
+      <div class="divider2"></div>
+      <div class="grid-item-3">
+        <span class="songSubmission">
+          Song Name: 
+        </span>
+        <div class="divider"></div>
+        <span class="songSubmission">
+          Submitted by: 
+        </span>
       </div>
-      <class="card-body">
-        <label class="form-check-label">
-          <input type="checkbox" id="verify">
-          This song IS CLEAN. This includes all sources, such as obscene language or inappropriate themes. </input>
-        </label>
-        <div id="confirmSongPadding">
-          <button class="button1" id="confirmSong" type="button" disabled>Confirm</button>
-          <div id="store_name"></div>
-          <div class="divider"></div>
-          <button class="button1" id="verifyCancelButton" type="button">Cancel</button>
-        </div>
+      <div id="songOptionsPadding">
+        <button class="button4" id="removeSongButton" type="button">Remove Song</button>
+        <div class="divider"></div>
+        <button class="button4" id="cancelOptionsButton" type="button">Cancel</button>
+      </div>
     </div>
   </div>
 

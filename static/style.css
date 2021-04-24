@@ -151,11 +151,20 @@ li {
   border-color: #bf1a02;
   text-align: center;
   width: 20%;
-  margin-left: 15%;
+  /*margin-left: 15%;*/
   margin-top: 1%;
+  vertical-align: top;
   display: none;
   /* margin-right: auto; */
 }
+
+
+/*
+  background-color: rgb(255, 255, 255);
+  padding: 1.5%;
+  border-radius: 20px;
+  border: 2px solid;
+  border-color: #009608;*/
 
 #studentCard {
   background-color: rgb(255, 255, 255);
@@ -165,8 +174,9 @@ li {
   border-color: #f7ef00;
   text-align: center;
   width: 20%;
-  margin-left: 15%;
+  /*margin-left: 15%;*/
   margin-top: 1%;
+  vertical-align: top;
   display: none;
   /* margin-right: auto; */
 }
@@ -292,6 +302,25 @@ li {
   box-shadow: none;
 }
 
+.button4 {
+  width: 40%;
+  font-family: 'Rubik', sans-serif;
+  border-radius: 10px;
+  /*border-color: #ffb78d;*/
+  border-color: #bf1a02;
+  background-color: #dfdfdfdf;
+  padding: 2%;
+}
+
+.button4:hover {
+  background-color: #cfcfcf;
+}
+
+.button4:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 #songChoiceBox1 {
   display: none;
   width: 50%;
@@ -361,7 +390,8 @@ li {
   background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
 }
 
-#songchoiceModal {
+
+#songOptionsModal {
   text-align: center;
   font-family: 'Windows 95';
   display: none; /* Hidden by default */
@@ -387,13 +417,51 @@ li {
   border: 2px solid #49b8da;
 }
 
+#songOptionsContent {
+  width: 45%;
+  height: 20%;
+  margin: auto;
+  background-color: rgb(255, 255, 255);
+  padding: 3%;
+  border-radius: 25px;
+  border: 2px solid #bf1a02;
+}
+
+.songSubmission {
+  width: 30%;
+  height: 10%;
+  margin: auto;
+  background-color: rgb(250, 250, 250);
+  padding: 3%;
+  border-radius: 15px;
+  border: 2px solid #bf1a02;
+  display: inline-block;
+  vertical-align: top;
+}
+
 .divider {
-  width:6%;
-  height:auto;
-  display:inline-block;
+  width: 6%;
+  height: auto;
+  display: inline-block;
+}
+
+.divider2 {
+  width: auto;
+  height: 6%;
+  display: inline-block;
+}
+
+.divider3 {
+  width: 28%;
+  height: auto;
+  display: inline-block;
 }
 
 #confirmSongPadding {
+  padding: 2%;
+}
+
+#songOptionsPadding {
   padding: 2%;
 }
 
