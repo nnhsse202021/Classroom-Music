@@ -175,6 +175,9 @@ async function xyz () {
 
 // method for allowing disabling/enabling classes
 document.getElementById("disableClassButton").addEventListener("click", async () => {
+  if (classDisabledData[1] != true && classDisabledData[1] != false) { // if undefined
+    classDisabledData[1] = true;
+  }
   if (classDisabledData[1] == true) { // if enabled
     classDisabledData[1] = false; // disable
     document.getElementById("disableClassButtonText").innerHTML = "Enable Classroom Code"; // change button to ask for enable
@@ -189,7 +192,9 @@ document.getElementById("disableClassButton").addEventListener("click", async ()
 
 // method for allowing disabling/enabling song submissions
 document.getElementById("disableSubmitButton").addEventListener("click", async () => {
-  console.log(submitDisabledData);
+  if (submitDisabledData != true && submitDisabledData != false) { // if undefined
+    submitDisabledData = true;
+  }
   if (submitDisabledData == true) { // if enabled
     submitDisabledData = false; // disable
     document.getElementById("disableSubmitButtonText").innerHTML = "Enable Song Submissions"; // change button to ask for enable
