@@ -78,11 +78,17 @@
       studentCode = document.getElementById("classCodeEnter").value;
 
 			classDisableArray = classDisableArray.split(',');
-      if (studentCode == classDisableArray[0] && classDisableArray[1] == true) {
+      
+      console.log(studentCode);
+      console.log(classDisableArray[0]);
+      console.log(classDisableArray[1]);
+      console.log(classDisableArray[1] == true);
+
+      if (studentCode == classDisableArray[0] && classDisableArray[1] == "true") {
         document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
         joinClass(studentCode, profile.getEmail());
       }
-      else if (studentCode == classDisableArray[0] && classDisableArray[1] == false) {
+      else if (studentCode == classDisableArray[0] && classDisableArray[1] == "false") {
         window.alert("Joining that classroom is disabled right now!");
       }
     });

@@ -162,9 +162,15 @@ async function xyz () { // send code stuff automatically
   classDisabledData = [await getCurrentCode(), isClassEnabled];
   console.log(classDisabledData);
   await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`); // so it's not linked to pressing the button
+  if (isClassEnabled == true) {
+    document.getElementById("disableButtonText").innerHTML = "Disable Classroom Code";
+  }
+  else {
+    document.getElementById("disableButtonText").innerHTML = "Enable Classroom Code";
+  }
 }
 
-document.getElementById("disableButtonText").innerHTML = "Disable Classroom Code";
+
 document.getElementById("disableButton").addEventListener("click", async () => {
   if (classDisabledData[1] == true) {
     document.getElementById("disableButtonText").innerHTML = "Enable Classroom Code";
