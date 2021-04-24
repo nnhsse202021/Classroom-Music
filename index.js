@@ -84,6 +84,17 @@ app.get("/getclassenabled", (req, res) =>{
   }));
 });
 
+var canSubmit;
+app.get("/sendsubmitenabled", (req, res) => {
+  canSubmit = req.query.canSubmit;
+});
+
+app.get("/getsubmitenabled", (req, res) =>{
+  res.send(JSON.stringify({
+    submitDisabledData: canSubmit
+  }));
+});
+
 app.get("/addsong", async (req, res) => {
   let vidID = req.query.id;
   let playlistID = req.query.playlist;
