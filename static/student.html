@@ -63,7 +63,7 @@
     document.getElementById("submitCode").addEventListener("click", () => {
       studentCode = document.getElementById("classCodeEnter").value;
       document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
-      joinClass(studentCode, profile.getEmail());
+      joinClass(studentCode, profile.getEmail(), profile.getName());
     });
 
     // function that returns the student's current class code
@@ -77,8 +77,10 @@
 				return currentCode;
     }
 		
-    async function joinClass(code, email) {
-      await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}`);
+    async function joinClass(code, email, name) {
+      await fetch(`/setemailtoname?email=${encodeURI(email)}&name=${encodeURI(name)}`);
+
+			await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}`);
     }
   </script>
 

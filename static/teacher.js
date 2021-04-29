@@ -221,9 +221,20 @@ document.getElementById("refreshClass").addEventListener("click", async () => {
     //newItem.setAttribute('id', songs[i]);
     
     newItem1.addEventListener("click", async () => {
-      document.getElementById("studentInfoName").innerHTML = "Student Name: " + classroom[i];
+      document.getElementById("studentInfoName").innerHTML = "Student Name: " + emailToName(classroom[i]);
+      document.getElementById("studentEmail").innerHTML = "Student Email: " + classroom[i];
       document.getElementById("studentOptionsModal").style.display = "block";
     })
     document.getElementById('class-list').appendChild(newItem1);
   }
 })
+
+async function emailToName(email) {
+	let name = await fetch(`/getemailtoname?email=${encodeURI(email)}`)
+		.then(response => response.json())
+		.then(data => {
+			console.log(data.name);
+			return data.name;
+		});
+	return name;
+}
