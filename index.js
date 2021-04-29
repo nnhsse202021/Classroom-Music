@@ -127,12 +127,37 @@ app.get("/deleteplaylist", async (req, res) => {
 });
 
 
+app.get("/renamecode", async (req, res) => {
+	let code = req.query.code;
+	let newName = req.query.name;
+
+	let database = await db.list();
+	var codeToName = {};
+	if (database.indexOf("codeToName") > -1) {
+		codeToName = await db.get("codeToName");
+	}
+
+	codeToName[code] = newName;
+	await db.set("codeToName", codeToName);
+})
+
+
+app.get("/getcodename", async (req, res) => {
+	let code = req.query.code;
+	let name = await db.get("codeToName");
+	name = name[code];
+
+	res.send(JSON.stringify({
+		name: name
+	}))
+})
+
 // Generate an unique code for each teacher.
 // req should take in an email.
-app.get("/generatecode", (req, res) => {
+app.get("/generatecode", async (req, res) => {
   let email = req.query.email;
 
-  // find the hash function of the email given
+  // find the hash function of the email
   // (same as java implementation for string hash function)
   let hash = 0;
   for (i = 0; i < email.length; i++) {
@@ -148,6 +173,18 @@ app.get("/generatecode", (req, res) => {
     code += String.fromCharCode(65 + hash % 26);
     hash = hash / 26;
   }
+
+	let codeToName = await db.get("codeToName");
+
+	if (codeToName == null) {
+		codeToName = {};
+	}
+
+	if (!(code in codeToName)) {
+		codeToName[code] = email;
+	}
+
+	await db.set("codeToName", codeToName);
 
   res.send(JSON.stringify({
     code: code
@@ -204,7 +241,6 @@ app.get("/getclass", async (req, res) => {
   }))
 });
 
-
 app.get("/setemailtoname", async (req, res) => {
 	let dictionary = await db.get("emailToName");
 	if (dictionary === null) {
@@ -257,7 +293,6 @@ app.use("/checksession", (req, res, next) => {
 })
 
 app.get("/checksession", (req, res, next) => {
-  console.log(req.session);
   res.send(JSON.stringify({
     loggedIn: req.session.views["/checksession"]
   }));
