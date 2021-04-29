@@ -1,5 +1,8 @@
 /* The playlist variable we have as of now works a bit strangely -- every even index is the song, and every odd index is the name of the student who submitted it. */
 
+var songBeingLookedAt;
+var songPlaylistBeingLookedAt;
+
 async function getPlaylist(playlistID) {
   var playlist;
   await fetch(`/getplaylist?playlistID=${encodeURI(playlistID)}`)
@@ -113,6 +116,17 @@ cancelOptionsButton.addEventListener("click", async () => {
   document.getElementById("songOptionsModal").style.display = "none";
 })
 
+let cancelOptionsesButton = document.getElementById("cancelOptionsesButton");
+cancelOptionsesButton.addEventListener("click", async () => {
+  document.getElementById("studentOptionsModal").style.display = "none";
+})
+
+let removeSongButton = document.getElementById("removeSongButton");
+removeSongButton.addEventListener("click", async () => {
+  console.log("bruhas");
+  removeSongFromPlaylist();
+})
+
 document.getElementById("showPlaylist").addEventListener("click", async () => {
   document.getElementById("playlistCard").style.display = "inline-block";
   document.getElementById("playlist").innerHTML = '';
@@ -138,20 +152,39 @@ document.getElementById("showPlaylist").addEventListener("click", async () => {
         newItem.classList.add("playlistSongs");
 
         newItem.addEventListener("click", async () => {
-          displaySongInfo(songs[i], stuName);
+          displaySongInfo(data.title, stuName);
           console.log("Sent ID and Student Name to MODAL");
+
+          songBeingLookedAt = songs[i];
+          songPlaylistBeingLookedAt = playlist;
+          
+          document.getElementById("songInfoName").innerHTML = "Song Name: " + data.title;
+          document.getElementById("submittedBy").innerHTML = "Submitted By: " + stuName;
           document.getElementById("songOptionsModal").style.display = "block";
+
         })
 
 
         newItem.innerHTML = data.title;
-        document.getElementById('playlist').appendChild(newItem).append(" ----------- Submitted by: " + stuName);
+        document.getElementById('playlist').appendChild(newItem);
       });
   }
+
 });
 
+async function removeSongFromPlaylist(id, playlistID) {
+  var id = songBeingLookedAt;
+  var playlistID = songPlaylistBeingLookedAt;
+  
+  await fetch(`/removesong?id=${encodeURI(id)}&playlist=${encodeURI(playlistID)}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log("(REQUEST RECEIVED BACK) after sending song to server to be removed from the playlist\nID: " + data.id);
+  });
+}
+
 async function displaySongInfo(id, stuName){
-  console.log("squigga");
+  console.log("id: " + id + "\nname: " + stuName);
 }
 
 document.getElementById("clearPlaylist").addEventListener("click", async () => {
@@ -181,8 +214,16 @@ document.getElementById("refreshClass").addEventListener("click", async () => {
   document.getElementById('class-list').innerHTML = "";
   document.getElementById("studentCard").style.display = "inline-block";
   for (let i = 0; i < classroom.length; i++) {
-    let newItem = document.createElement('li');
-    newItem.innerHTML = classroom[i];
-    document.getElementById('class-list').appendChild(newItem);
+    var newItem1 = document.createElement("BUTTON");
+    newItem1.innerHTML = classroom[i];
+    console.log(classroom[i]);
+    newItem1.classList.add("playlistSongs");
+    //newItem.setAttribute('id', songs[i]);
+    
+    newItem1.addEventListener("click", async () => {
+      document.getElementById("studentInfoName").innerHTML = "Student Name: " + classroom[i];
+      document.getElementById("studentOptionsModal").style.display = "block";
+    })
+    document.getElementById('class-list').appendChild(newItem1);
   }
 })

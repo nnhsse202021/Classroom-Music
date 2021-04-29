@@ -1,10 +1,15 @@
+:root {
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
 .grid-container-1 {
   display: grid;
   grid-template-columns: 25% 50% 25%;
   padding: 2%;
 }
+
 .grid-item-1 {
-  padding: 10%;
+  //padding: 10%;
   text-align: center;
 }
 
@@ -22,6 +27,12 @@
 .grid-item-3 {
   padding: 2%;
   text-align: center;
+}
+
+.grid-item-4 {
+  padding: 2%;
+  text-align: center;
+  display: flex;
 }
 
 .classroomBox {
@@ -61,6 +72,7 @@ li {
   /*border-color: #ffb78d;*/
   border-color: rgb(255, 190, 190);
   padding: 4%;
+  width: 100%;
   margin:0 0 10px 0;
 }
 
@@ -71,6 +83,7 @@ li {
   background-color: #dfdfdfdf;
   border-color: rgb(255, 190, 190);
   padding: 4%;
+  width: 100%;
   margin:0 0 10px 0;
 }
 
@@ -84,6 +97,12 @@ li {
 }
 
 #playlist {
+  background-color: #ffffff;
+  padding: 2%;
+  list-style-type: none;
+}
+
+#class-list {
   background-color: #ffffff;
   padding: 2%;
   list-style-type: none;
@@ -150,7 +169,7 @@ li {
   border: 2px solid;
   border-color: #bf1a02;
   text-align: center;
-  width: 20%;
+  width: 50%;
   /*margin-left: 15%;*/
   margin-top: 1%;
   vertical-align: top;
@@ -173,7 +192,7 @@ li {
   border: 2px solid;
   border-color: #f7ef00;
   text-align: center;
-  width: 20%;
+  width: 50%;
   /*margin-left: 15%;*/
   margin-top: 1%;
   vertical-align: top;
@@ -321,6 +340,25 @@ li {
   box-shadow: none;
 }
 
+.button5 {
+  width: 40%;
+  font-family: 'Rubik', sans-serif;
+  border-radius: 10px;
+  /*border-color: #ffb78d;*/
+  border-color: #f7ef00;
+  background-color: #dfdfdfdf;
+  padding: 2%;
+}
+
+.button5:hover {
+  background-color: #cfcfcf;
+}
+
+.button5:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 #songChoiceBox1 {
   display: none;
   width: 50%;
@@ -407,6 +445,22 @@ li {
   background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
 }
 
+#studentOptionsModal {
+  text-align: center;
+  font-family: 'Windows 95';
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 100; /* Sit on top */
+  padding-top: 8%; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+}
+
 #modalContent {
   width: 45%;
   height: 15%;
@@ -419,7 +473,6 @@ li {
 
 #songOptionsContent {
   width: 45%;
-  height: 20%;
   margin: auto;
   background-color: rgb(255, 255, 255);
   padding: 3%;
@@ -427,14 +480,33 @@ li {
   border: 2px solid #bf1a02;
 }
 
+#studentOptionsContent {
+  width: 45%;
+  margin: auto;
+  background-color: rgb(255, 255, 255);
+  padding: 3%;
+  border-radius: 25px;
+  border: 2px solid #f7ef00;
+}
+
 .songSubmission {
   width: 30%;
-  height: 10%;
   margin: auto;
   background-color: rgb(250, 250, 250);
   padding: 3%;
   border-radius: 15px;
   border: 2px solid #bf1a02;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.studentSubmission {
+  width: 30%;
+  margin: auto;
+  background-color: rgb(250, 250, 250);
+  padding: 3%;
+  border-radius: 15px;
+  border: 2px solid #f7ef00;
   display: inline-block;
   vertical-align: top;
 }
@@ -455,6 +527,12 @@ li {
   width: 28%;
   height: auto;
   display: inline-block;
+}
+
+.section {
+  display: inline-block;
+  width: 50%;
+  height: auto;
 }
 
 #confirmSongPadding {

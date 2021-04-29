@@ -70,15 +70,18 @@
     </div>
   </div>
 
-  <div class="grid-item-3">
-    <div id="playlistCard">
-      <div class="grid-item-3">Playlist</div>
-      <ul id="playlist"></ul>
+  <div class="grid-item-4">
+    <div class="section">
+      <div id="playlistCard">
+        <div class="grid-item-3">Playlist</div>
+        <ul id="playlist"></ul>
+      </div>
     </div>
-    <div class="divider3"></div>
-    <div id="studentCard">
-      <div class="grid-item-3">Students</div>
-        <ul id="class-list"></ul>
+    <div class="section">
+      <div id="studentCard">
+        <div class="grid-item-3">Students</div>
+          <ul id="class-list"></ul>
+        </div>
       </div>
     </div>
   </div>
@@ -138,20 +141,42 @@
     <div id="songOptionsContent">
       <div class="card-header">
         <span>Song Info</span>
-      <div class="divider2"></div>
+      </div>
       <div class="grid-item-3">
-        <span class="songSubmission">
-          Song Name: 
+        <span id = "songInfoName" class="songSubmission">
+          Song Name: ERROR
         </span>
         <div class="divider"></div>
-        <span class="songSubmission">
-          Submitted by: 
+        <span id = "submittedBy" class="songSubmission">
+          Submitted by: ERROR
         </span>
       </div>
       <div id="songOptionsPadding">
         <button class="button4" id="removeSongButton" type="button">Remove Song</button>
         <div class="divider"></div>
         <button class="button4" id="cancelOptionsButton" type="button">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal" id="studentOptionsModal">
+    <div id="studentOptionsContent">
+      <div class="card-header">
+        <span>Student Info</span>
+      </div>
+      <div class="grid-item-3">
+        <span id = "studentInfoName" class="studentSubmission">
+          Student Name: ERROR
+        </span> 
+        <!--<div class="divider"></div>
+        <span id = "submittedBy" class="studentSubmission">
+          Submitted by: ERROR
+        </span>-->
+      </div>
+      <div id="songOptionsPadding">
+        <button class="button5" id="removeStudentButton" type="button">Remove Student</button>
+        <div class="divider"></div>
+        <button class="button5" id="cancelOptionsesButton" type="button">Cancel</button>
       </div>
     </div>
   </div>

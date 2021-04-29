@@ -73,6 +73,20 @@ app.get("/videoidtotitle", (req, res) => {
     });
 });
 
+app.get("/removesong", async (req ,res) => {
+  let vidID = req.query.id;
+  let playlistID = req.query.playlist;
+  
+  value = db.get(playlistID);
+  console.log("Request received!");
+  console.log(db.list().then(keys => {}));
+
+  res.send(JSON.stringify({
+    id: vidID,
+    playlist: playlistID
+  }));
+})
+
 app.get("/addsong", async (req, res) => {
   let vidID = req.query.id;
   let playlistID = req.query.playlist;
