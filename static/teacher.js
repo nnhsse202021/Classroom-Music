@@ -1,5 +1,6 @@
 
 var songBeingLookedAt;
+var studentBeingLookedAt;
 var songPlaylistBeingLookedAt;
 //Is this needed ^^^ or this vvv
 async function getCode(email) {
@@ -14,6 +15,8 @@ async function getCode(email) {
 
 async function getClassList(code) {
   var classroom;
+	console.log(code);
+	console.log("abc");
   await fetch(`/getclass?code=${encodeURI(code)}`)
     .then(response => response.json())
     .then(data => {
@@ -154,6 +157,12 @@ removeSongButton.addEventListener("click", async () => {
   await removeSongFromPlaylist();
 })
 
+let removeStudentButton = document.getElementById("removeStudentButton");
+removeStudentButton.addEventListener("click", async () => {
+	console.log(studentBeingLookedAt);
+	await removeStudentFromClass();
+})
+
 document.getElementById("showPlaylist").addEventListener("click", showPlaylist)
 
 async function showPlaylist() {
@@ -207,6 +216,15 @@ async function removeSongFromPlaylist() {
   });
 	await showPlaylist();
 	document.getElementById("songOptionsModal").style.display = "none";
+}
+
+async function removeStudentFromClass() {
+	var email = studentBeingLookedAt;
+	var playlistID = await getCurrentCode();
+
+	await fetch(`/removestudent?email=${encodeURI(email)}&code=${encodeURI(playlistID)}`);
+
+	document.getElementById("studentOptionsModal").style.display = "none";
 }
 
 async function displaySongInfo(id, stuName){
@@ -273,6 +291,7 @@ document.getElementById("changeClassNameButton").addEventListener("click", async
 
 document.getElementById("refreshClass").addEventListener("click", async () => {
   let classroom = await getClassList(await getCurrentCode());
+	console.log(classroom);
   document.getElementById('class-list').innerHTML = "";
   document.getElementById("studentCard").style.display = "inline-block";
   for (let i = 0; i < classroom.length; i++) {
@@ -283,6 +302,7 @@ document.getElementById("refreshClass").addEventListener("click", async () => {
     //newItem.setAttribute('id', songs[i]);
     
     newItem1.addEventListener("click", async () => {
+			studentBeingLookedAt = classroom[i];
 			let name = await emailToName(classroom[i]);
       document.getElementById("studentInfoName").innerHTML = "Student Name: " + name;
       document.getElementById("studentEmail").innerHTML = "Student Email: " + classroom[i];

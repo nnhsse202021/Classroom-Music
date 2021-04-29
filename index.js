@@ -92,7 +92,7 @@ app.get("/removesong", async (req ,res) => {
 
 	value.splice(index, 2);
 	value = value.toString();
-	
+
 	if (value === "") {
 		await db.delete(playlistID);
 	} else {
@@ -103,6 +103,29 @@ app.get("/removesong", async (req ,res) => {
     id: vidID,
     playlist: playlistID
   }));
+})
+
+app.get("/removestudent", async (req, res) => {
+	console.log("time to remove a student");
+
+	let email = req.query.email;
+	let code = req.query.code + "class";
+
+	let classroom = await db.get(code);
+	console.log(classroom);
+
+	let index = -1;
+	for (let i = 0; i < classroom.length; i++) {
+		if (classroom[i] === email) {
+			index = i;
+			break;
+		}
+	}
+
+	classroom.splice(index, 1);
+	console.log(classroom);
+	console.log(index);
+	await db.set(code, classroom);
 })
 
 app.get("/addsong", async (req, res) => {
@@ -227,6 +250,8 @@ app.get("/joinclass", async (req, res) => {
   classroom.push(email);
   db.set(code, classroom);
 
+
+	
   let studentsToCodes = {};
 
   if (codeList.indexOf("studentsToCodes") > -1) {
@@ -235,6 +260,19 @@ app.get("/joinclass", async (req, res) => {
 
   studentsToCodes[email] = req.query.code;
   db.set("studentsToCodes", studentsToCodes);
+
+	/* email to name */
+	
+	let dictionary = await db.get("emailToName");
+	if (dictionary === null) {
+		dictionary = {};
+	}
+
+	console.log(req.query.name);
+	console.log(dictionary);
+	dictionary[req.query.email] = req.query.name;
+
+	await db.set("emailToName", dictionary);
 })
 
 
@@ -255,6 +293,7 @@ app.get("/getcurrentclass", async (req, res) => {
 app.get("/getclass", async (req, res) => {
   let code = req.query.code + "class";
   let classroom = await db.get(code);
+
   res.send(JSON.stringify({
     classroom: classroom
   }))
@@ -263,7 +302,6 @@ app.get("/getclass", async (req, res) => {
 app.get("/setemailtoname", async (req, res) => {
 	let dictionary = await db.get("emailToName");
 	if (dictionary === null) {
-		console.log("susaf");
 		dictionary = {};
 	}
 

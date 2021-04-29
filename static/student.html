@@ -60,10 +60,11 @@
   <script>
     var studentCode = ""; // Student's current class code
 
-    document.getElementById("submitCode").addEventListener("click", () => {
+    document.getElementById("submitCode").addEventListener("click", async () => {
       studentCode = document.getElementById("classCodeEnter").value;
       document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
-      joinClass(studentCode, profile.getEmail(), profile.getName());
+      await joinClass(studentCode, profile.getEmail(), profile.getName());
+			// await setEmailToName(profile.getEmail(), profile.getName());
     });
 
     // function that returns the student's current class code
@@ -78,10 +79,13 @@
     }
 		
     async function joinClass(code, email, name) {
-      await fetch(`/setemailtoname?email=${encodeURI(email)}&name=${encodeURI(name)}`);
-
-			await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}`);
+			await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}&name=${name}`);
     }
+
+		async function setEmailToName(email, name) {
+			await fetch(`/setemailtoname?email=${encodeURI(email)}&name=${encodeURI(name)}`);
+			console.log("aaaaaaaaa");
+		}
   </script>
 
   <div class="modal" id="verifyModal">
