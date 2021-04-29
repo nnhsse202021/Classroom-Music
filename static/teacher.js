@@ -91,8 +91,8 @@ async function updateCurrentlyPlayingText(id) {
 }
 
 var currentSongIndex = 0;
-document.getElementById("loadButton").addEventListener("click", async () => {
-  if (player) {
+async function loadNextSong() {
+	if (player) {
 		var id;
 		var playlist = await getPlaylist(await getCurrentCode());
     if (isShuffled) {
@@ -117,12 +117,16 @@ document.getElementById("loadButton").addEventListener("click", async () => {
     document.getElementById("playButtonText").innerHTML = "Pause";
 		updateCurrentlyPlayingText(id);
   }
+}
+
+document.getElementById("loadButton").addEventListener("click", async () => {
+  await loadNextSong();
 });
 
 
 var isPlaying = false;
 document.getElementById("playButton").addEventListener("click", () => {
-  if (isPlaying == true) { // Execute this if a video is currently playing
+	if (isPlaying == true) { // Execute this if a video is currently playing
     player.pauseVideo();
     document.getElementById("playButtonText").innerHTML = "Play";
   } else { // Execute this if a video is currently paused
