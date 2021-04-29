@@ -73,6 +73,19 @@ app.get("/videoidtotitle", (req, res) => {
     });
 });
 
+app.get("/removesong", async (req ,res) => {
+  let vidID = req.query.id;
+  let playlistID = req.query.playlist;
+  
+  value = db.get(playlistID);
+  console.log("Request received!");
+
+  res.send(JSON.stringify({
+    id: vidID,
+    playlist: playlistID
+  }));
+})
+
 app.get("/addsong", async (req, res) => {
   let vidID = req.query.id;
   let playlistID = req.query.playlist;
@@ -181,6 +194,7 @@ app.get("/generatecode", async (req, res) => {
 
 
 app.get("/joinclass", async (req, res) => {
+	console.log("success!");
   let code = req.query.code + "class";
   let email = req.query.email;
 
@@ -227,6 +241,28 @@ app.get("/getclass", async (req, res) => {
   }))
 });
 
+app.get("/setemailtoname", async (req, res) => {
+	let dictionary = await db.get("emailToName");
+	if (dictionary === null) {
+		console.log("susaf");
+		dictionary = {};
+	}
+
+	console.log(req.query.name);
+	console.log(dictionary);
+	dictionary[req.query.email] = req.query.name;
+
+	await db.set("emailToName", dictionary);
+})
+
+app.get("/getemailtoname", async (req, res) => {
+	let dictionary = await db.get("emailToName");
+	let email = req.query.email;
+
+	res.send(JSON.stringify({
+		name: dictionary[email]
+	}))
+})
 
 /* SESSIONS: */
 const parseurl = require('parseurl')

@@ -1,4 +1,7 @@
 
+var songBeingLookedAt;
+var songPlaylistBeingLookedAt;
+//Is this needed ^^^ or this vvv
 async function getCode(email) {
 	var code;
   await fetch(`/generatecode?email=${encodeURI(email)}`)
@@ -18,8 +21,7 @@ async function getClassList(code) {
     })
   return classroom;
 }
-
-
+//Hmm ^^^
 
 /* The playlist variable we have as of now works a bit strangely -- every even index is the song, and every odd index is the name of the student who submitted it. */
 async function getPlaylist(playlistID) {
@@ -133,13 +135,27 @@ document.getElementById("playButton").addEventListener("click", () => {
     player.playVideo();
     document.getElementById("playButtonText").innerHTML = "Pause";
   }
-
   isPlaying = !isPlaying;
 });
 
+let cancelOptionsButton = document.getElementById("cancelOptionsButton");
+cancelOptionsButton.addEventListener("click", async () => {
+  document.getElementById("songOptionsModal").style.display = "none";
+})
+
+let cancelOptionsesButton = document.getElementById("cancelOptionsesButton");
+cancelOptionsesButton.addEventListener("click", async () => {
+  document.getElementById("studentOptionsModal").style.display = "none";
+})
+
+let removeSongButton = document.getElementById("removeSongButton");
+removeSongButton.addEventListener("click", async () => {
+  console.log("bruhas");
+  removeSongFromPlaylist();
+})
 
 document.getElementById("showPlaylist").addEventListener("click", async () => {
-  document.getElementById("playlistCard").style.display = "block";
+  document.getElementById("playlistCard").style.display = "inline-block";
   document.getElementById("playlist").innerHTML = '';
   var playlist = await getPlaylist(await getCurrentCode());
   if (playlist === null) return;
@@ -150,13 +166,50 @@ document.getElementById("showPlaylist").addEventListener("click", async () => {
     await fetch(`/videoidtotitle?id=${encodeURI(songs[i])}`)
       .then(response => response.json())
       .then(data => {
-        var newItem = document.createElement('li');
+        /*
+        var rmvbtn = document.createElement("BUTTON");
+        rmvbtn.innerHTML = "CLICK ME";
+        document.getElementById("playlist").appendChild(rmvbtn);
+        */
+        var newItem = document.createElement("BUTTON");
+        newItem.setAttribute('id', songs[i]);
+        newItem.classList.add("playlistSongs");
+
+        newItem.addEventListener("click", async () => {
+          displaySongInfo(data.title, stuName);
+          console.log("Sent ID and Student Name to MODAL");
+
+          songBeingLookedAt = songs[i];
+          songPlaylistBeingLookedAt = playlist;
+          
+          document.getElementById("songInfoName").innerHTML = "Song Name: " + data.title;
+          document.getElementById("submittedBy").innerHTML = "Submitted By: " + stuName;
+          document.getElementById("songOptionsModal").style.display = "block";
+
+        })
+
+
         newItem.innerHTML = data.title;
-        document.getElementById('playlist').appendChild(newItem).append(" ----------- Submitted by: " + stuName);
+        document.getElementById('playlist').appendChild(newItem);
       });
   }
+
 });
 
+async function removeSongFromPlaylist(id, playlistID) {
+  var id = songBeingLookedAt;
+  var playlistID = songPlaylistBeingLookedAt;
+  
+  await fetch(`/removesong?id=${encodeURI(id)}&playlist=${encodeURI(playlistID)}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log("(REQUEST RECEIVED BACK) after sending song to server to be removed from the playlist\nID: " + data.id);
+  });
+}
+
+async function displaySongInfo(id, stuName){
+  console.log("id: " + id + "\nname: " + stuName);
+}
 
 document.getElementById("clearPlaylist").addEventListener("click", async () => {
   deletePlaylist(await getCurrentCode());
@@ -219,10 +272,29 @@ document.getElementById("changeClassNameButton").addEventListener("click", async
 document.getElementById("refreshClass").addEventListener("click", async () => {
   let classroom = await getClassList(await getCurrentCode());
   document.getElementById('class-list').innerHTML = "";
-
+  document.getElementById("studentCard").style.display = "inline-block";
   for (let i = 0; i < classroom.length; i++) {
-    let newItem = document.createElement('li');
-    newItem.innerHTML = classroom[i];
-    document.getElementById('class-list').appendChild(newItem);
+    var newItem1 = document.createElement("BUTTON");
+    newItem1.innerHTML = classroom[i];
+    console.log(classroom[i]);
+    newItem1.classList.add("playlistSongs");
+    //newItem.setAttribute('id', songs[i]);
+    
+    newItem1.addEventListener("click", async () => {
+      document.getElementById("studentInfoName").innerHTML = "Student Name: " + emailToName(classroom[i]);
+      document.getElementById("studentEmail").innerHTML = "Student Email: " + classroom[i];
+      document.getElementById("studentOptionsModal").style.display = "block";
+    })
+    document.getElementById('class-list').appendChild(newItem1);
   }
 })
+
+async function emailToName(email) {
+	let name = await fetch(`/getemailtoname?email=${encodeURI(email)}`)
+		.then(response => response.json())
+		.then(data => {
+			console.log(data.name);
+			return data.name;
+		});
+	return name;
+}

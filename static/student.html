@@ -15,7 +15,7 @@
 
 
   <ul id="navbar1">
-    <li><a>Classroom Music</a></li>
+    <a id= "navbarstyling">Classroom Music</a>
   </ul>
 
   <div class="g-signin2" data-onsuccess="onSignIn"></div>
@@ -63,7 +63,7 @@
     document.getElementById("submitCode").addEventListener("click", () => {
       studentCode = document.getElementById("classCodeEnter").value;
       document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
-      joinClass(studentCode, profile.getEmail());
+      joinClass(studentCode, profile.getEmail(), profile.getName());
     });
 
     // function that returns the student's current class code
@@ -77,15 +77,17 @@
 				return currentCode;
     }
 		
-    async function joinClass(code, email) {
-      await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}`);
+    async function joinClass(code, email, name) {
+      await fetch(`/setemailtoname?email=${encodeURI(email)}&name=${encodeURI(name)}`);
+
+			await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}`);
     }
   </script>
 
   <div class="modal" id="verifyModal">
     <div id="modalContent">
       <div class="card-header">
-        <span class="ml-4">ERROR: Please Confirm</span>
+        <span class="ml-4">Please Confirm</span>
       </div>
       <class="card-body">
         <div class="form-check">

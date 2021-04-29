@@ -121,3 +121,14 @@ verifyCancelButton.addEventListener("click", async () => {
 	document.getElementById("verifyModal").style.display = "none";
   document.getElementById("verify").checked = false;
 });
+
+/*
+async function emailToName(email) {
+	let name = await fetch(`/getemailtoname?email=${encodeURI(email)}`)
+		.then(response => response.json())
+		.then(data => {
+			console.log(data.name);
+			return data.name;
+		});
+	return name;
+}*/
