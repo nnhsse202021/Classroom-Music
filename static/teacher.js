@@ -151,17 +151,20 @@ cancelOptionsesButton.addEventListener("click", async () => {
 let removeSongButton = document.getElementById("removeSongButton");
 removeSongButton.addEventListener("click", async () => {
   console.log("bruhas");
-  removeSongFromPlaylist();
+  await removeSongFromPlaylist();
 })
 
-document.getElementById("showPlaylist").addEventListener("click", async () => {
+document.getElementById("showPlaylist").addEventListener("click", showPlaylist)
+
+async function showPlaylist() {
   document.getElementById("playlistCard").style.display = "inline-block";
   document.getElementById("playlist").innerHTML = '';
   var playlist = await getPlaylist(await getCurrentCode());
   if (playlist === null) return;
   var songs = playlist.split(',');
+	console.log(songs);
   // song id
-  for (i = 0; i < songs.length; i += 2) {
+  for (let i = 0; i < songs.length; i += 2) {
     var stuName = songs[i + 1];
     await fetch(`/videoidtotitle?id=${encodeURI(songs[i])}`)
       .then(response => response.json())
@@ -180,31 +183,30 @@ document.getElementById("showPlaylist").addEventListener("click", async () => {
           console.log("Sent ID and Student Name to MODAL");
 
           songBeingLookedAt = songs[i];
-          songPlaylistBeingLookedAt = playlist;
           
           document.getElementById("songInfoName").innerHTML = "Song Name: " + data.title;
           document.getElementById("submittedBy").innerHTML = "Submitted By: " + stuName;
           document.getElementById("songOptionsModal").style.display = "block";
-
         })
-
 
         newItem.innerHTML = data.title;
         document.getElementById('playlist').appendChild(newItem);
       });
   }
 
-});
+}
 
-async function removeSongFromPlaylist(id, playlistID) {
+async function removeSongFromPlaylist() {
   var id = songBeingLookedAt;
-  var playlistID = songPlaylistBeingLookedAt;
+  var playlistID = await getCurrentCode();
   
   await fetch(`/removesong?id=${encodeURI(id)}&playlist=${encodeURI(playlistID)}`)
     .then(response => response.json())
     .then(data => {
       console.log("(REQUEST RECEIVED BACK) after sending song to server to be removed from the playlist\nID: " + data.id);
   });
+	await showPlaylist();
+	document.getElementById("songOptionsModal").style.display = "none";
 }
 
 async function displaySongInfo(id, stuName){
@@ -281,7 +283,8 @@ document.getElementById("refreshClass").addEventListener("click", async () => {
     //newItem.setAttribute('id', songs[i]);
     
     newItem1.addEventListener("click", async () => {
-      document.getElementById("studentInfoName").innerHTML = "Student Name: " + emailToName(classroom[i]);
+			let name = await emailToName(classroom[i]);
+      document.getElementById("studentInfoName").innerHTML = "Student Name: " + name;
       document.getElementById("studentEmail").innerHTML = "Student Email: " + classroom[i];
       document.getElementById("studentOptionsModal").style.display = "block";
     })

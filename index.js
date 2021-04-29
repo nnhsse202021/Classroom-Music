@@ -74,11 +74,30 @@ app.get("/videoidtotitle", (req, res) => {
 });
 
 app.get("/removesong", async (req ,res) => {
+	console.log("Request received!");
+
   let vidID = req.query.id;
   let playlistID = req.query.playlist;
   
-  value = db.get(playlistID);
-  console.log("Request received!");
+  let value = await db.get(playlistID);
+	value = value.split(",");
+
+	let index = -1;
+	for (let i = 0; i < value.length; i++) {
+		if (value[i] === vidID) {
+			index = i;
+			break;
+		}
+	}
+
+	value.splice(index, 2);
+	value = value.toString();
+	
+	if (value === "") {
+		await db.delete(playlistID);
+	} else {
+		await db.set(playlistID, value);
+	}
 
   res.send(JSON.stringify({
     id: vidID,
