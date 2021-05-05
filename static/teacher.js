@@ -155,12 +155,16 @@ let removeSongButton = document.getElementById("removeSongButton");
 removeSongButton.addEventListener("click", async () => {
   console.log("bruhas");
   await removeSongFromPlaylist();
+	await showPlaylist();
+	document.getElementById("songOptionsModal").style.display = "none";
 })
 
 let removeStudentButton = document.getElementById("removeStudentButton");
 removeStudentButton.addEventListener("click", async () => {
 	console.log(studentBeingLookedAt);
 	await removeStudentFromClass();
+	await refreshClass();
+	document.getElementById("studentOptionsModal").style.display = "none";
 })
 
 document.getElementById("showPlaylist").addEventListener("click", showPlaylist)
@@ -214,8 +218,7 @@ async function removeSongFromPlaylist() {
     .then(data => {
       console.log("(REQUEST RECEIVED BACK) after sending song to server to be removed from the playlist\nID: " + data.id);
   });
-	await showPlaylist();
-	document.getElementById("songOptionsModal").style.display = "none";
+	
 }
 
 async function removeStudentFromClass() {
@@ -289,7 +292,9 @@ document.getElementById("changeClassNameButton").addEventListener("click", async
 })
 
 
-document.getElementById("refreshClass").addEventListener("click", async () => {
+document.getElementById("refreshClass").addEventListener("click", refreshClass)
+
+async function refreshClass() {
   let classroom = await getClassList(await getCurrentCode());
 	console.log(classroom);
   document.getElementById('class-list').innerHTML = "";
@@ -310,7 +315,7 @@ document.getElementById("refreshClass").addEventListener("click", async () => {
     })
     document.getElementById('class-list').appendChild(newItem1);
   }
-})
+}
 
 async function emailToName(email) {
 	let name = await fetch(`/getemailtoname?email=${encodeURI(email)}`)
