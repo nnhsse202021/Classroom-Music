@@ -75,10 +75,12 @@ app.get("/videoidtotitle", (req, res) => {
 
 var classArray;
 app.get("/sendclassenabled", (req, res) => {
+	console.log('banana');
   classArray = req.query.classArray;
 });
 
 app.get("/getclassenabled", (req, res) =>{
+	console.log('apple');
   res.send(JSON.stringify({
     classDisabledData: classArray
   }));
@@ -241,7 +243,7 @@ app.use("/checksession", (req, res, next) => {
 })
 
 app.get("/checksession", (req, res, next) => {
-  console.log(req.session);
+  // console.log(req.session);
   res.send(JSON.stringify({
     loggedIn: req.session.views["/checksession"]
   }));
