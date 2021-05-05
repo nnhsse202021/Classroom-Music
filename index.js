@@ -133,19 +133,28 @@ app.get("/addsong", async (req, res) => {
   let playlistID = req.query.playlist;
   let value = vidID;
 
+  var alreadyContainsSong = false;
+
   playlistIDList = await db.list(); // getting the list of keys
   if (playlistIDList.indexOf(playlistID) > -1) { // check for whether the key is already in the database
     value = await db.get(playlistID);
     console.log("got it");
     console.log(value);
-    value = value + "," + vidID;
+    if (value.includes(vidID)) {
+      alreadyContainsSong = true;
+    }
+    else {
+      alreadyContainsSong = false;
+      value = value + "," + vidID;
+    }
   }
 
   await db.set(playlistID, value);
 
   res.send(JSON.stringify({
     id: vidID,
-    playlist: playlistID
+    playlist: playlistID,
+    contains: alreadyContainsSong
   }));
 });
 
