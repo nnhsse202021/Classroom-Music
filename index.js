@@ -126,6 +126,18 @@ app.get("/removestudent", async (req, res) => {
 	console.log(classroom);
 	console.log(index);
 	await db.set(code, classroom);
+
+	let studentsToCodes = await db.get("studentsToCodes");
+	if (email in studentsToCodes) {
+		delete studentsToCodes[email];
+	}
+	await db.set("studentsToCodes", studentsToCodes);
+
+	console.log(studentsToCodes);
+
+	res.send(JSON.stringify({
+		successful: true
+	}));
 })
 
 app.get("/addsong", async (req, res) => {
@@ -251,7 +263,7 @@ app.get("/joinclass", async (req, res) => {
   db.set(code, classroom);
 
 
-	
+
   let studentsToCodes = {};
 
   if (codeList.indexOf("studentsToCodes") > -1) {
