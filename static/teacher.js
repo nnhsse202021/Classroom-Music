@@ -166,13 +166,13 @@ async function xyz () {
   classDisabledData = [await getCurrentCode(), isClassEnabled];
   await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`); // so it's not linked to pressing the button
   document.getElementById("disableClassButtonText").innerHTML = "Disable Classroom Code";
-  document.getElementByID("disableClassDescription").innerHTML = "Your class is currently ENABLED";
+  document.getElementById("disableClassDescription").innerHTML = "Your class is currently ENABLED";
 
   // enabling/disabling song submission
   submitDisabledData = isSubmitEnabled;
   await fetch(`/sendsubmitenabled?canSubmit=${encodeURI(submitDisabledData)}`); // so it's not linked to pressing the button
   document.getElementById("disableSubmitButtonText").innerHTML = "Disable Song Submissions";
-  document.getElementByID("disableSongDescription").innerHTML = "Your playlist is currently ENABLED";
+  document.getElementById("disableSongDescription").innerHTML = "Your playlist is currently ENABLED";
 }
 
 // method for allowing disabling/enabling classes
@@ -180,16 +180,16 @@ document.getElementById("disableClassButton").addEventListener("click", async ()
   if (classDisabledData[1] != true && classDisabledData[1] != false) { // if undefined
     classDisabledData[1] = true;
   }
-  if (classDisabledData[1] == true) { // if enabled
+  if (classDisabledData[1] === true) { // if enabled
     classDisabledData[1] = false; // disable
     document.getElementById("disableClassButtonText").innerHTML = "Enable Classroom Code"; // change button to ask for enable
-    document.getElementByID("disableClassDescription").innerHTML = "Your class is currently DISABLED"; // change description
+    document.getElementById("disableClassDescription").innerHTML = "Your class is currently DISABLED"; // change description to disabled
     await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`);
   }
   else { // else(if disabled)
     classDisabledData[1] = true; // enable
     document.getElementById("disableClassButtonText").innerHTML = "Disable Classroom Code"; // change button to ask for disable
-    document.getElementByID("disableClassDescription").innerHTML = "Your class is currently ENABLED"; // change description
+    document.getElementById("disableClassDescription").innerHTML = "Your class is currently ENABLED"; // change description to enabled
     await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`);
   }
 })
@@ -199,16 +199,16 @@ document.getElementById("disableSubmitButton").addEventListener("click", async (
   if (submitDisabledData != true && submitDisabledData != false) { // if undefined
     submitDisabledData = true;
   }
-  if (submitDisabledData == true) { // if enabled
+  if (submitDisabledData === true) { // if enabled
     submitDisabledData = false; // disable
     document.getElementById("disableSubmitButtonText").innerHTML = "Enable Song Submissions"; // change button to ask for enable
-    document.getElementByID("disableSongDescription").innerHTML = "Your playlist is currently DISABLED"; // change description
+    document.getElementById("disableSongDescription").innerHTML = "Your playlist is currently DISABLED"; // change description to disabled
     await fetch(`/sendsubmitenabled?canSubmit=${encodeURI(submitDisabledData)}`);
   }
   else { // else(if disabled)
     submitDisabledData = true; // enable
     document.getElementById("disableSubmitButtonText").innerHTML = "Disable Song Submissions"; // change button to ask for disable
-    document.getElementByID("disableSongDescription").innerHTML = "Your playlist is currently ENABLED"; // change description
+    document.getElementById("disableSongDescription").innerHTML = "Your playlist is currently ENABLED"; // change description to enabled
     await fetch(`/sendsubmitenabled?canSubmit=${encodeURI(submitDisabledData)}`);
   }
 })

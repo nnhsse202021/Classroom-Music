@@ -86,6 +86,18 @@
   transition: border-color 0.5s;
 }
 
+#disableClassDescription {
+  display: block;
+  color: #5f0096;
+  font-weight: bold;
+}
+
+#disableSongDescription {
+  display: block;
+  color: #009608;
+  font-weight: bold;
+}
+
 #classCodeEnter:focus {
   outline: none;
   box-shadow: none;
