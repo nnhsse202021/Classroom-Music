@@ -17,11 +17,9 @@
 </head>
 
 <body>
-
-
-	<ul id="navbar1">
-		<li><a>Classroom Music</a></li>
-	</ul>
+  <ul id="navbar1">
+    <a id= "navbarstyling">Classroom Music</a>
+  </ul>
 
 	<div class="g-signin2" data-onsuccess="onSignIn"></div>
 	<button id = "signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign Out</button>
@@ -76,13 +74,13 @@
           return data.classDisabledData;
         });
 
+
+    document.getElementById("submitCode").addEventListener("click", async () => {
       studentCode = document.getElementById("classCodeEnter").value;
-
-			classDisableArray = classDisableArray.split(',');
-
       if (studentCode == classDisableArray[0] && classDisableArray[1] == "true") {
         document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
-        joinClass(studentCode, profile.getEmail());
+        await joinClass(studentCode, profile.getEmail(), profile.getName());
+        // await setEmailToName(profile.getEmail(), profile.getName());
       }
       else if (studentCode == classDisableArray[0] && classDisableArray[1] == "false") {
         window.alert("Joining that classroom is disabled right now!");
@@ -100,15 +98,20 @@
 				return currentCode;
     }
 		
-    async function joinClass(code, email) {
-      await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}`);
+    async function joinClass(code, email, name) {
+			await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}&name=${name}`);
     }
+
+		async function setEmailToName(email, name) {
+			await fetch(`/setemailtoname?email=${encodeURI(email)}&name=${encodeURI(name)}`);
+			console.log("aaaaaaaaa");
+		}
   </script>
 
   <div class="modal" id="verifyModal">
     <div id="modalContent">
       <div class="card-header">
-        <span class="ml-4">Confirmation</span>
+        <span class="ml-4">Please Confirm</span>
       </div>
       <class="card-body">
         <div class="form-check">

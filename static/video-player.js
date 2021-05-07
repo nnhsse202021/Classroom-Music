@@ -12,8 +12,8 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 var player;
 function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
-    height: '0', // Change this to 1 to make the player invisible
-    width: '0',
+    height: '300', // Change this to 1 to make the player invisible
+    width: '300',
     events: {
       'onReady': onPlayerReady,
       'onStateChange': onPlayerStateChange
@@ -27,7 +27,9 @@ function onPlayerReady(event) {
 }
 
 // 5. The API calls this function when the player's state changes.
-var done = false;
-function onPlayerStateChange(event) {
-
+async function onPlayerStateChange(event) {
+	if (event.data == YT.PlayerState.ENDED) {
+		await loadNextSong();
+		// playVideo();
+	}
 }

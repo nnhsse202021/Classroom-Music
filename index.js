@@ -97,6 +97,73 @@ app.get("/getsubmitenabled", (req, res) =>{
   }));
 });
 
+app.get("/removesong", async (req ,res) => {
+	console.log("Request received!");
+
+  let vidID = req.query.id;
+  let playlistID = req.query.playlist;
+  
+  let value = await db.get(playlistID);
+	value = value.split(",");
+
+	let index = -1;
+	for (let i = 0; i < value.length; i++) {
+		if (value[i] === vidID) {
+			index = i;
+			break;
+		}
+	}
+
+	value.splice(index, 2);
+	value = value.toString();
+
+	if (value === "") {
+		await db.delete(playlistID);
+	} else {
+		await db.set(playlistID, value);
+	}
+
+  res.send(JSON.stringify({
+    id: vidID,
+    playlist: playlistID
+  }));
+})
+
+app.get("/removestudent", async (req, res) => {
+	console.log("time to remove a student");
+
+	let email = req.query.email;
+	let code = req.query.code + "class";
+
+	let classroom = await db.get(code);
+	console.log(classroom);
+
+	let index = -1;
+	for (let i = 0; i < classroom.length; i++) {
+		if (classroom[i] === email) {
+			index = i;
+			break;
+		}
+	}
+
+	classroom.splice(index, 1);
+	console.log(classroom);
+	console.log(index);
+	await db.set(code, classroom);
+
+	let studentsToCodes = await db.get("studentsToCodes");
+	if (email in studentsToCodes) {
+		delete studentsToCodes[email];
+	}
+	await db.set("studentsToCodes", studentsToCodes);
+
+	console.log(studentsToCodes);
+
+	res.send(JSON.stringify({
+		successful: true
+	}));
+})
+
 app.get("/addsong", async (req, res) => {
   let vidID = req.query.id;
   let playlistID = req.query.playlist;
@@ -138,12 +205,37 @@ app.get("/deleteplaylist", async (req, res) => {
 });
 
 
+app.get("/renamecode", async (req, res) => {
+	let code = req.query.code;
+	let newName = req.query.name;
+
+	let database = await db.list();
+	var codeToName = {};
+	if (database.indexOf("codeToName") > -1) {
+		codeToName = await db.get("codeToName");
+	}
+
+	codeToName[code] = newName;
+	await db.set("codeToName", codeToName);
+})
+
+
+app.get("/getcodename", async (req, res) => {
+	let code = req.query.code;
+	let name = await db.get("codeToName");
+	name = name[code];
+
+	res.send(JSON.stringify({
+		name: name
+	}))
+})
+
 // Generate an unique code for each teacher.
 // req should take in an email.
-app.get("/generatecode", (req, res) => {
+app.get("/generatecode", async (req, res) => {
   let email = req.query.email;
 
-  // find the hash function of the email given
+  // find the hash function of the email
   // (same as java implementation for string hash function)
   let hash = 0;
   for (i = 0; i < email.length; i++) {
@@ -160,6 +252,18 @@ app.get("/generatecode", (req, res) => {
     hash = hash / 26;
   }
 
+	let codeToName = await db.get("codeToName");
+
+	if (codeToName == null) {
+		codeToName = {};
+	}
+
+	if (!(code in codeToName)) {
+		codeToName[code] = email;
+	}
+
+	await db.set("codeToName", codeToName);
+
   res.send(JSON.stringify({
     code: code
   }));
@@ -168,6 +272,7 @@ app.get("/generatecode", (req, res) => {
 
 
 app.get("/joinclass", async (req, res) => {
+	console.log("success!");
   let code = req.query.code + "class";
   let email = req.query.email;
 
@@ -181,6 +286,8 @@ app.get("/joinclass", async (req, res) => {
   classroom.push(email);
   db.set(code, classroom);
 
+
+
   let studentsToCodes = {};
 
   if (codeList.indexOf("studentsToCodes") > -1) {
@@ -189,6 +296,19 @@ app.get("/joinclass", async (req, res) => {
 
   studentsToCodes[email] = req.query.code;
   db.set("studentsToCodes", studentsToCodes);
+
+	/* email to name */
+	
+	let dictionary = await db.get("emailToName");
+	if (dictionary === null) {
+		dictionary = {};
+	}
+
+	console.log(req.query.name);
+	console.log(dictionary);
+	dictionary[req.query.email] = req.query.name;
+
+	await db.set("emailToName", dictionary);
 })
 
 
@@ -209,10 +329,33 @@ app.get("/getcurrentclass", async (req, res) => {
 app.get("/getclass", async (req, res) => {
   let code = req.query.code + "class";
   let classroom = await db.get(code);
+
   res.send(JSON.stringify({
     classroom: classroom
   }))
 });
+
+app.get("/setemailtoname", async (req, res) => {
+	let dictionary = await db.get("emailToName");
+	if (dictionary === null) {
+		dictionary = {};
+	}
+
+	console.log(req.query.name);
+	console.log(dictionary);
+	dictionary[req.query.email] = req.query.name;
+
+	await db.set("emailToName", dictionary);
+})
+
+app.get("/getemailtoname", async (req, res) => {
+	let dictionary = await db.get("emailToName");
+	let email = req.query.email;
+
+	res.send(JSON.stringify({
+		name: dictionary[email]
+	}))
+})
 
 /* SESSIONS: */
 const parseurl = require('parseurl')
@@ -243,7 +386,6 @@ app.use("/checksession", (req, res, next) => {
 })
 
 app.get("/checksession", (req, res, next) => {
-  // console.log(req.session);
   res.send(JSON.stringify({
     loggedIn: req.session.views["/checksession"]
   }));
