@@ -7,6 +7,14 @@
 
 	<script src="/static/sessions.js"></script>
   <script>checkLoginStatus();</script>
+  <style>
+  body {
+    background-image: url('/static/images/background.png');
+    background-attachment: scroll;
+    background-size: cover;
+    background-size: 40%;
+  }
+  </style>
 </head>
 
 <body>
@@ -72,11 +80,11 @@
     <div class="card-body">
 			<p></p>
 			<div id="selector">
-				<label for="selectClass" id="selectClassLabel">Select your class: Loading...</label>
+				<label for="selectClass" id="selectClassLabel">Select your class:      Loading...</label>
 			</div>
 			<p></p>
 			<input class="card-text" type="text" id="changeClassName" placeholder="New Name">
-			<button class="button1" id="changeClassNameButton" type="button">Rename</button>
+			<button class="button3" id="changeClassNameButton" type="button">Rename</button>
 
       <p class="card-text" id="displayCode">Your code is: </p>
       <button id="refreshClass" class="button3">Refresh class list</button>

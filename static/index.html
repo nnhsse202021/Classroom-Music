@@ -5,6 +5,14 @@
   <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
   <script src="https://apis.google.com/js/api.js"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <style>
+  body {
+    background-image: url('/static/images/background.png');
+    background-attachment: scroll;
+    background-size: cover;
+    background-size: 40%;
+  }
+  </style>
 </head>
 
 <body>
@@ -36,7 +44,8 @@
 				window.location.href = window.location.origin + "/static/teacher.html";
       }
       else if (["dpbabenkov@stu.naperville203.org", "evman142@gmail.com", "geoffrey.feifei@gmail.com",
-      "bizzlebozzlebuzzle@gmail.com"].includes(profile.getEmail())) {
+      "bizzlebozzlebuzzle@gmail.com",
+      "bzli@stu.naperville203.org"].includes(profile.getEmail())) {
         setLogin(window.location.origin + "/static/teacher.html");
 				window.location.href = window.location.origin + "/static/teacher.html";
       }

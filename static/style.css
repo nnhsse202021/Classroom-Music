@@ -50,7 +50,7 @@
   background-color: rgb(255, 255, 255);
   padding: 6%;
   border-radius: 25px;
-  border: 2px solid;
+  border: 6px solid;
   border-color: #49b8da;
 }
 
@@ -58,7 +58,7 @@
   background-color: rgb(255, 255, 255);
   padding: 1.5%;
   border-radius: 20px;
-  border: 2px solid;
+  border: 6px solid;
   border-color: #5f0096;
 }
 
@@ -145,11 +145,35 @@ li {
   border-color: #5f0096;
 }
 
+#selectClass{
+  width: 50%;
+  border-radius: 10px;
+  border-color: white;
+  background-color: #dfdfdfdf;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  
+  padding: 2%;
+  font-family: 'Rubik', sans-serif;
+  transition: border-color 0.5s;
+}
+
+#selectClass:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #5f0096;
+}
+
+#selectClass:hover {
+  border-color: #5f0096;
+}
+
 .musicControlses {
   background-color: rgb(255, 255, 255);
   padding: 1.5%;
   border-radius: 20px;
-  border: 2px solid;
+  border: 6px solid;
   border-color: #009608;
 }
 
@@ -166,7 +190,7 @@ li {
   background-color: rgb(255, 255, 255);
   padding: 1.5%;
   border-radius: 20px;
-  border: 2px solid;
+  border: 6px solid;
   border-color: #bf1a02;
   text-align: center;
   width: 50%;
@@ -189,7 +213,7 @@ li {
   background-color: rgb(255, 255, 255);
   padding: 1.5%;
   border-radius: 20px;
-  border: 2px solid;
+  border: 6px solid;
   border-color: #f7ef00;
   text-align: center;
   width: 50%;
@@ -264,6 +288,29 @@ li {
   border-color: #49b8da;
 }
 
+#changeClassName {
+  width: 40%;
+  border-radius: 10px;
+  /*border-color: #ffb78d;*/
+  border-color: white;
+  background-color: #dfdfdfdf;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  padding: 2%;
+  font-family: 'Rubik', sans-serif;
+  transition: border-color 0.5s;
+}
+
+#changeClassName:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #5f0096;
+}
+
+#changeClassName:hover {
+  border-color: #5f0096;
+}
 
 .button1 {
   width: 40%;
