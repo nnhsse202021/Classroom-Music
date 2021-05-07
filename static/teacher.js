@@ -225,9 +225,13 @@ async function removeStudentFromClass() {
 	var email = studentBeingLookedAt;
 	var playlistID = await getCurrentCode();
 
-	await fetch(`/removestudent?email=${encodeURI(email)}&code=${encodeURI(playlistID)}`);
-
 	document.getElementById("studentOptionsModal").style.display = "none";
+
+	await fetch(`/removestudent?email=${encodeURI(email)}&code=${encodeURI(playlistID)}`)
+		.then(response => response.json())
+		.then(data => {
+			
+		});
 }
 
 async function displaySongInfo(id, stuName){

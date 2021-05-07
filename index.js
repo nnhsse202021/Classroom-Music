@@ -134,6 +134,10 @@ app.get("/removestudent", async (req, res) => {
 	await db.set("studentsToCodes", studentsToCodes);
 
 	console.log(studentsToCodes);
+
+	res.send(JSON.stringify({
+		successful: true
+	}));
 })
 
 app.get("/addsong", async (req, res) => {
