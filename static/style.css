@@ -147,48 +147,59 @@ li {
   width: 50%;
   border-radius: 10px;
   /*border-color: #ffb78d;*/
-  border-color: white;
   background-color: #dfdfdfdf;
   border-top: none;
   border-left: none;
   border-right: none;
+  border-bottom: 2.5px solid;
+  border-color: white;
   padding: 2%;
   font-family: 'Rubik', sans-serif;
-  transition: border-color 0.5s;
+  transition: border-color 0.5s, transform .2s;
 }
 
 #classCodeEnter:focus {
   outline: none;
   box-shadow: none;
   border-color: #5f0096;
+  transform: scale(1.02);
 }
 
 #classCodeEnter:hover {
   border-color: #5f0096;
 }
 
+#classCodeEnter:visited {
+  border-color: white;
+}
+
 #selectClass{
   width: 50%;
   border-radius: 10px;
-  border-color: white;
   background-color: #dfdfdfdf;
   border-top: none;
   border-left: none;
   border-right: none;
-  
+  border-bottom: 2.5px solid;
+  border-color: white;
   padding: 2%;
   font-family: 'Rubik', sans-serif;
-  transition: border-color 0.5s;
+  transition: border-color 0.5s, transform 0.005s;
 }
 
 #selectClass:focus {
   outline: none;
   box-shadow: none;
   border-color: #5f0096;
+  transform: scale(1.01);
 }
 
 #selectClass:hover {
   border-color: #5f0096;
+}
+
+#selectClass:visited {
+  border-color: white;
 }
 
 .musicControlses {
@@ -237,6 +248,7 @@ li {
   border-radius: 20px;
   border: 6px solid;
   border-color: #f7ef00;
+  //border-color: #e07400;
   text-align: center;
   width: 50%;
   /*margin-left: 15%;*/
@@ -289,48 +301,60 @@ li {
   width: 90%;
   border-radius: 10px;
   /*border-color: #ffb78d;*/
-  border-color: white;
   background-color: #dfdfdfdf;
   border-top: none;
   border-left: none;
   border-right: none;
+  border-bottom: 2.5px solid;
+  border-color: white;
   padding: 2%;
   font-family: 'Rubik', sans-serif;
-  transition: border-color 0.5s;
+  transition: border-color 0.5s, transform 0.2s;
 }
 
 #searchWord:focus {
   outline: none;
   box-shadow: none;
   border-color: #49b8da;
+  transform: scale(1.02);
 }
 
 #searchWord:hover {
   border-color: #49b8da;
 }
 
+#searchWord:visited {
+  border-color: white;
+}
+
 #changeClassName {
   width: 40%;
   border-radius: 10px;
   /*border-color: #ffb78d;*/
-  border-color: white;
   background-color: #dfdfdfdf;
   border-top: none;
   border-left: none;
   border-right: none;
+  border-bottom: 2.5px solid;
+  border-color: white;
   padding: 2%;
   font-family: 'Rubik', sans-serif;
-  transition: border-color 0.5s;
+  transition: border-color 0.5s, transform .2s;
 }
 
 #changeClassName:focus {
   outline: none;
   box-shadow: none;
   border-color: #5f0096;
+  transform: scale(1.02);
 }
 
 #changeClassName:hover {
   border-color: #5f0096;
+}
+
+#changeClassName:visited {
+  border-color: white;
 }
 
 .button1 {
