@@ -153,12 +153,14 @@ cancelOptionsesButton.addEventListener("click", async () => {
 
 let removeSongButton = document.getElementById("removeSongButton");
 removeSongButton.addEventListener("click", async () => {
+  document.getElementById("songOptionsModal").style.display = "none";
   console.log("bruhas");
   await removeSongFromPlaylist();
 })
 
 let removeStudentButton = document.getElementById("removeStudentButton");
 removeStudentButton.addEventListener("click", async () => {
+  document.getElementById("studentOptionsModal").style.display = "none";
 	console.log(studentBeingLookedAt);
 	await removeStudentFromClass();
 })
@@ -185,7 +187,7 @@ async function showPlaylist() {
         */
         var newItem = document.createElement("BUTTON");
         newItem.setAttribute('id', songs[i]);
-        newItem.classList.add("playlistSongs");
+        newItem.classList.add("playlistSongs1");
 
         newItem.addEventListener("click", async () => {
           displaySongInfo(data.title, stuName);
@@ -215,16 +217,15 @@ async function removeSongFromPlaylist() {
       console.log("(REQUEST RECEIVED BACK) after sending song to server to be removed from the playlist\nID: " + data.id);
   });
 	await showPlaylist();
-	document.getElementById("songOptionsModal").style.display = "none";
 }
 
 async function removeStudentFromClass() {
 	var email = studentBeingLookedAt;
 	var playlistID = await getCurrentCode();
-
+//something broken here vvv
 	await fetch(`/removestudent?email=${encodeURI(email)}&code=${encodeURI(playlistID)}`);
-
-	document.getElementById("studentOptionsModal").style.display = "none";
+  await refreshClass();
+  window.alert("removed!")
 }
 
 async function displaySongInfo(id, stuName){
@@ -289,7 +290,9 @@ document.getElementById("changeClassNameButton").addEventListener("click", async
 })
 
 
-document.getElementById("refreshClass").addEventListener("click", async () => {
+document.getElementById("refreshClass").addEventListener("click", refreshClass)
+
+async function refreshClass(){
   let classroom = await getClassList(await getCurrentCode());
 	console.log(classroom);
   document.getElementById('class-list').innerHTML = "";
@@ -298,7 +301,7 @@ document.getElementById("refreshClass").addEventListener("click", async () => {
     var newItem1 = document.createElement("BUTTON");
     newItem1.innerHTML = classroom[i];
     console.log(classroom[i]);
-    newItem1.classList.add("playlistSongs");
+    newItem1.classList.add("playlistSongs2");
     //newItem.setAttribute('id', songs[i]);
     
     newItem1.addEventListener("click", async () => {
@@ -310,7 +313,7 @@ document.getElementById("refreshClass").addEventListener("click", async () => {
     })
     document.getElementById('class-list').appendChild(newItem1);
   }
-})
+}
 
 async function emailToName(email) {
 	let name = await fetch(`/getemailtoname?email=${encodeURI(email)}`)

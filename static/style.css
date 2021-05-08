@@ -42,7 +42,7 @@
   background-color: rgb(255, 255, 255);
   padding: 1.5%;
   border-radius: 25px;
-  border: 2px solid;
+  border: 6px solid;
   border-color: #5f0096;
 }
 
@@ -76,22 +76,40 @@ li {
   margin:0 0 10px 0;
 }
 
-.playlistSongs {
+.playlistSongs1 {
   border-radius: 10px;
-  border: 2px solid;
-  /*border-color: #ffb78d;*/
+  border: 3px solid;
   background-color: #dfdfdfdf;
-  border-color: rgb(255, 190, 190);
+  border-color: #bf1a02;
   padding: 4%;
   width: 100%;
   margin:0 0 10px 0;
 }
 
-.playlistSongs:hover {
+.playlistSongs1:hover {
   background-color: #cfcfcf;
 }
 
-.playlistSongs:focus {
+.playlistSongs1:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.playlistSongs2 {
+  border-radius: 10px;
+  border: 3px solid;
+  background-color: #dfdfdfdf;
+  border-color: #f7ef00;
+  padding: 4%;
+  width: 100%;
+  margin:0 0 10px 0;
+}
+
+.playlistSongs2:hover {
+  background-color: #cfcfcf;
+}
+
+.playlistSongs2:focus {
   outline: none;
   box-shadow: none;
 }
@@ -316,6 +334,7 @@ li {
   width: 40%;
   font-family: 'Rubik', sans-serif;
   border-radius: 10px;
+  border: 3px solid;
   /*border-color: #ffb78d;*/
   border-color: #49b8da;
   background-color: #dfdfdfdf;
@@ -334,6 +353,7 @@ li {
 .button2 {
   font-family: 'Rubik', sans-serif;
   border-radius: 10px;
+  border: 3px solid;
   /*border-color: #ffb78d;*/
   border-color: #009608;
   background-color: #dfdfdfdf;
@@ -353,6 +373,7 @@ li {
   width: 40%;
   font-family: 'Rubik', sans-serif;
   border-radius: 10px;
+  border: 3px solid;
   /*border-color: #ffb78d;*/
   border-color: #5f0096;
   background-color: #dfdfdfdf;
@@ -372,6 +393,7 @@ li {
   width: 40%;
   font-family: 'Rubik', sans-serif;
   border-radius: 10px;
+  border: 3px solid;
   /*border-color: #ffb78d;*/
   border-color: #bf1a02;
   background-color: #dfdfdfdf;
@@ -391,6 +413,7 @@ li {
   width: 40%;
   font-family: 'Rubik', sans-serif;
   border-radius: 10px;
+  border: 3px solid;
   /*border-color: #ffb78d;*/
   border-color: #f7ef00;
   background-color: #dfdfdfdf;
@@ -412,7 +435,7 @@ li {
   background-color: rgb(255, 255, 255);
   padding: 8%;
   border-radius: 25px;
-  border: 2px solid #ffb78d;
+  border: 6px solid #ffb78d;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -424,7 +447,7 @@ li {
   background-color: rgb(255, 255, 255);
   padding: 8%;
   border-radius: 25px;
-  border: 2px solid #ffb78d;
+  border: 6px solid #ffb78d;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -436,7 +459,7 @@ li {
   background-color: rgb(255, 255, 255);
   padding: 8%;
   border-radius: 25px;
-  border: 2px solid #ffb78d;
+  border: 6px solid #ffb78d;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
