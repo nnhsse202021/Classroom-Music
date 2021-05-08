@@ -224,8 +224,10 @@ async function removeStudentFromClass() {
 	var playlistID = await getCurrentCode();
 //something broken here vvv
 	await fetch(`/removestudent?email=${encodeURI(email)}&code=${encodeURI(playlistID)}`);
+//everything after above line doesn't run...
   await refreshClass();
-  window.alert("removed!")
+  window.alert("removed!");
+  console.log("remove success!");
 }
 
 async function displaySongInfo(id, stuName){

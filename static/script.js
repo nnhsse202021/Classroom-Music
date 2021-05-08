@@ -94,9 +94,11 @@ let verifyCancelButton = document.getElementById("verifyCancelButton");
 verify.addEventListener("click", async () => {
   if (verify.checked) {
     confirmSong.disabled = false;
+    document.getElementById("confirmSong").style.borderColor = "#49b8da"; 
   }
   else {
     confirmSong.disabled = true;
+    document.getElementById("confirmSong").style.borderColor = "#b3b3b3";
   }
 })
 window.onclick = function(event) {

@@ -84,10 +84,12 @@ li {
   padding: 4%;
   width: 100%;
   margin:0 0 10px 0;
+  transition: transform .2s;
 }
 
 .playlistSongs1:hover {
   background-color: #cfcfcf;
+  transform: scale(1.03);
 }
 
 .playlistSongs1:focus {
@@ -103,10 +105,12 @@ li {
   padding: 4%;
   width: 100%;
   margin:0 0 10px 0;
+  transition: transform .2s;
 }
 
 .playlistSongs2:hover {
   background-color: #cfcfcf;
+  transform: scale(1.03);
 }
 
 .playlistSongs2:focus {
@@ -281,7 +285,6 @@ li {
   position: relative;
 }
 
-
 #searchWord {
   width: 90%;
   border-radius: 10px;
@@ -339,10 +342,12 @@ li {
   border-color: #49b8da;
   background-color: #dfdfdfdf;
   padding: 2%;
+  transition: transform .2s;
 }
 
 .button1:hover {
   background-color: #cfcfcf;
+  transform: scale(1.03);
 }
 
 .button1:focus {
@@ -358,10 +363,12 @@ li {
   border-color: #009608;
   background-color: #dfdfdfdf;
   padding: 2%;
+  transition: transform .2s;
 }
 
 .button2:hover {
   background-color: #cfcfcf;
+  transform: scale(1.03);
 }
 
 .button2:focus {
@@ -378,10 +385,12 @@ li {
   border-color: #5f0096;
   background-color: #dfdfdfdf;
   padding: 2%;
+  transition: transform .2s;
 }
 
 .button3:hover {
   background-color: #cfcfcf;
+  transform: scale(1.03);
 }
 
 .button3:focus {
@@ -398,10 +407,12 @@ li {
   border-color: #bf1a02;
   background-color: #dfdfdfdf;
   padding: 2%;
+  transition: transform .2s;
 }
 
 .button4:hover {
   background-color: #cfcfcf;
+  transform: scale(1.03);
 }
 
 .button4:focus {
@@ -418,15 +429,21 @@ li {
   border-color: #f7ef00;
   background-color: #dfdfdfdf;
   padding: 2%;
+  transition: transform .2s;
 }
 
 .button5:hover {
   background-color: #cfcfcf;
+  transform: scale(1.03);
 }
 
 .button5:focus {
   outline: none;
   box-shadow: none;
+}
+
+#confirmSong {
+  border-color: #b3b3b3;
 }
 
 #songChoiceBox1 {
