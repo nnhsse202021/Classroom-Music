@@ -259,7 +259,7 @@ async function loadClassSelection() {
 	let newItem = document.createElement('select');
 	newItem.name = 'selectClass';
 	newItem.id = 'selectClass';
-
+	let email = profile.getEmail();
 	for (let i = 1; i <= 8; i++) {
 		let code = await getCode(i + email);
 		await fetch(`/getcodename?code=${encodeURI(code)}`).
