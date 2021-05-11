@@ -73,6 +73,30 @@ app.get("/videoidtotitle", (req, res) => {
     });
 });
 
+var classArray;
+app.get("/sendclassenabled", (req, res) => {
+	console.log('banana');
+  classArray = req.query.classArray;
+});
+
+app.get("/getclassenabled", (req, res) =>{
+	console.log('apple');
+  res.send(JSON.stringify({
+    classDisabledData: classArray
+  }));
+});
+
+var canSubmit;
+app.get("/sendsubmitenabled", (req, res) => {
+  canSubmit = req.query.canSubmit;
+});
+
+app.get("/getsubmitenabled", (req, res) =>{
+  res.send(JSON.stringify({
+    submitDisabledData: canSubmit
+  }));
+});
+
 app.get("/removesong", async (req ,res) => {
 	console.log("Request received!");
 
@@ -126,6 +150,18 @@ app.get("/removestudent", async (req, res) => {
 	console.log(classroom);
 	console.log(index);
 	await db.set(code, classroom);
+
+	let studentsToCodes = await db.get("studentsToCodes");
+	if (email in studentsToCodes) {
+		delete studentsToCodes[email];
+	}
+	await db.set("studentsToCodes", studentsToCodes);
+
+	console.log(studentsToCodes);
+
+	res.send(JSON.stringify({
+		successful: true
+	}));
 })
 
 app.get("/addsong", async (req, res) => {
@@ -133,7 +169,7 @@ app.get("/addsong", async (req, res) => {
   let playlistID = req.query.playlist;
   let value = vidID;
 
-  playlistIDList = await db.list(); // getting the list of keys
+  playlistIDList =  db.list(); // getting the list of keys
   if (playlistIDList.indexOf(playlistID) > -1) { // check for whether the key is already in the database
     value = await db.get(playlistID);
     console.log("got it");
@@ -251,7 +287,7 @@ app.get("/joinclass", async (req, res) => {
   db.set(code, classroom);
 
 
-	
+
   let studentsToCodes = {};
 
   if (codeList.indexOf("studentsToCodes") > -1) {

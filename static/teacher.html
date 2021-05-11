@@ -39,6 +39,7 @@
       let currentCode = await getCurrentCode();
       document.getElementById("displayCode").innerHTML = "Your code is: " + currentCode;
 
+			await xyz();
 			await loadClassSelection();
     }
 
@@ -63,6 +64,8 @@
         <button id="clearPlaylist" class="button2" type="button">Clear Playlist</button>
         <button id="shuffleButton" class="button2" type="button">Shuffle</button>
         <button id="playButton" class="button2"><span id="playButtonText" class="btn-text">Play</span></button>
+        <p class="card-text" id="disableSongDescription">Your playlist is currently ENABLED</p>
+        <button id="disableSubmitButton" class="button2">Disable Song Submissions</button> 
       </div>
 
 			<p></p>
@@ -87,6 +90,8 @@
 			<button class="button3" id="changeClassNameButton" type="button">Rename</button>
 
       <p class="card-text" id="displayCode">Your code is: </p>
+      <p class="card-text" id="disableClassDescription">Your class is currently ENABLED</p>
+      <button id="disableClassButton" class="button3" </span> <span id="disableClassButtonText" class="btn-text" innerHTML = "Disable Classroom Code">Disable Classroom Code</span></button> <!-- button to disable/enable ability to join a class -->
       <button id="refreshClass" class="button3">Refresh class list</button>
     </div>
   </div>
@@ -157,7 +162,6 @@
   </div>
   </div>
   </div>
-
   <div class="modal" id="songOptionsModal">
     <div id="songOptionsContent">
       <div class="card-header">

@@ -1,14 +1,14 @@
 <head>
-  <meta name="google-signin-client_id" content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
-  <link rel="stylesheet" type="text/css" href="/static/style.css" />
-  <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Lora&family=Rubik&display=swap" rel="stylesheet">
+	<meta name="google-signin-client_id" content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
+	<link rel="stylesheet" type="text/css" href="/static/style.css" />
+	<script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Lora&family=Rubik&display=swap" rel="stylesheet">
 
 	<script src="/static/sessions.js"></script>
-  <script>checkLoginStatus()</script>
+	<script>checkLoginStatus()</script>
   <style>
   body {
     background-image: url('/static/images/background.png');
@@ -20,14 +20,12 @@
 </head>
 
 <body>
-
-
   <ul id="navbar1">
     <a id= "navbarstyling">Classroom Music</a>
   </ul>
 
-  <div class="g-signin2" data-onsuccess="onSignIn"></div>
-  <button id = "signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign Out</button>
+	<div class="g-signin2" data-onsuccess="onSignIn"></div>
+	<button id = "signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign Out</button>
 
   <script>
     var profile;
@@ -65,14 +63,31 @@
     </div>
   </div>
 
-  <script>
-    var studentCode = ""; // Student's current class code
+	<script>
+		var studentCode = ""; // Student's current class classcode
+    
+    // method to join a class, if class is enabled
+    document.getElementById("submitCode").addEventListener("click", async () => {
+      
+      let classDisableArray = await fetch(`/getclassenabled`)
+				.then(response => response.json())
+        .then(data => {
+          console.log("Classroom Enable Data Accessed");
+					console.log(data);
+          return data.classDisabledData;
+        });
+
 
     document.getElementById("submitCode").addEventListener("click", async () => {
       studentCode = document.getElementById("classCodeEnter").value;
-      document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
-      await joinClass(studentCode, profile.getEmail(), profile.getName());
-			// await setEmailToName(profile.getEmail(), profile.getName());
+      if (studentCode == classDisableArray[0] && classDisableArray[1] == "true") {
+        document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
+        await joinClass(studentCode, profile.getEmail(), profile.getName());
+        // await setEmailToName(profile.getEmail(), profile.getName());
+      }
+      else if (studentCode == classDisableArray[0] && classDisableArray[1] == "false") {
+        window.alert("Joining that classroom is disabled right now!");
+      }
     });
 
     // function that returns the student's current class code
@@ -184,4 +199,4 @@
   <script src="/static/script.js"></script>
 
 
-</body>
+</body> 
