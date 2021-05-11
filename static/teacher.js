@@ -289,6 +289,10 @@ async function loadClassSelection() {
 document.getElementById("changeClassNameButton").addEventListener("click", async () => {
 	let code = await getCurrentCode();
 	let newName = document.getElementById("changeClassName").value;
+
+	document.getElementById("option" + classNumber).innerHTML = newName;
+
+	await fetch(`/renamecode?code=${encodeURI(code)}&name=${encodeURI(newName)}`);
 })
 
 var isClassEnabled = true;
