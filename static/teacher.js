@@ -153,14 +153,20 @@ cancelOptionsesButton.addEventListener("click", async () => {
 
 let removeSongButton = document.getElementById("removeSongButton");
 removeSongButton.addEventListener("click", async () => {
+  document.getElementById("songOptionsModal").style.display = "none";
   console.log("bruhas");
   await removeSongFromPlaylist();
+	await showPlaylist();
+	document.getElementById("songOptionsModal").style.display = "none";
 })
 
 let removeStudentButton = document.getElementById("removeStudentButton");
 removeStudentButton.addEventListener("click", async () => {
+  document.getElementById("studentOptionsModal").style.display = "none";
 	console.log(studentBeingLookedAt);
 	await removeStudentFromClass();
+	await refreshClass();
+	document.getElementById("studentOptionsModal").style.display = "none";
 })
 
 document.getElementById("showPlaylist").addEventListener("click", showPlaylist)
@@ -185,7 +191,7 @@ async function showPlaylist() {
         */
         var newItem = document.createElement("BUTTON");
         newItem.setAttribute('id', songs[i]);
-        newItem.classList.add("playlistSongs");
+        newItem.classList.add("playlistSongs1");
 
         newItem.addEventListener("click", async () => {
           displaySongInfo(data.title, stuName);
@@ -215,16 +221,18 @@ async function removeSongFromPlaylist() {
       console.log("(REQUEST RECEIVED BACK) after sending song to server to be removed from the playlist\nID: " + data.id);
   });
 	await showPlaylist();
-	document.getElementById("songOptionsModal").style.display = "none";
 }
 
 async function removeStudentFromClass() {
 	var email = studentBeingLookedAt;
 	var playlistID = await getCurrentCode();
-
-	await fetch(`/removestudent?email=${encodeURI(email)}&code=${encodeURI(playlistID)}`);
-
-	document.getElementById("studentOptionsModal").style.display = "none";
+	await fetch(`/removestudent?email=${encodeURI(email)}&code=${encodeURI(playlistID)}`)
+    .then(response => response.json())
+		.then(data => {
+			
+		});
+  await refreshClass();
+  console.log("remove success!");
 }
 
 async function displaySongInfo(id, stuName){
@@ -252,7 +260,7 @@ async function loadClassSelection() {
 	let newItem = document.createElement('select');
 	newItem.name = 'selectClass';
 	newItem.id = 'selectClass';
-
+	let email = profile.getEmail();
 	for (let i = 1; i <= 8; i++) {
 		let code = await getCode(i + email);
 		await fetch(`/getcodename?code=${encodeURI(code)}`).
@@ -288,8 +296,77 @@ document.getElementById("changeClassNameButton").addEventListener("click", async
 	await fetch(`/renamecode?code=${encodeURI(code)}&name=${encodeURI(newName)}`);
 })
 
+var isClassEnabled = true;
+var classDisabledData = [];
+var isSubmitEnabled = true;
+var submitDisabledData;
 
-document.getElementById("refreshClass").addEventListener("click", async () => {
+// support method for enabling/disabling, activated upon sign-in
+async function xyz () {
+	console.log("123");
+  // enabling/disabling classes
+  classDisabledData = [await getCurrentCode(), isClassEnabled];
+  await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`)
+		.then(response => response.json())
+		.then(data => {
+			
+		}); // so it's not linked to pressing the button
+  document.getElementById("disableClassButton").innerHTML = "Disable Classroom Code";
+  document.getElementById("disableClassDescription").innerHTML = "Your class is currently ENABLED";
+
+
+	console.log(456);
+
+  // enabling/disabling song submission
+  submitDisabledData = isSubmitEnabled;
+  await fetch(`/sendsubmitenabled?canSubmit=${encodeURI(submitDisabledData)}`); // so it's not linked to pressing the button
+  document.getElementById("disableSubmitButton").innerHTML = "Disable Song Submissions";
+  document.getElementById("disableSongDescription").innerHTML = "Your playlist is currently ENABLED";
+}
+
+// method for allowing disabling/enabling classes
+document.getElementById("disableClassButton").addEventListener("click", async () => {
+  if (classDisabledData[1] != true && classDisabledData[1] != false) { // if undefined
+    classDisabledData[1] = true;
+  }
+  if (classDisabledData[1] === true) { // if enabled
+    classDisabledData[1] = false; // disable
+    document.getElementById("disableClassButton").innerHTML = "Enable Classroom Code"; // change button to ask for enable
+    document.getElementById("disableClassDescription").innerHTML = "Your class is currently DISABLED"; // change description to disabled
+    await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`);
+  }
+  else { // else(if disabled)
+    classDisabledData[1] = true; // enable
+    document.getElementById("disableClassButton").innerHTML = "Disable Classroom Code"; // change button to ask for disable
+    document.getElementById("disableClassDescription").innerHTML = "Your class is currently ENABLED"; // change description to enabled
+    await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`);
+  }
+})
+
+// method for allowing disabling/enabling song submissions
+document.getElementById("disableSubmitButton").addEventListener("click", async () => {
+  if (submitDisabledData != true && submitDisabledData != false) { // if undefined
+    submitDisabledData = true;
+  }
+  if (submitDisabledData === true) { // if enabled
+    submitDisabledData = false; // disable
+    document.getElementById("disableSubmitButton").innerHTML = "Enable Song Submissions"; // change button to ask for enable
+    document.getElementById("disableSongDescription").innerHTML = "Your playlist is currently DISABLED"; // change description to disabled
+    await fetch(`/sendsubmitenabled?canSubmit=${encodeURI(submitDisabledData)}`);
+  }
+  else { // else(if disabled)
+    submitDisabledData = true; // enable
+    document.getElementById("disableSubmitButton").innerHTML = "Disable Song Submissions"; // change button to ask for disable
+    document.getElementById("disableSongDescription").innerHTML = "Your playlist is currently ENABLED"; // change description to enabled
+    await fetch(`/sendsubmitenabled?canSubmit=${encodeURI(submitDisabledData)}`);
+  }
+})
+
+
+document.getElementById("refreshClass").addEventListener("click", refreshClass)
+
+
+async function refreshClass(){
   let classroom = await getClassList(await getCurrentCode());
 	console.log(classroom);
   document.getElementById('class-list').innerHTML = "";
@@ -298,7 +375,7 @@ document.getElementById("refreshClass").addEventListener("click", async () => {
     var newItem1 = document.createElement("BUTTON");
     newItem1.innerHTML = classroom[i];
     console.log(classroom[i]);
-    newItem1.classList.add("playlistSongs");
+    newItem1.classList.add("playlistSongs2");
     //newItem.setAttribute('id', songs[i]);
     
     newItem1.addEventListener("click", async () => {
@@ -310,7 +387,7 @@ document.getElementById("refreshClass").addEventListener("click", async () => {
     })
     document.getElementById('class-list').appendChild(newItem1);
   }
-})
+}
 
 async function emailToName(email) {
 	let name = await fetch(`/getemailtoname?email=${encodeURI(email)}`)

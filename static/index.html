@@ -1,50 +1,69 @@
-
 <head>
   <meta name="google-signin-client_id" content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
   <link rel="stylesheet" type="text/css" href="/static/style.css" />
   <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
   <script src="https://apis.google.com/js/api.js"></script>
   <script src="https://apis.google.com/js/platform.js" async defer></script>
+  <style>
+  body {
+    background-image: url('/static/images/background.png');
+    background-attachment: scroll;
+    background-size: cover;
+    background-size: 40%;
+  }
+  </style>
 </head>
 
 <body>
-  <script src="/static/sessions.js"></script>
+	<div id="signInBox">
+		<div class="card">
+			<div class="card-header">Please Sign in</div>
+			<div class="card-body">
+				<p class="card-text">To access the website you are required to sign in with Google.</p>
+				<!-- Google sign in button -->
+				<div class="centered">
+					<button id="loginButton">Login</button>
+				</div>
+			</div>
+		</div>
+	</div>
 
-  
-  <div id="signInBox">
-    <div class="card">
-      <div class="card-header">Please Sign in</div>
-        <div class="card-body">
-          <p class="card-text">To access the website you are required to sign in with Google.</p>
+	<script>
+		//load up that authy boi
+		gapi.load("auth2", () => {
+			gapi.auth2.init()
+		});
 
-          <!-- Google sign in button -->
-          <div id = "googleButton" class="g-signin2" data-onsuccess="onSignIn"></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  
-  <script>
-    function onSignIn(googleUser) {
-      
-      var profile = googleUser.getBasicProfile();
-      console.log('Name: ' + profile.getName());
-      console.log('Email: ' + profile.getEmail());
+		document.getElementById("loginButton").addEventListener("click", googleLogin);
 
-      if (profile.getEmail().includes("@naperville203.org")) {
-        setLogin(window.location.origin + "/static/teacher.html");
-				window.location.href = window.location.origin + "/static/teacher.html";
-      }
-      else if (["dpbabenkov@stu.naperville203.org", "evman142@gmail.com", "geoffrey.feifei@gmail.com",
-      "bizzlebozzlebuzzle@gmail.com"].includes(profile.getEmail())) {
-        setLogin(window.location.origin + "/static/teacher.html");
-				window.location.href = window.location.origin + "/static/teacher.html";
-      }
-      else {
-				setLogin(window.location.origin + "/static/student.html");
-        window.location.href = window.location.origin + "/static/student.html";
-      }
-    }
-  </script>
-  
+		async function googleLogin() {
+			var googleUser = await gapi.auth2.getAuthInstance().signIn(); // <- this one gonna open the google window
+			let res = await fetch(`/authenticate`, {
+				method: "POST",
+				body: JSON.stringify({
+					token: googleUser.getAuthResponse().id_token
+				}),
+				headers: {
+					"Content-Type": "application/json"
+				}
+			})
+				.then(response => response.json())
+				.then(data => {
+					let email = data.email;
+					if (email.includes("@naperville203.org")) {
+						// setLogin(window.location.origin + "/static/teacher.html");
+						window.location.href = window.location.origin + "/static/teacher.html";
+					}
+					else if (["dpbabenkov@stu.naperville203.org", "evman142@gmail.com", "geoffrey.feifei@gmail.com",
+					"bizzlebozzlebuzzle@gmail.com"].includes(email)) {
+						// setLogin(window.location.origin + "/static/teacher.html");
+						window.location.href = window.location.origin + "/static/teacher.html";
+					}
+					else {
+						// setLogin(window.location.origin + "/static/student.html");
+						window.location.href = window.location.origin + "/static/student.html";
+					}
+				});
+		}
+	</script>
 </body>

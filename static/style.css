@@ -42,7 +42,7 @@
   background-color: rgb(255, 255, 255);
   padding: 1.5%;
   border-radius: 25px;
-  border: 2px solid;
+  border: 6px solid;
   border-color: #5f0096;
 }
 
@@ -50,7 +50,7 @@
   background-color: rgb(255, 255, 255);
   padding: 6%;
   border-radius: 25px;
-  border: 2px solid;
+  border: 6px solid;
   border-color: #49b8da;
 }
 
@@ -58,7 +58,7 @@
   background-color: rgb(255, 255, 255);
   padding: 1.5%;
   border-radius: 20px;
-  border: 2px solid;
+  border: 6px solid;
   border-color: #5f0096;
 }
 
@@ -76,22 +76,44 @@ li {
   margin:0 0 10px 0;
 }
 
-.playlistSongs {
+.playlistSongs1 {
   border-radius: 10px;
-  border: 2px solid;
-  /*border-color: #ffb78d;*/
+  border: 3px solid;
   background-color: #dfdfdfdf;
-  border-color: rgb(255, 190, 190);
+  border-color: #bf1a02;
   padding: 4%;
   width: 100%;
   margin:0 0 10px 0;
+  transition: transform .2s;
 }
 
-.playlistSongs:hover {
+.playlistSongs1:hover {
   background-color: #cfcfcf;
+  transform: scale(1.03);
 }
 
-.playlistSongs:focus {
+.playlistSongs1:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.playlistSongs2 {
+  border-radius: 10px;
+  border: 3px solid;
+  background-color: #dfdfdfdf;
+  border-color: #f7ef00;
+  padding: 4%;
+  width: 100%;
+  margin:0 0 10px 0;
+  transition: transform .2s;
+}
+
+.playlistSongs2:hover {
+  background-color: #cfcfcf;
+  transform: scale(1.03);
+}
+
+.playlistSongs2:focus {
   outline: none;
   box-shadow: none;
 }
@@ -125,31 +147,78 @@ li {
   width: 50%;
   border-radius: 10px;
   /*border-color: #ffb78d;*/
-  border-color: white;
   background-color: #dfdfdfdf;
   border-top: none;
   border-left: none;
   border-right: none;
+  border-bottom: 2px solid;
+  border-color: white;
   padding: 2%;
   font-family: 'Rubik', sans-serif;
-  transition: border-color 0.5s;
+  transition: border-color 0.5s, transform .2s;
+}
+
+#disableClassDescription {
+  display: block;
+  color: #5f0096;
+  font-weight: bold;
+}
+
+#disableSongDescription {
+  display: block;
+  color: #009608;
+  font-weight: bold;
 }
 
 #classCodeEnter:focus {
   outline: none;
   box-shadow: none;
   border-color: #5f0096;
+  transform: scale(1.02);
 }
 
 #classCodeEnter:hover {
   border-color: #5f0096;
 }
 
+#classCodeEnter:visited {
+  border-color: white;
+}
+
+#selectClass{
+  width: 50%;
+  border-radius: 10px;
+  background-color: #dfdfdfdf;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid;
+  border-color: white;
+  padding: 2%;
+  font-family: 'Rubik', sans-serif;
+  transition: border-color 0.5s, transform 0.005s;
+}
+
+#selectClass:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #5f0096;
+  transform: scale(1.01);
+}
+
+#selectClass:hover {
+  border-color: #5f0096;
+}
+
+#selectClass:visited {
+  border-color: white;
+}
+
 .musicControlses {
   background-color: rgb(255, 255, 255);
   padding: 1.5%;
   border-radius: 20px;
-  border: 2px solid;
+  border: 6px solid;
   border-color: #009608;
 }
 
@@ -166,7 +235,7 @@ li {
   background-color: rgb(255, 255, 255);
   padding: 1.5%;
   border-radius: 20px;
-  border: 2px solid;
+  border: 6px solid;
   border-color: #bf1a02;
   text-align: center;
   width: 50%;
@@ -189,8 +258,9 @@ li {
   background-color: rgb(255, 255, 255);
   padding: 1.5%;
   border-radius: 20px;
-  border: 2px solid;
+  border: 6px solid;
   border-color: #f7ef00;
+  //border-color: #e07400;
   text-align: center;
   width: 50%;
   /*margin-left: 15%;*/
@@ -219,7 +289,6 @@ li {
 }
 
 
-
 /* sign in box */
 #signInBox {
   width: 20%;
@@ -232,51 +301,85 @@ li {
 #signOutButton {
 }
 
-/* trying to center the dumb google sign in button inside of the box (it's not working) */
 #googleButton {
-  width: 50px;
-  padding: 10px;
-  position: relative;
+  margin: auto;
 }
-
 
 #searchWord {
   width: 90%;
   border-radius: 10px;
   /*border-color: #ffb78d;*/
-  border-color: white;
   background-color: #dfdfdfdf;
   border-top: none;
   border-left: none;
   border-right: none;
+  border-bottom: 2px solid;
+  border-color: white;
   padding: 2%;
   font-family: 'Rubik', sans-serif;
-  transition: border-color 0.5s;
+  transition: border-color 0.5s, transform 0.2s;
 }
 
 #searchWord:focus {
   outline: none;
   box-shadow: none;
   border-color: #49b8da;
+  transform: scale(1.02);
 }
 
 #searchWord:hover {
   border-color: #49b8da;
 }
 
+#searchWord:visited {
+  border-color: white;
+}
+
+#changeClassName {
+  width: 40%;
+  border-radius: 10px;
+  /*border-color: #ffb78d;*/
+  background-color: #dfdfdfdf;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 2px solid;
+  border-color: white;
+  padding: 2%;
+  font-family: 'Rubik', sans-serif;
+  transition: border-color 0.5s, transform .2s;
+}
+
+#changeClassName:focus {
+  outline: none;
+  box-shadow: none;
+  border-color: #5f0096;
+  transform: scale(1.02);
+}
+
+#changeClassName:hover {
+  border-color: #5f0096;
+}
+
+#changeClassName:visited {
+  border-color: white;
+}
 
 .button1 {
   width: 40%;
   font-family: 'Rubik', sans-serif;
   border-radius: 10px;
+  border: 3px solid;
   /*border-color: #ffb78d;*/
   border-color: #49b8da;
   background-color: #dfdfdfdf;
   padding: 2%;
+  transition: transform .2s;
 }
 
 .button1:hover {
   background-color: #cfcfcf;
+  transform: scale(1.03);
 }
 
 .button1:focus {
@@ -287,14 +390,17 @@ li {
 .button2 {
   font-family: 'Rubik', sans-serif;
   border-radius: 10px;
+  border: 3px solid;
   /*border-color: #ffb78d;*/
   border-color: #009608;
   background-color: #dfdfdfdf;
   padding: 2%;
+  transition: transform .2s;
 }
 
 .button2:hover {
   background-color: #cfcfcf;
+  transform: scale(1.03);
 }
 
 .button2:focus {
@@ -306,14 +412,17 @@ li {
   width: 40%;
   font-family: 'Rubik', sans-serif;
   border-radius: 10px;
+  border: 3px solid;
   /*border-color: #ffb78d;*/
   border-color: #5f0096;
   background-color: #dfdfdfdf;
   padding: 2%;
+  transition: transform .2s;
 }
 
 .button3:hover {
   background-color: #cfcfcf;
+  transform: scale(1.03);
 }
 
 .button3:focus {
@@ -325,14 +434,17 @@ li {
   width: 40%;
   font-family: 'Rubik', sans-serif;
   border-radius: 10px;
+  border: 3px solid;
   /*border-color: #ffb78d;*/
   border-color: #bf1a02;
   background-color: #dfdfdfdf;
   padding: 2%;
+  transition: transform .2s;
 }
 
 .button4:hover {
   background-color: #cfcfcf;
+  transform: scale(1.03);
 }
 
 .button4:focus {
@@ -344,19 +456,26 @@ li {
   width: 40%;
   font-family: 'Rubik', sans-serif;
   border-radius: 10px;
+  border: 3px solid;
   /*border-color: #ffb78d;*/
   border-color: #f7ef00;
   background-color: #dfdfdfdf;
   padding: 2%;
+  transition: transform .2s;
 }
 
 .button5:hover {
   background-color: #cfcfcf;
+  transform: scale(1.03);
 }
 
 .button5:focus {
   outline: none;
   box-shadow: none;
+}
+
+#confirmSong {
+  border-color: #b3b3b3;
 }
 
 #songChoiceBox1 {
@@ -365,7 +484,7 @@ li {
   background-color: rgb(255, 255, 255);
   padding: 8%;
   border-radius: 25px;
-  border: 2px solid #ffb78d;
+  border: 6px solid #ffb78d;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -377,7 +496,7 @@ li {
   background-color: rgb(255, 255, 255);
   padding: 8%;
   border-radius: 25px;
-  border: 2px solid #ffb78d;
+  border: 6px solid #ffb78d;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -389,7 +508,7 @@ li {
   background-color: rgb(255, 255, 255);
   padding: 8%;
   border-radius: 25px;
-  border: 2px solid #ffb78d;
+  border: 6px solid #ffb78d;
   text-align: center;
   margin-left: auto;
   margin-right: auto;
@@ -563,7 +682,7 @@ body {
   background-color: #dfdfdf;
 }
 
-#centered {
+.centered {
   position: fixed;
   top: 50%;
   left: 50%;

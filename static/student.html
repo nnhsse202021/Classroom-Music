@@ -1,44 +1,61 @@
 <head>
-  <meta name="google-signin-client_id" content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
-  <link rel="stylesheet" type="text/css" href="/static/style.css" />
-  <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <link rel="preconnect" href="https://fonts.gstatic.com">
-  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css2?family=Lora&family=Rubik&display=swap" rel="stylesheet">
-
-	<script src="/static/sessions.js"></script>
-  <script>checkLoginStatus()</script>
+	<meta name="google-signin-client_id" content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
+	<link rel="stylesheet" type="text/css" href="/static/style.css" />
+	<script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
+	<script src="https://apis.google.com/js/platform.js" async defer></script>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css2?family=Lora&family=Rubik&display=swap" rel="stylesheet">
+  <style>
+  body {
+    background-image: url('/static/images/background.png');
+    background-attachment: scroll;
+    background-size: cover;
+    background-size: 40%;
+  }
+  </style>
 </head>
 
 <body>
-
-
   <ul id="navbar1">
     <a id= "navbarstyling">Classroom Music</a>
   </ul>
 
-  <div class="g-signin2" data-onsuccess="onSignIn"></div>
-  <button id = "signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign Out</button>
+	<!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+	<button id = "signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign Out</button>
 
   <script>
-    var profile;
-    async function onSignIn(googleUser) {
-      // setLogin();
-
-      profile = googleUser.getBasicProfile();
-      console.log('Name: ' + profile.getName());
-      console.log('Email: ' + profile.getEmail());
-      document.getElementById("store_name").innerHTML = profile.getName();
-
-			let currentCode = await getCurrentCode();
-			document.getElementById("displayCode").innerHTML = "Your current code is: " + currentCode;
+		// function that returns the student's current class code
+    async function getCurrentCode() {
+			let email = profile.getEmail();
+			let currentCode = await fetch(`/getcurrentclass?email=${encodeURI(email)}`)
+        .then(response => response.json())
+        .then(data => {
+					return data.code;
+        })
+				return currentCode;
     }
 
-    function signOut() {
+		var profile;
+
+		//load up that authy boi
+		gapi.load("auth2", async () => {
+			gapi.auth2.init()
+				.then(async response => {
+					profile = response.currentUser.get().getBasicProfile();
+					console.log('Full Name: ' + profile.getName());
+					console.log('Email: ' + profile.getEmail());
+
+					document.getElementById("store_name").innerHTML = profile.getName();
+
+					let currentCode = await getCurrentCode();
+					document.getElementById("displayCode").innerHTML = "Your current code is: " + currentCode;
+			});
+		})
+
+		function signOut() {
       var auth2 = gapi.auth2.getAuthInstance();
       auth2.signOut().then(() => {
-        setLogout();
         window.location.href = window.location.origin + "/static/index.html";
       });
     }
@@ -57,26 +74,32 @@
     </div>
   </div>
 
-  <script>
-    var studentCode = ""; // Student's current class code
-
+	<script>
+		var studentCode = ""; // Student's current class classcode
+    
+    // method to join a class, if class is enabled
     document.getElementById("submitCode").addEventListener("click", async () => {
-      studentCode = document.getElementById("classCodeEnter").value;
-      document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
-      await joinClass(studentCode, profile.getEmail(), profile.getName());
-			// await setEmailToName(profile.getEmail(), profile.getName());
-    });
-
-    // function that returns the student's current class code
-    async function getCurrentCode() {
-			let email = profile.getEmail();
-			let currentCode = await fetch(`/getcurrentclass?email=${encodeURI(email)}`)
-        .then(response => response.json())
+      
+      let classDisableArray = await fetch(`/getclassenabled`)
+				.then(response => response.json())
         .then(data => {
-					return data.code;
-        })
-			return currentCode;
-    }
+          console.log("Classroom Enable Data Accessed");
+					console.log(data);
+          return data.classDisabledData;
+        });
+
+			classDisableArray = classDisableArray.split(",");
+			console.log(classDisableArray);
+      studentCode = document.getElementById("classCodeEnter").value;
+      if (studentCode == classDisableArray[0] && classDisableArray[1] == "true") {
+        document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
+        await joinClass(studentCode, profile.getEmail(), profile.getName());
+        // await setEmailToName(profile.getEmail(), profile.getName());
+      }
+      else if (studentCode == classDisableArray[0] && classDisableArray[1] == "false") {
+        window.alert("Joining that classroom is disabled right now!");
+      }
+    });
 		
     async function joinClass(code, email, name) {
 			await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}&name=${name}`)
@@ -185,4 +208,4 @@
   <script src="/static/script.js"></script>
 
 
-</body>
+</body> 

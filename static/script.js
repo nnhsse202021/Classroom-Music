@@ -2,16 +2,28 @@
 let submitButton = document.getElementById("submitButton");
 
 submitButton.addEventListener("click", async () => {
+  let submitDisableArray = await fetch(`/getsubmitenabled`)
+	.then(response => response.json())
+  .then(data => {
+    console.log("Song Submission Enable Data Accessed");
+		console.log(data);
+    return data.submitDisabledData;
+  });
+
 	let searchTerm = document.getElementById("searchWord").value;
 
-  await fetch(`/ytapi?term=${encodeURI(searchTerm)}`)
-    .then(response => response.json())
-    .then(data => {
-      console.log(data.videoId1 + "   " + data.videoTitle1);
-      showSongChoices(data.videoId1, data.videoId2, data.videoId3,data.videoTitle1, data.videoTitle2, data.videoTitle3);
-    });
+  if (submitDisableArray == "true") {
+    await fetch(`/ytapi?term=${encodeURI(searchTerm)}`)
+      .then(response => response.json())
+      .then(data => {
+        console.log(data.videoId1 + "   " + data.videoTitle1);
+        showSongChoices(data.videoId1, data.videoId2, data.videoId3,data.videoTitle1, data.videoTitle2, data.videoTitle3);
+      });
+  }
+  else {
+    window.alert("Song could not be submitted. Make sure you've joined a classroom. If you have, ask your teacher if submitting a song is currently disabled for this playlist.");
+  }
 });
-
 function showSongChoices(videoId1, videoId2, videoId3, videoTitle1, videoTitle2, videoTitle3) {
   document.getElementById("songChoice1").innerHTML = "Title: " + videoTitle1;
 	document.getElementById("songChoice1").setAttribute("videoid", videoId1);
@@ -99,9 +111,11 @@ let verifyCancelButton = document.getElementById("verifyCancelButton");
 verify.addEventListener("click", async () => {
   if (verify.checked) {
     confirmSong.disabled = false;
+    document.getElementById("confirmSong").style.borderColor = "#49b8da"; 
   }
   else {
     confirmSong.disabled = true;
+    document.getElementById("confirmSong").style.borderColor = "#b3b3b3";
   }
 })
 window.onclick = function(event) {
