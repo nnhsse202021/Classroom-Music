@@ -77,25 +77,25 @@ var classArray;
 app.get("/sendclassenabled", (req, res) => {
 	console.log('banana');
   classArray = req.query.classArray;
-});
+}); // send from teacher if submitting is enabled
 
 app.get("/getclassenabled", (req, res) =>{
 	console.log('apple');
   res.send(JSON.stringify({
     classDisabledData: classArray
   }));
-});
+}); // returns true/false for if class is enabled
 
 var canSubmit;
 app.get("/sendsubmitenabled", (req, res) => {
   canSubmit = req.query.canSubmit;
-});
+}); // send from teacher if submitting is enabled
 
 app.get("/getsubmitenabled", (req, res) =>{
   res.send(JSON.stringify({
     submitDisabledData: canSubmit
   }));
-});
+}); // returns true/false for if submit is enabled
 
 app.get("/removesong", async (req ,res) => {
 	console.log("Request received!");
@@ -169,7 +169,7 @@ app.get("/addsong", async (req, res) => {
   let playlistID = req.query.playlist;
   let value = vidID;
 
-  playlistIDList =  db.list(); // getting the list of keys
+  playlistIDList = await db.list(); // getting the list of keys
   if (playlistIDList.indexOf(playlistID) > -1) { // check for whether the key is already in the database
     value = await db.get(playlistID);
     console.log("got it");
