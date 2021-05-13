@@ -373,16 +373,16 @@ const CLIENT_ID = "430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleuser
 let {OAuth2Client} = require('google-auth-library');
 let oAuth2Client = new OAuth2Client(CLIENT_ID);
 app.post("/authenticate", async (req, res) => {
-    let { token } = req.body;
-    let ticket = await oAuth2Client.verifyIdToken({ // magic google stuff
-        idToken: token,
-        audience: CLIENT_ID
-    });
+  let { token } = req.body;
+  let ticket = await oAuth2Client.verifyIdToken({ // magic google stuff
+    idToken: token,
+    audience: CLIENT_ID
+  });
 
-		req.session.token = token;
+	req.session.token = token;
 
-		let email = ticket.getPayload().email;
-    res.json({email: email});
+	let email = ticket.getPayload().email;
+  res.json({email: email});
 })
 
 //serving files
