@@ -226,7 +226,7 @@ async function removeSongFromPlaylist() {
 async function removeStudentFromClass() {
 	var email = studentBeingLookedAt;
 	var playlistID = await getCurrentCode();
-	await fetch(`/removestudent?email=${encodeURI(email)}&code=${encodeURI(playlistID)}`);
+	await fetch(`/removestudent?email=${encodeURI(email)}&code=${encodeURI(playlistID)}`)
     .then(response => response.json())
 		.then(data => {
 			
@@ -303,11 +303,19 @@ var submitDisabledData;
 
 // support method for enabling/disabling, activated upon sign-in
 async function xyz () {
+	console.log("123");
   // enabling/disabling classes
   classDisabledData = [await getCurrentCode(), isClassEnabled];
-  await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`); // so it's not linked to pressing the button
+  await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`)
+		.then(response => response.json())
+		.then(data => {
+			
+		}); // so it's not linked to pressing the button
   document.getElementById("disableClassButton").innerHTML = "Disable Classroom Code";
   document.getElementById("disableClassDescription").innerHTML = "Your class is currently ENABLED";
+
+
+	console.log(456);
 
   // enabling/disabling song submission
   submitDisabledData = isSubmitEnabled;
@@ -352,12 +360,6 @@ document.getElementById("disableSubmitButton").addEventListener("click", async (
     document.getElementById("disableSongDescription").innerHTML = "Your playlist is currently ENABLED"; // change description to enabled
     await fetch(`/sendsubmitenabled?canSubmit=${encodeURI(submitDisabledData)}`);
   }
-})
-
-document.getElementById("refreshClass").addEventListener("click", async () => {
-	document.getElementById("option" + classNumber).innerHTML = newName;
-
-	await fetch(`/renamecode?code=${encodeURI(code)}&name=${encodeURI(newName)}`);
 })
 
 
