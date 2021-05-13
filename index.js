@@ -256,32 +256,43 @@ app.get("/joinclass", async (req, res) => {
     classroom = await db.get(code);
   }
 
-  classroom.push(email);
-  db.set(code, classroom);
-
-
-	
-  let studentsToCodes = {};
-
-  if (codeList.indexOf("studentsToCodes") > -1) {
-    studentsToCodes = await db.get("studentsToCodes");
+  var studentAlreadyHere;
+  if (codeList.includes(code)) {
+    studentAlreadyHere = true;
   }
+  else {
+    classroom.push(email);
+    db.set(code, classroom);
 
-  studentsToCodes[email] = req.query.code;
-  db.set("studentsToCodes", studentsToCodes);
 
-	/* email to name */
-	
-	let dictionary = await db.get("emailToName");
-	if (dictionary === null) {
-		dictionary = {};
-	}
+    
+    let studentsToCodes = {};
 
-	console.log(req.query.name);
-	console.log(dictionary);
-	dictionary[req.query.email] = req.query.name;
+    if (codeList.indexOf("studentsToCodes") > -1) {
+      studentsToCodes = await db.get("studentsToCodes");
+    }
 
-	await db.set("emailToName", dictionary);
+    studentsToCodes[email] = req.query.code;
+    db.set("studentsToCodes", studentsToCodes);
+
+    /* email to name */
+    
+    let dictionary = await db.get("emailToName");
+    if (dictionary === null) {
+      dictionary = {};
+    }
+
+    console.log(req.query.name);
+    console.log(dictionary);
+    dictionary[req.query.email] = req.query.name;
+
+    await db.set("emailToName", dictionary);
+
+    studentAlreadyHere = false;
+  }
+  res.send(JSON.stringify({
+    contains: studentAlreadyHere
+  }));
 })
 
 
