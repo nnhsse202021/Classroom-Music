@@ -367,34 +367,56 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-app.use("/checksession", (req, res, next) => {
-  if (!req.session.views) {
-    req.session.views = {}
-  }
+/* GOOGLE SECURITY */
 
-  var pathname = parseurl(req).pathname
+const CLIENT_ID = "430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com";
+let {OAuth2Client} = require('google-auth-library');
+let oAuth2Client = new OAuth2Client(CLIENT_ID);
+app.post("/authenticate", async (req, res) => {
+    let { token } = req.body;
+    let ticket = await oAuth2Client.verifyIdToken({ // magic google stuff
+        idToken: token,
+        audience: CLIENT_ID
+    });
 
-  if (req.session.views[pathname] === null) {
-    req.session.views[pathname] = false;
-  }
+		req.session.token = token;
 
-  let mode = req.query.mode;
-	let url = req.query.url;
-  req.session.views["/checksession"] = (mode === 'check') ? req.session.views["/checksession"] : url;
-
-  next();
+		let email = ticket.getPayload().email;
+    res.json({email: email});
 })
 
-app.get("/checksession", (req, res, next) => {
-  res.send(JSON.stringify({
-    loggedIn: req.session.views["/checksession"]
-  }));
-});
-
-
 //serving files
-app.use((req, res) => {
-  res.sendFile(__dirname + req.url);
+app.use(async (req, res) => {
+	if (req.url === "/static/student.html" || req.url === "/static/teacher.html") {
+		token = req.session.token;
+		let ticket = await oAuth2Client.verifyIdToken({ // magic google stuff
+        idToken: token,
+        audience: CLIENT_ID
+    })
+			.then(response => {
+				let email = response.payload.email;
+				let isStudent = ((email.includes("@naperville203.org")) || (["dpbabenkov@stu.naperville203.org", "evman142@gmail.com", "geoffrey.feifei@gmail.com", "bizzlebozzlebuzzle@gmail.com"].includes(email)));
+				if (isStudent) {
+					if (req.url === "/static/teacher.html") {
+						res.sendFile(__dirname + "/static/teacher.html");
+					} else {
+						return res.redirect("/static/teacher.html");
+					}
+				} else {
+					if (req.url === "/static/student.html") {
+						res.sendFile(__dirname + "/static/student.html");
+					} else {
+						return res.redirect("/static/student.html");
+					}
+				}
+			})
+			.catch(error => {
+				console.log(error);
+				return res.redirect('/static/index.html');
+			});
+	} else {
+		res.sendFile(__dirname + req.url);
+	}
 });
 
 
