@@ -169,19 +169,28 @@ app.get("/addsong", async (req, res) => {
   let playlistID = req.query.playlist;
   let value = vidID;
 
+  var alreadyContainsSong = false;
+
   playlistIDList = await db.list(); // getting the list of keys
   if (playlistIDList.indexOf(playlistID) > -1) { // check for whether the key is already in the database
     value = await db.get(playlistID);
     console.log("got it");
     console.log(value);
-    value = value + "," + vidID;
+    if (value.includes(vidID)) {
+      alreadyContainsSong = true;
+    }
+    else {
+      alreadyContainsSong = false;
+      value = value + "," + vidID;
+    }
   }
 
   await db.set(playlistID, value);
 
   res.send(JSON.stringify({
     id: vidID,
-    playlist: playlistID
+    playlist: playlistID,
+    contains: alreadyContainsSong
   }));
 });
 
@@ -283,32 +292,41 @@ app.get("/joinclass", async (req, res) => {
     classroom = await db.get(code);
   }
 
-  classroom.push(email);
-  db.set(code, classroom);
-
-
-
-  let studentsToCodes = {};
-
-  if (codeList.indexOf("studentsToCodes") > -1) {
-    studentsToCodes = await db.get("studentsToCodes");
+  var studentAlreadyHere;
+  if (codeList.includes(code)) {
+    studentAlreadyHere = true;
   }
+  else {
+    classroom.push(email);
+    db.set(code, classroom);
+    
+    var studentsToCodes = {};
 
-  studentsToCodes[email] = req.query.code;
-  db.set("studentsToCodes", studentsToCodes);
+    if (codeList.indexOf("studentsToCodes") > -1) {
+      studentsToCodes = await db.get("studentsToCodes");
+    }
 
-	/* email to name */
-	
-	let dictionary = await db.get("emailToName");
-	if (dictionary === null) {
-		dictionary = {};
-	}
+    studentsToCodes[email] = req.query.code;
+    db.set("studentsToCodes", studentsToCodes);
 
-	console.log(req.query.name);
-	console.log(dictionary);
-	dictionary[req.query.email] = req.query.name;
+    /* email to name */
+    
+    let dictionary = await db.get("emailToName");
+    if (dictionary === null) {
+      dictionary = {};
+    }
 
-	await db.set("emailToName", dictionary);
+    console.log(req.query.name);
+    console.log(dictionary);
+    dictionary[req.query.email] = req.query.name;
+
+    await db.set("emailToName", dictionary);
+
+    studentAlreadyHere = false;
+  }
+  res.send(JSON.stringify({
+    contains: studentAlreadyHere
+  }));
 })
 
 
