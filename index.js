@@ -300,7 +300,7 @@ app.get("/joinclass", async (req, res) => {
     classroom.push(email);
     db.set(code, classroom);
     
-    let studentsToCodes = {};
+    var studentsToCodes = {};
 
     if (codeList.indexOf("studentsToCodes") > -1) {
       studentsToCodes = await db.get("studentsToCodes");
