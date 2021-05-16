@@ -429,7 +429,7 @@ app.use(async (req, res) => {
 				}
 			})
 			.catch(error => {
-				console.log(error);
+				// console.log(error);
 				return res.redirect('/static/index.html');
 			});
 	} else {
