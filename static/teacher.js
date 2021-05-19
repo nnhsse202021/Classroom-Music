@@ -305,12 +305,12 @@ var submitDisabledData;
 async function xyz () {
 	console.log("123");
   // enabling/disabling classes
-  classDisabledData = [await getCurrentCode(), isClassEnabled];
-  await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`)
-		.then(response => response.json())
-		.then(data => {
+  // classDisabledData = [await getCurrentCode(), isClassEnabled];
+  // await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`)
+	// 	.then(response => response.json())
+	// 	.then(data => {
 			
-		}); // so it's not linked to pressing the button
+	// 	}); // so it's not linked to pressing the button
   document.getElementById("disableClassButton").innerHTML = "Disable Classroom Code";
   document.getElementById("disableClassDescription").innerHTML = "Your class is currently ENABLED";
 
@@ -326,6 +326,8 @@ async function xyz () {
 
 // method for allowing disabling/enabling classes
 document.getElementById("disableClassButton").addEventListener("click", async () => {
+	let code = await getCurrentCode();
+
   if (classDisabledData[1] != true && classDisabledData[1] != false) { // if undefined
     classDisabledData[1] = true;
   }
@@ -333,13 +335,13 @@ document.getElementById("disableClassButton").addEventListener("click", async ()
     classDisabledData[1] = false; // disable
     document.getElementById("disableClassButton").innerHTML = "Enable Classroom Code"; // change button to ask for enable
     document.getElementById("disableClassDescription").innerHTML = "Your class is currently DISABLED"; // change description to disabled
-    await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`);
+    await fetch(`/sendclassenabled?code=${encodeURI(code)}&canjoin=${encodeURI(false)}`);
   }
   else { // else(if disabled)
     classDisabledData[1] = true; // enable
     document.getElementById("disableClassButton").innerHTML = "Disable Classroom Code"; // change button to ask for disable
     document.getElementById("disableClassDescription").innerHTML = "Your class is currently ENABLED"; // change description to enabled
-    await fetch(`/sendclassenabled?classArray=${encodeURI(classDisabledData)}`);
+    await fetch(`/sendclassenabled?code=${encodeURI(code)}&canjoin=${encodeURI(true)}`);
   }
 })
 
@@ -366,7 +368,7 @@ document.getElementById("disableSubmitButton").addEventListener("click", async (
 document.getElementById("refreshClass").addEventListener("click", refreshClass)
 
 
-async function refreshClass(){
+async function refreshClass() {
   let classroom = await getClassList(await getCurrentCode());
 	console.log(classroom);
   document.getElementById('class-list').innerHTML = "";

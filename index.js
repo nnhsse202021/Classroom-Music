@@ -73,20 +73,16 @@ app.get("/videoidtotitle", (req, res) => {
     });
 });
 
-var classArray;
+var classEnabledMap = {};
 app.get("/sendclassenabled", (req, res) => {
-	console.log('banana');
-  classArray = req.query.classArray;
+	console.log(classCode + " " + canJoin);
+	let classCode = req.query.code;
+	let canJoin = req.query.canjoin;
+	classEnabledMap[classCode] = canJoin;
 }); // send from teacher if submitting is enabled
 
-app.get("/getclassenabled", (req, res) =>{
-	console.log('apple');
-  res.send(JSON.stringify({
-    classDisabledData: classArray
-  }));
-}); // returns true/false for if class is enabled
 
-var canSubmit;
+var canSubmit = {};
 app.get("/sendsubmitenabled", (req, res) => {
   canSubmit = req.query.canSubmit;
 }); // send from teacher if submitting is enabled
@@ -285,6 +281,11 @@ app.get("/joinclass", async (req, res) => {
   let code = req.query.code + "class";
   let email = req.query.email;
 
+	let classEnabled = true;
+	if (req.query.code in classEnabledMap) {
+		classEnabled = (classEnabledMap[req.query.code] === 'true');
+	}
+
   let codeList = await db.list();
   var classroom = [];
 
@@ -297,7 +298,7 @@ app.get("/joinclass", async (req, res) => {
   if (classroom.includes(email)) {
     studentAlreadyHere = true;
   }
-  else {
+  else if (classEnabled) {
     classroom.push(email);
     db.set(code, classroom);
     
@@ -326,7 +327,8 @@ app.get("/joinclass", async (req, res) => {
     studentAlreadyHere = false;
   }
   res.send(JSON.stringify({
-    contains: studentAlreadyHere
+    contains: studentAlreadyHere,
+		classEnabled: classEnabled
   }));
 })
 
