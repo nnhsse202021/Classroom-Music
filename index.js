@@ -77,25 +77,25 @@ var classArray;
 app.get("/sendclassenabled", (req, res) => {
 	console.log('banana');
   classArray = req.query.classArray;
-});
+}); // send from teacher if submitting is enabled
 
 app.get("/getclassenabled", (req, res) =>{
 	console.log('apple');
   res.send(JSON.stringify({
     classDisabledData: classArray
   }));
-});
+}); // returns true/false for if class is enabled
 
 var canSubmit;
 app.get("/sendsubmitenabled", (req, res) => {
   canSubmit = req.query.canSubmit;
-});
+}); // send from teacher if submitting is enabled
 
 app.get("/getsubmitenabled", (req, res) =>{
   res.send(JSON.stringify({
     submitDisabledData: canSubmit
   }));
-});
+}); // returns true/false for if submit is enabled
 
 app.get("/removesong", async (req ,res) => {
 	console.log("Request received!");
@@ -169,19 +169,28 @@ app.get("/addsong", async (req, res) => {
   let playlistID = req.query.playlist;
   let value = vidID;
 
-  playlistIDList =  db.list(); // getting the list of keys
+  var alreadyContainsSong = false;
+
+  playlistIDList = await db.list(); // getting the list of keys
   if (playlistIDList.indexOf(playlistID) > -1) { // check for whether the key is already in the database
     value = await db.get(playlistID);
     console.log("got it");
     console.log(value);
-    value = value + "," + vidID;
+    if (value.includes(vidID)) {
+      alreadyContainsSong = true;
+    }
+    else {
+      alreadyContainsSong = false;
+      value = value + "," + vidID;
+    }
   }
 
   await db.set(playlistID, value);
 
   res.send(JSON.stringify({
     id: vidID,
-    playlist: playlistID
+    playlist: playlistID,
+    contains: alreadyContainsSong
   }));
 });
 
@@ -283,32 +292,42 @@ app.get("/joinclass", async (req, res) => {
     classroom = await db.get(code);
   }
 
-  classroom.push(email);
-  db.set(code, classroom);
+  var studentAlreadyHere;
 
-
-
-  let studentsToCodes = {};
-
-  if (codeList.indexOf("studentsToCodes") > -1) {
-    studentsToCodes = await db.get("studentsToCodes");
+  if (classroom.includes(email)) {
+    studentAlreadyHere = true;
   }
+  else {
+    classroom.push(email);
+    db.set(code, classroom);
+    
+    var studentsToCodes = {};
 
-  studentsToCodes[email] = req.query.code;
-  db.set("studentsToCodes", studentsToCodes);
+    if (codeList.indexOf("studentsToCodes") > -1) {
+      studentsToCodes = await db.get("studentsToCodes");
+    }
 
-	/* email to name */
-	
-	let dictionary = await db.get("emailToName");
-	if (dictionary === null) {
-		dictionary = {};
-	}
+    studentsToCodes[email] = req.query.code;
+    db.set("studentsToCodes", studentsToCodes);
 
-	console.log(req.query.name);
-	console.log(dictionary);
-	dictionary[req.query.email] = req.query.name;
+    /* email to name */
+    
+    let dictionary = await db.get("emailToName");
+    if (dictionary === null) {
+      dictionary = {};
+    }
 
-	await db.set("emailToName", dictionary);
+    console.log(req.query.name);
+    console.log(dictionary);
+    dictionary[req.query.email] = req.query.name;
+
+    await db.set("emailToName", dictionary);
+
+    studentAlreadyHere = false;
+  }
+  res.send(JSON.stringify({
+    contains: studentAlreadyHere
+  }));
 })
 
 
@@ -367,34 +386,56 @@ app.use(session({
   saveUninitialized: true,
 }));
 
-app.use("/checksession", (req, res, next) => {
-  if (!req.session.views) {
-    req.session.views = {}
-  }
+/* GOOGLE SECURITY */
 
-  var pathname = parseurl(req).pathname
+const CLIENT_ID = "430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com";
+let {OAuth2Client} = require('google-auth-library');
+let oAuth2Client = new OAuth2Client(CLIENT_ID);
+app.post("/authenticate", async (req, res) => {
+  let { token } = req.body;
+  let ticket = await oAuth2Client.verifyIdToken({ // magic google stuff
+    idToken: token,
+    audience: CLIENT_ID
+  });
 
-  if (req.session.views[pathname] === null) {
-    req.session.views[pathname] = false;
-  }
+	req.session.token = token;
 
-  let mode = req.query.mode;
-	let url = req.query.url;
-  req.session.views["/checksession"] = (mode === 'check') ? req.session.views["/checksession"] : url;
-
-  next();
+	let email = ticket.getPayload().email;
+  res.json({email: email});
 })
 
-app.get("/checksession", (req, res, next) => {
-  res.send(JSON.stringify({
-    loggedIn: req.session.views["/checksession"]
-  }));
-});
-
-
 //serving files
-app.use((req, res) => {
-  res.sendFile(__dirname + req.url);
+app.use(async (req, res) => {
+	if (req.url === "/static/student.html" || req.url === "/static/teacher.html") {
+		token = req.session.token;
+		let ticket = await oAuth2Client.verifyIdToken({ // magic google stuff
+        idToken: token,
+        audience: CLIENT_ID
+    })
+			.then(response => {
+				let email = response.payload.email;
+				let isStudent = ((email.includes("@naperville203.org")) || (["kittendub@gmail.com", "evman142@gmail.com", "geoffrey.feifei@gmail.com", "bizzlebozzlebuzzle@gmail.com"].includes(email)));
+				if (isStudent) {
+					if (req.url === "/static/teacher.html") {
+						res.sendFile(__dirname + "/static/teacher.html");
+					} else {
+						return res.redirect("/static/teacher.html");
+					}
+				} else {
+					if (req.url === "/static/student.html") {
+						res.sendFile(__dirname + "/static/student.html");
+					} else {
+						return res.redirect("/static/student.html");
+					}
+				}
+			})
+			.catch(error => {
+				// console.log(error);
+				return res.redirect('/static/index.html');
+			});
+	} else {
+		res.sendFile(__dirname + req.url);
+	}
 });
 
 

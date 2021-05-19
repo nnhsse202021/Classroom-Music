@@ -42,7 +42,12 @@ async function addSongToPlaylist(id, playlistID) {
   await fetch(`/addsong?id=${encodeURI(id)}&playlist=${encodeURI(playlistID)}`)
     .then(response => response.json())
     .then(data => {
-      console.log("Sent song to server for database logging\nID: " + data.id);
+      if (data.contains === true) {
+        window.alert("Song was already in the playlist and could not be submitted. Please try again with a different song.");
+      }
+      else {
+        console.log("Sent song to server for database logging\nID: " + data.id);
+      }
   });
 }
 
@@ -106,9 +111,11 @@ let verifyCancelButton = document.getElementById("verifyCancelButton");
 verify.addEventListener("click", async () => {
   if (verify.checked) {
     confirmSong.disabled = false;
+    document.getElementById("confirmSong").style.borderColor = "#49b8da"; 
   }
   else {
     confirmSong.disabled = true;
+    document.getElementById("confirmSong").style.borderColor = "#b3b3b3";
   }
 })
 window.onclick = function(event) {
