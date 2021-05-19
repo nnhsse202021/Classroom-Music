@@ -293,7 +293,8 @@ app.get("/joinclass", async (req, res) => {
   }
 
   var studentAlreadyHere;
-  if (codeList.includes(code)) {
+
+  if (classroom.includes(email)) {
     studentAlreadyHere = true;
   }
   else {
