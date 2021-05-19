@@ -2,27 +2,29 @@
 let submitButton = document.getElementById("submitButton");
 
 submitButton.addEventListener("click", async () => {
-  let submitDisableArray = await fetch(`/getsubmitenabled`)
-	.then(response => response.json())
-  .then(data => {
-    console.log("Song Submission Enable Data Accessed");
-		console.log(data);
-    return data.submitDisabledData;
-  });
-
 	let searchTerm = document.getElementById("searchWord").value;
+	let code = await getCurrentCode();
+  let canSubmit = await fetch(`/getsubmitenabled?code=${encodeURI(code)}`)
+		.then(response => response.json())
+		.then(data => {
+			console.log("Song Submission Enable Data Accessed");
+			console.log(data);
 
-  if (submitDisableArray == "true") {
-    await fetch(`/ytapi?term=${encodeURI(searchTerm)}`)
-      .then(response => response.json())
-      .then(data => {
-        console.log(data.videoId1 + "   " + data.videoTitle1);
-        showSongChoices(data.videoId1, data.videoId2, data.videoId3,data.videoTitle1, data.videoTitle2, data.videoTitle3);
-      });
-  }
-  else {
-    window.alert("Song could not be submitted. Make sure you've joined a classroom. If you have, ask your teacher if submitting a song is currently disabled for this playlist.");
-  }
+			return data.submitDisabledData;
+		});
+	
+	if (canSubmit) {
+		await fetch(`/ytapi?term=${encodeURI(searchTerm)}`)
+			.then(response => response.json())
+			.then(data => {
+				console.log(data.videoId1 + "   " + data.videoTitle1);
+				showSongChoices(data.videoId1, data.videoId2, data.videoId3,data.videoTitle1, data.videoTitle2, data.videoTitle3);
+			});
+	}
+	else {
+		window.alert("Song could not be submitted. Make sure you've joined a classroom. If you have, ask your teacher if submitting a song is currently disabled for this playlist.");
+	}
+		
 });
 function showSongChoices(videoId1, videoId2, videoId3, videoTitle1, videoTitle2, videoTitle3) {
   document.getElementById("songChoice1").innerHTML = "Title: " + videoTitle1;

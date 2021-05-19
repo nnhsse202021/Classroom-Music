@@ -347,6 +347,7 @@ document.getElementById("disableClassButton").addEventListener("click", async ()
 
 // method for allowing disabling/enabling song submissions
 document.getElementById("disableSubmitButton").addEventListener("click", async () => {
+	let code = await getCurrentCode();
   if (submitDisabledData != true && submitDisabledData != false) { // if undefined
     submitDisabledData = true;
   }
@@ -354,13 +355,13 @@ document.getElementById("disableSubmitButton").addEventListener("click", async (
     submitDisabledData = false; // disable
     document.getElementById("disableSubmitButton").innerHTML = "Enable Song Submissions"; // change button to ask for enable
     document.getElementById("disableSongDescription").innerHTML = "Your playlist is currently DISABLED"; // change description to disabled
-    await fetch(`/sendsubmitenabled?canSubmit=${encodeURI(submitDisabledData)}`);
+    await fetch(`/sendsubmitenabled?canSubmit=${encodeURI(false)}&code=${encodeURI(code)}`);
   }
   else { // else(if disabled)
     submitDisabledData = true; // enable
     document.getElementById("disableSubmitButton").innerHTML = "Disable Song Submissions"; // change button to ask for disable
     document.getElementById("disableSongDescription").innerHTML = "Your playlist is currently ENABLED"; // change description to enabled
-    await fetch(`/sendsubmitenabled?canSubmit=${encodeURI(submitDisabledData)}`);
+    await fetch(`/sendsubmitenabled?canSubmit=${encodeURI(true)}&code=${encodeURI(code)}`);
   }
 })
 
