@@ -1,25 +1,26 @@
 <head>
-  <meta name="google-signin-client_id"
-    content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
-  <link rel="stylesheet" type="text/css" href="/static/style.css" />
-  <script src="https://apis.google.com/js/client.js?onload=onClientLoad"></script>
-  <script src="https://apis.google.com/js/platform.js" async defer></script>
-  <style>
-  body {
-    background-image: url('/static/images/background.png');
-    background-attachment: scroll;
-    background-size: cover;
-    background-size: 40%;
-  }
-  </style>
+	<meta name="google-signin-client_id" content="430954870897-nqat6i8u9fbhsl4kdctnni162isherhh.apps.googleusercontent.com">
+	<link rel="stylesheet" type="text/css" href="/static/style.css" />
+	<script src="https://apis.google.com/js/client.js?onload=onClientLoad">
+	</script>
+	<script src="https://apis.google.com/js/platform.js" async defer>
+	</script>
+	<style>
+		body {
+			background-image: url('/static/images/background.png');
+			background-attachment: scroll;
+			background-size: cover;
+			background-size: 40%;
+		}
+	</style>
 </head>
 
 <body>
-  <ul id="navbar1">
-    <a id= "navbarstyling">Classroom Music - Teacher View</a>
-  </ul>
-  <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
-  <button id="signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign Out</button>
+	<ul id="navbar1">
+		<a id="navbarstyling">Classroom Music - Teacher View</a>
+	</ul>
+	<!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
+	<button id="signOutButton" href="#" onclick="signOut();" class="btn mr-2 mb-2 btn-primary" type="button">Sign Out</button>
 
   <p></p>
   <script>
@@ -205,7 +206,25 @@
       </div>
     </div>
   </div>
+
+  <div class="modal" id="confirmClearModal">
+    <div id="confirmClearContent">
+      <div class="card-header">
+        <span>Clear Playlist</span>
+      </div>
+      <div class="divider4"></div>
+      <div class="card-body">
+        <span>Are you sure you would like to clear your playlist? This will clear ALL songs in this class's playlist.</span>
+      </div>
+      <div id="songOptionsPadding">
+        <button class="button2b" id="confirmClearButton" type="button">Yes, I'm sure</button>
+        <div class="divider"></div>
+        <button class="button2b" id="cancelClearButton" type="button">Cancel</button>
+      </div>
+    </div>
   </div>
+  
+  <!-- </div> -->
   <div class="grid-container-2">
     <div id="songChoiceBox1" class="grid-item-1">
       <div class="card">
@@ -240,6 +259,8 @@
   </div>
 
 		<button id="newLogin"></button>
+  
+  <div class="divider5"></div>
 
   <script src="https://apis.google.com/js/api.js"></script>
   <script src="/static/script.js"></script>

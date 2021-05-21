@@ -395,7 +395,8 @@ app.use(async (req, res) => {
     })
 			.then(response => {
 				let email = response.payload.email;
-				let isStudent = ((email.includes("@naperville203.org")) || (["dpbabenkov@stu.naperville203.org", "evman142@gmail.com", "geoffrey.feifei@gmail.com", "bizzlebozzlebuzzle@gmail.com"].includes(email)));
+				let isStudent = ((email.includes("@naperville203.org")) || (["dpbabenkov@stu.naperville203.org", "evman142@gmail.com", "geoffrey.feifei@gmail.com", "bizzlebozzlebuzzle@gmail.com",
+        "bzli@stu.naperville203.org"].includes(email)));
 				if (isStudent) {
 					if (req.url === "/static/teacher.html") {
 						res.sendFile(__dirname + "/static/teacher.html");

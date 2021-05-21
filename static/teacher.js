@@ -239,12 +239,6 @@ async function displaySongInfo(id, stuName){
   console.log("id: " + id + "\nname: " + stuName);
 }
 
-document.getElementById("clearPlaylist").addEventListener("click", async () => {
-  deletePlaylist(await getCurrentCode());
-  window.alert("Playlist has been cleared!");
-})
-
-
 document.getElementById("shuffleButton").addEventListener("click", async () => {
   shufflePlaylist();
   if (isShuffled) {
@@ -398,3 +392,17 @@ async function emailToName(email) {
 		});
 	return name;
 }
+
+let cancelClearButton = document.getElementById("cancelClearButton");
+cancelClearButton.addEventListener("click", async () => {
+  document.getElementById("confirmClearModal").style.display = "none";
+})
+
+document.getElementById("confirmClearButton").addEventListener("click", async () => {
+  deletePlaylist(await getCurrentCode());
+  document.getElementById("confirmClearModal").style.display = "none";
+})
+
+document.getElementById("clearPlaylist").addEventListener("click", async () => {
+  document.getElementById("confirmClearModal").style.display = "block";
+})
