@@ -50,16 +50,18 @@
 						// setLogin(window.location.origin + "/static/teacher.html");
 						window.location.href = window.location.origin + "/static/teacher.html";
 					}
-					else if (["dpbabenkov@stu.naperville203.org", "evman142@gmail.com", "geoffrey.feifei@gmail.com",
-					"bizzlebozzlebuzzle@gmail.com",
-          "bzli@stu.naperville203.org"].includes(email)) {
+					else if (["kittendub@gmail.com", "evman142@gmail.com", "geoffrey.feifei@gmail.com",
+					"bizzlebozzlebuzzle@gmail.com"].includes(email)) {
 						// setLogin(window.location.origin + "/static/teacher.html");
 						window.location.href = window.location.origin + "/static/teacher.html";
 					}
-					else {
+					else if (email.includes("@stu.naperville203.org")){
 						// setLogin(window.location.origin + "/static/student.html");
 						window.location.href = window.location.origin + "/static/student.html";
 					}
+          else {
+            window.alert("Please sign in with a school email account.");
+          }
 				});
 		}
 	</script>

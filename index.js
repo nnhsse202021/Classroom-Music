@@ -73,25 +73,34 @@ app.get("/videoidtotitle", (req, res) => {
     });
 });
 
-var classArray;
+var classEnabledMap = {};
 app.get("/sendclassenabled", (req, res) => {
-	console.log('banana');
-  classArray = req.query.classArray;
+	let classCode = req.query.code;
+	let canJoin = req.query.canjoin;
+	classEnabledMap[classCode] = canJoin;
+	
+	console.log(classCode + " " + canJoin);
 }); // send from teacher if submitting is enabled
 
-app.get("/getclassenabled", (req, res) =>{
-	console.log('apple');
-  res.send(JSON.stringify({
-    classDisabledData: classArray
-  }));
-}); // returns true/false for if class is enabled
 
-var canSubmit;
+var canSubmitMap = {};
 app.get("/sendsubmitenabled", (req, res) => {
-  canSubmit = req.query.canSubmit;
+	let classCode = req.query.code;
+  let canSubmit = (req.query.canSubmit === "true");
+
+	canSubmitMap[classCode] = canSubmit;
+
+	console.log(classCode + " " + canSubmit + " submission");
 }); // send from teacher if submitting is enabled
 
-app.get("/getsubmitenabled", (req, res) =>{
+app.get("/getsubmitenabled", (req, res) => {
+	let classCode = req.query.code;
+  let canSubmit = true;
+
+	if (classCode in canSubmitMap) {
+		canSubmit = canSubmitMap[classCode];
+	}
+
   res.send(JSON.stringify({
     submitDisabledData: canSubmit
   }));
@@ -169,19 +178,28 @@ app.get("/addsong", async (req, res) => {
   let playlistID = req.query.playlist;
   let value = vidID;
 
+  var alreadyContainsSong = false;
+
   playlistIDList = await db.list(); // getting the list of keys
   if (playlistIDList.indexOf(playlistID) > -1) { // check for whether the key is already in the database
     value = await db.get(playlistID);
     console.log("got it");
     console.log(value);
-    value = value + "," + vidID;
+    if (value.includes(vidID)) {
+      alreadyContainsSong = true;
+    }
+    else {
+      alreadyContainsSong = false;
+      value = value + "," + vidID;
+    }
   }
 
   await db.set(playlistID, value);
 
   res.send(JSON.stringify({
     id: vidID,
-    playlist: playlistID
+    playlist: playlistID,
+    contains: alreadyContainsSong
   }));
 });
 
@@ -276,6 +294,11 @@ app.get("/joinclass", async (req, res) => {
   let code = req.query.code + "class";
   let email = req.query.email;
 
+	let classEnabled = true;
+	if (req.query.code in classEnabledMap) {
+		classEnabled = (classEnabledMap[req.query.code] === 'true');
+	}
+
   let codeList = await db.list();
   var classroom = [];
 
@@ -283,32 +306,43 @@ app.get("/joinclass", async (req, res) => {
     classroom = await db.get(code);
   }
 
-  classroom.push(email);
-  db.set(code, classroom);
+  var studentAlreadyHere;
 
-
-
-  let studentsToCodes = {};
-
-  if (codeList.indexOf("studentsToCodes") > -1) {
-    studentsToCodes = await db.get("studentsToCodes");
+  if (classroom.includes(email)) {
+    studentAlreadyHere = true;
   }
+  else if (classEnabled) {
+    classroom.push(email);
+    db.set(code, classroom);
+    
+    var studentsToCodes = {};
 
-  studentsToCodes[email] = req.query.code;
-  db.set("studentsToCodes", studentsToCodes);
+    if (codeList.indexOf("studentsToCodes") > -1) {
+      studentsToCodes = await db.get("studentsToCodes");
+    }
 
-	/* email to name */
-	
-	let dictionary = await db.get("emailToName");
-	if (dictionary === null) {
-		dictionary = {};
-	}
+    studentsToCodes[email] = req.query.code;
+    db.set("studentsToCodes", studentsToCodes);
 
-	console.log(req.query.name);
-	console.log(dictionary);
-	dictionary[req.query.email] = req.query.name;
+    /* email to name */
+    
+    let dictionary = await db.get("emailToName");
+    if (dictionary === null) {
+      dictionary = {};
+    }
 
-	await db.set("emailToName", dictionary);
+    console.log(req.query.name);
+    console.log(dictionary);
+    dictionary[req.query.email] = req.query.name;
+
+    await db.set("emailToName", dictionary);
+
+    studentAlreadyHere = false;
+  }
+  res.send(JSON.stringify({
+    contains: studentAlreadyHere,
+		classEnabled: classEnabled
+  }));
 })
 
 
@@ -395,8 +429,7 @@ app.use(async (req, res) => {
     })
 			.then(response => {
 				let email = response.payload.email;
-				let isStudent = ((email.includes("@naperville203.org")) || (["dpbabenkov@stu.naperville203.org", "evman142@gmail.com", "geoffrey.feifei@gmail.com", "bizzlebozzlebuzzle@gmail.com",
-        "bzli@stu.naperville203.org"].includes(email)));
+				let isStudent = ((email.includes("@naperville203.org")) || (["kittendub@gmail.com", "evman142@gmail.com", "geoffrey.feifei@gmail.com", "bizzlebozzlebuzzle@gmail.com"].includes(email)));
 				if (isStudent) {
 					if (req.url === "/static/teacher.html") {
 						res.sendFile(__dirname + "/static/teacher.html");
@@ -412,7 +445,7 @@ app.use(async (req, res) => {
 				}
 			})
 			.catch(error => {
-				console.log(error);
+				// console.log(error);
 				return res.redirect('/static/index.html');
 			});
 	} else {

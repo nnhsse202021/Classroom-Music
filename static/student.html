@@ -79,30 +79,26 @@
     
     // method to join a class, if class is enabled
     document.getElementById("submitCode").addEventListener("click", async () => {
-      
-      let classDisableArray = await fetch(`/getclassenabled`)
-				.then(response => response.json())
-        .then(data => {
-          console.log("Classroom Enable Data Accessed");
-					console.log(data);
-          return data.classDisabledData;
-        });
-
-			classDisableArray = classDisableArray.split(",");
-			console.log(classDisableArray);
-      studentCode = document.getElementById("classCodeEnter").value;
-      if (studentCode == classDisableArray[0] && classDisableArray[1] == "true") {
-        document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
-        await joinClass(studentCode, profile.getEmail(), profile.getName());
-        // await setEmailToName(profile.getEmail(), profile.getName());
-      }
-      else if (studentCode == classDisableArray[0] && classDisableArray[1] == "false") {
-        window.alert("Joining that classroom is disabled right now!");
-      }
+			studentCode = document.getElementById("classCodeEnter").value;
+			
+			await joinClass(studentCode, profile.getEmail(), profile.getName());
+			await setEmailToName(profile.getEmail(), profile.getName());
     });
 		
     async function joinClass(code, email, name) {
-			await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}&name=${name}`);
+			await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}&name=${name}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.contains === true) {
+            window.alert("You are already in this class. Please try again with a different class code.");
+          }
+          else if (data.classEnabled) {
+            console.log("Student successfully added");
+						document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
+          } else {
+						window.alert("Joining that classroom is disabled right now!");
+					}
+        });
     }
 
 		async function setEmailToName(email, name) {
@@ -149,7 +145,7 @@
         <input class="card-text" type="text" id="searchWord" placeholder="Search">
         <p id="termDisplay" class="card-text"></p>
         <button class="button1" id="submitButton" type="button">
-          <span>Submit</span>
+          <span>Search</span>
         </button>
         <div class="divider"></div>
         <button class="button1" id="cancelButton" type="button">
