@@ -132,6 +132,8 @@ confirmSong.addEventListener("click", async () => {
   document.getElementById("songChoiceBox3").style.display = "none";
   document.getElementById("searchWord").value = "";
   document.getElementById("verify").checked = false;
+  confirmSong.disabled = true;
+  document.getElementById("confirmSong").style.borderColor = "#b3b3b3";
   var name = document.getElementById("store_name").innerHTML;
   // console.log(name);
   var songInfo = [id, name];
@@ -141,6 +143,8 @@ confirmSong.addEventListener("click", async () => {
 verifyCancelButton.addEventListener("click", async () => {
 	document.getElementById("verifyModal").style.display = "none";
   document.getElementById("verify").checked = false;
+  confirmSong.disabled = true;
+  document.getElementById("confirmSong").style.borderColor = "#b3b3b3";
 });
 
 /*
