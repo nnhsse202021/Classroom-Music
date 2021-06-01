@@ -9,10 +9,16 @@
 }
 
 .grid-item-1 {
-  //padding: 10%;
   text-align: center;
 }
 
+#player {
+  bottom: 10;
+  left: 10;
+  position: fixed;
+  z-index: 3000;
+
+}
 .grid-container-2 {
   display: grid;
   grid-template-columns: 33.333333333% 33.333333333% 33.333333333%;
@@ -222,6 +228,19 @@ li {
   border-color: #009608;
 }
 
+.signInBox {
+  background-color: rgb(255, 255, 255);
+  padding: 1.5%;
+  border-radius: 20px;
+  position: relative;
+  border: 6px solid;
+  border-color: #e7e7e7;
+}
+
+#signInTitle {
+  font-size: 120%;
+}
+
 #musicControls {
   width: 40%;
   margin-left: 5%;
@@ -260,7 +279,7 @@ li {
   border-radius: 20px;
   border: 6px solid;
   border-color: #f7ef00;
-  //border-color: #e07400;
+  /*border-color: #e07400;*/
   text-align: center;
   width: 50%;
   /*margin-left: 15%;*/
@@ -294,7 +313,7 @@ li {
   width: 20%;
   position: fixed;
   top: 30%;
-  left: 40%;
+  left: 38%;
   text-align: center;
 }
 
@@ -365,6 +384,45 @@ li {
   border-color: white;
 }
 
+#loginButton {
+      display: inline-block;
+      background: white;
+      color: #444;
+      width: 190px;
+      border-radius: 5px;
+      border: thin solid #888;
+      box-shadow: 1px 1px 1px grey;
+      white-space: nowrap;
+    }
+    #loginButton:hover {
+      cursor: pointer;
+    }
+    span.label {
+      font-family: serif;
+      font-weight: normal;
+    }
+    span.icon {
+      background: url('/identity/sign-in/g-normal.png') transparent 5px 50% no-repeat;
+      display: inline-block;
+      vertical-align: middle;
+      width: 42px;
+      height: 42px;
+    }
+    span.buttonText {
+      display: inline-block;
+      vertical-align: middle;
+      padding-left: 42px;
+      padding-right: 42px;
+      font-size: 14px;
+      font-weight: bold;
+      /* Use the Roboto font that is loaded in the <head> */
+      font-family: 'Roboto', sans-serif;
+    }
+
+#loginButton {
+  
+}
+
 .button1 {
   width: 40%;
   font-family: 'Rubik', sans-serif;
@@ -404,6 +462,28 @@ li {
 }
 
 .button2:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+.button2b {
+  width: 40%;
+  font-family: 'Rubik', sans-serif;
+  border-radius: 10px;
+  border: 3px solid;
+  /*border-color: #ffb78d;*/
+  border-color: #009608;
+  background-color: #dfdfdfdf;
+  padding: 2%;
+  transition: transform .2s;
+}
+
+.button2b:hover {
+  background-color: #cfcfcf;
+  transform: scale(1.03);
+}
+
+.button2b:focus {
   outline: none;
   box-shadow: none;
 }
@@ -580,6 +660,22 @@ li {
   background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
 }
 
+#confirmClearModal {
+  text-align: center;
+  font-family: 'Windows 95';
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 100; /* Sit on top */
+  padding-top: 8%; /* Location of the box */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.6); /* Black w/ opacity */
+}
+
 #modalContent {
   width: 45%;
   height: 15%;
@@ -587,7 +683,7 @@ li {
   background-color: rgb(255, 255, 255);
   padding: 3%;
   border-radius: 25px;
-  border: 2px solid #49b8da;
+  border: 6px solid #49b8da;
 }
 
 #songOptionsContent {
@@ -596,7 +692,7 @@ li {
   background-color: rgb(255, 255, 255);
   padding: 3%;
   border-radius: 25px;
-  border: 2px solid #bf1a02;
+  border: 6px solid #bf1a02;
 }
 
 #studentOptionsContent {
@@ -605,7 +701,16 @@ li {
   background-color: rgb(255, 255, 255);
   padding: 3%;
   border-radius: 25px;
-  border: 2px solid #f7ef00;
+  border: 6px solid #f7ef00;
+}
+
+#confirmClearContent {
+  width: 45%;
+  margin: auto;
+  background-color: rgb(255, 255, 255);
+  padding: 3%;
+  border-radius: 25px;
+  border: 6px solid #009608;
 }
 
 .songSubmission {
@@ -645,6 +750,18 @@ li {
 .divider3 {
   width: 28%;
   height: auto;
+  display: inline-block;
+}
+
+.divider4 {
+  width: auto;
+  height: 1%;
+  display: inline-block;
+}
+
+.divider5 {
+  width: auto;
+  height: 300px;
   display: inline-block;
 }
 
