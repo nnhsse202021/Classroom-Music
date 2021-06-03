@@ -37,3 +37,6 @@ In the situation that the teacher needs to erase the playlist,they can click the
 
 ### Classroom Controls
 Finally, each teachers has 8 classrooms, and each classroom has its own code. The teacher can rename the classroom. The "Disable Classroom Code" button disables the classroom code, making it so that new students are unable to join the classroom (this feature was coded but has bugs in it). Next to the disable class code button, there is a "Refresh Class List" button, and when clicked it shows a list of students in the currently selected class. Each student name on the list is clickable, and when clicked it shows more informations and options for the student: the full name, the full email, and a button allowing the teacher to remove that student from the class.
+
+# Future Updates 
+For future teams working on this project, there is a list of features and enhancements to add to the webapp on our github issues page: https://github.com/nnhsse202021/Classroom-Music/issues

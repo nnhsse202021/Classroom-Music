@@ -135,6 +135,9 @@ document.getElementById("playButton").addEventListener("click", () => {
     player.pauseVideo();
     document.getElementById("playButtonText").innerHTML = "Play";
   } else { // Execute this if a video is currently paused
+    if (currentSongIndex == 0){
+      loadNextSong();
+    }
     player.playVideo();
     document.getElementById("playButtonText").innerHTML = "Pause";
   }
