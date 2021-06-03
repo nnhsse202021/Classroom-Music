@@ -388,27 +388,36 @@ li {
       display: inline-block;
       background: white;
       color: #444;
-      width: 190px;
+      width: 70%;
       border-radius: 5px;
       border: thin solid #888;
       box-shadow: 1px 1px 1px grey;
-      white-space: nowrap;
+      //white-space: nowrap;
     }
-    #loginButton:hover {
+#loginButton:hover {
       cursor: pointer;
-    }
-    span.label {
+}
+#loginIcon {
+  background-image: url('/static/images/google.png');
+  background-size: cover;
+  background-size: 99%;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+}
+/*
+span.label {
       font-family: serif;
       font-weight: normal;
     }
-    span.icon {
-      background: url('/identity/sign-in/g-normal.png') transparent 5px 50% no-repeat;
+span.icon {
+      background: url('/static/images/google.png') 5px 50% no-repeat;
       display: inline-block;
       vertical-align: middle;
       width: 42px;
       height: 42px;
     }
-    span.buttonText {
+span.buttonText {
       display: inline-block;
       vertical-align: middle;
       padding-left: 42px;
@@ -417,11 +426,7 @@ li {
       font-weight: bold;
       /* Use the Roboto font that is loaded in the <head> */
       font-family: 'Roboto', sans-serif;
-    }
-
-#loginButton {
-  
-}
+}*/
 
 .button1 {
   width: 40%;
