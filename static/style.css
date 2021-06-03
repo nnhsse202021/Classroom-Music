@@ -317,9 +317,6 @@ li {
   text-align: center;
 }
 
-#signOutButton {
-}
-
 #googleButton {
   margin: auto;
 }
@@ -384,43 +381,68 @@ li {
   border-color: white;
 }
 
-#loginButton {
-      display: inline-block;
-      background: white;
-      color: #444;
-      width: 190px;
-      border-radius: 5px;
-      border: thin solid #888;
-      box-shadow: 1px 1px 1px grey;
-      white-space: nowrap;
-    }
-    #loginButton:hover {
-      cursor: pointer;
-    }
-    span.label {
-      font-family: serif;
-      font-weight: normal;
-    }
-    span.icon {
-      background: url('/identity/sign-in/g-normal.png') transparent 5px 50% no-repeat;
-      display: inline-block;
-      vertical-align: middle;
-      width: 42px;
-      height: 42px;
-    }
-    span.buttonText {
-      display: inline-block;
-      vertical-align: middle;
-      padding-left: 42px;
-      padding-right: 42px;
-      font-size: 14px;
-      font-weight: bold;
-      /* Use the Roboto font that is loaded in the <head> */
-      font-family: 'Roboto', sans-serif;
-    }
+#signOutButton {
+  display: inline-block;
+  background: white;
+  color: #444;
+  width: 9%;
+  /* height: 1%; */
+  border-radius: 5px;
+  border: thin solid #888;
+  box-shadow: 1px 1px 1px grey;
+  transition: transform .2s;
+  padding: 0.6%;
+}
+
+#signOutButton:hover {
+  cursor: pointer;
+  background-color: #cfcfcf;
+  transform: scale(1.05);
+}
+
+#signOutButton:focus {
+  outline: none;
+  box-shadow: none;
+}
 
 #loginButton {
-  
+  display: inline-block;
+  background: white;
+  color: #444;
+  width: 70%;
+  border-radius: 5px;
+  border: thin solid #888;
+  box-shadow: 1px 1px 1px grey;
+  transition: transform .2s;
+  padding: 2%;
+}
+
+#loginButton:hover {
+  cursor: pointer;
+  background-color: #cfcfcf;
+  transform: scale(1.05);
+}
+
+#loginButton:focus {
+  outline: none;
+  box-shadow: none;
+}
+
+#signInOutText {
+  display: inline-block;
+  margin: auto;
+  vertical-align: top;
+}
+
+#googleIcon {
+  background-image: url('/static/images/google.png');
+  background-size: cover;
+  background-size: 99%;
+  display: inline-block;
+  height: 18px;
+  width: 18px;
+  margin: auto;
+  vertical-align: top;
 }
 
 .button1 {
@@ -438,6 +460,7 @@ li {
 .button1:hover {
   background-color: #cfcfcf;
   transform: scale(1.03);
+  cursor: pointer;
 }
 
 .button1:focus {
@@ -459,6 +482,7 @@ li {
 .button2:hover {
   background-color: #cfcfcf;
   transform: scale(1.03);
+  cursor: pointer;
 }
 
 .button2:focus {
@@ -481,6 +505,7 @@ li {
 .button2b:hover {
   background-color: #cfcfcf;
   transform: scale(1.03);
+  cursor: pointer;
 }
 
 .button2b:focus {
@@ -503,6 +528,7 @@ li {
 .button3:hover {
   background-color: #cfcfcf;
   transform: scale(1.03);
+  cursor: pointer;
 }
 
 .button3:focus {
@@ -525,6 +551,7 @@ li {
 .button4:hover {
   background-color: #cfcfcf;
   transform: scale(1.03);
+  cursor: pointer;
 }
 
 .button4:focus {
@@ -547,6 +574,7 @@ li {
 .button5:hover {
   background-color: #cfcfcf;
   transform: scale(1.03);
+  cursor: pointer;
 }
 
 .button5:focus {
@@ -598,16 +626,19 @@ li {
 #songChoiceBox1:hover {
   background-color: #ffebdbdf;
   transform: scale(1.07);
+  cursor: pointer;
 }
 
 #songChoiceBox2:hover {
   background-color: #ffebdbdf;
   transform: scale(1.07);
+  cursor: pointer;
 }
 
 #songChoiceBox3:hover {
   background-color: #ffebdbdf;
   transform: scale(1.07);
+  cursor: pointer;
 }
 
 /* Verification Pop-up */
