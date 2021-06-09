@@ -89,7 +89,19 @@
     });
 		
     async function joinClass(code, email, name) {
-			await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}&name=${name}`)
+      await fetch(`/checkCodes?code=${encodeURI(code)}`)
+        .then(response => response.json())
+        .then(data => {
+          if (data.codeInDatabase === true){
+            //window.alert("Sussy wussy!!!! You are a sussy baka :) :) :D :P");
+            window.alert("Class has been successfully joined!")
+          }
+          else {
+            window.alert("Invalid code has been entered!");
+          }
+        })
+
+      await fetch(`/joinclass?code=${encodeURI(code)}&email=${encodeURI(email)}&name=${name}`)
         .then(response => response.json())
         .then(data => {
           if (data.contains === true) {
@@ -97,10 +109,10 @@
           }
           else if (data.classEnabled) {
             console.log("Student successfully added");
-						document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
+            document.getElementById("displayCode").innerHTML = "Your current code is: " + studentCode;
           } else {
-						window.alert("Joining that classroom is disabled right now!");
-					}
+            window.alert("Joining that classroom is disabled right now!");
+          }
         });
     }
 

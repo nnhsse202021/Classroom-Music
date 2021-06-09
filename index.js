@@ -287,7 +287,21 @@ app.get("/generatecode", async (req, res) => {
   }));
 });
 
-
+app.get("/checkCodes", async (req, res) => {
+  let code = req.query.code;
+  let codeInDatabase = false;
+  let keyList = await db.list();
+  console.log(keyList);
+  for (var i = 0; i < keyList.length; i++){
+    if (keyList[i] === code){
+      codeInDatabase = true;
+      console.log(keyList[i]);
+    }
+  }
+  res.send(JSON.stringify({
+    codeInDatabase: codeInDatabase
+  }));
+})
 
 app.get("/joinclass", async (req, res) => {
 	console.log("success!");
@@ -430,8 +444,7 @@ app.use(async (req, res) => {
 			.then(response => {
 				let email = response.payload.email;
 				let isStudent = ((email.includes("@naperville203.org")) || (["kittendub@gmail.com", "evman142@gmail.com", "geoffrey.feifei@gmail.com", "bizzlebozzlebuzzle@gmail.com",
-        "bzlbzlbzl2000iscool@gmail.com",
-        "bzli@stu.naperville203.org"].includes(email)));
+        "bzlbzlbzl2000iscool@gmail.com"].includes(email)));
 				if (isStudent) {
 					if (req.url === "/static/teacher.html") {
 						res.sendFile(__dirname + "/static/teacher.html");
